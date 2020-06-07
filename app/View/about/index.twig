@@ -1,0 +1,71 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %} 私たちについて {% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			私たちについて
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p>
+				ACT Laboratory(Accessible Tools Laboratory)は、プログラミングを学ぶ視覚障害者の集まりです。<br />
+				このサイトでは、メンバーが開発したソフトウェアの配布と、各ソフトウェアのサポートを行っています。<br />
+			</p>
+			<p>
+				私たちは、画面読み上げソフト（スクリーンリーダー）で使用できるソフトウェアの開発を行っています。<br />
+				１人でも多くの方に利用していただき、より便利で、使いやすいソフトウェアを開発していくことが、私たちの目標です。<br />
+				ここで公開しているソフトウェアを利用してのご意見やご感想は、電子メールや掲示板への書き込みなどで是非私たちにお知らせください。<br />
+				皆様から頂くご意見も参考にしながら、よりよいソフトウェアを制作していければと思っています。<br />
+			</p>
+		</div>
+	</div>
+
+	<div class="d-flex align-items-center  text-white bg-primary px-5">
+		<h3 class="h2">メンバー紹介</h3>
+	</div>
+
+	{% for member in members %}
+		<div class="card">
+			<div class="card-body">
+				<div class="card-title">
+					<div class="d-flex align-items-center px-5">
+						<h4 class="h2">{{ member.name }}</h4>
+					</div>
+				</div>
+				<div class="card-text">
+					<div class="row">
+						<div class="col-sm-9">
+							<div class="container pl-5">
+								<p>{{ member.introduction | raw }}</p>
+							</div>
+						</div>
+						<div class="hidden-xs col-sm-3">
+							{{ member.links | raw }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	<div class="d-flex align-items-center  text-white bg-primary px-5">
+		<h3 class="h2">連絡先</h3>
+	</div>
+	<div class="container m-5">
+		<p>ラボへのご連絡は、以下の電子メールアドレス宛にお送りください。<br></p>
+		<p>support (at) actlab.org<p>
+	</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

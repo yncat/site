@@ -1,0 +1,47 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}TOP{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron text-center">
+		<h2>
+			ようこそ、ラボへ！
+		</h2>
+	</div>
+	<div class="row text-left">
+		<div class="col-md-2">
+			<h2>新着情報</h2>
+		</div>
+		<div class="col-md-10">
+			{% for info in informations %}
+				<div class="row">
+					<div class="col-md-2">
+						{{ info.date }}
+					</div>
+					<div class="col-md-10">
+						{% if info.url != null %}
+							<a href="{{ info.url }}">{{ info.title }}</a>
+						{% else %}
+							{{ info.title }}
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<div class="row">
+					現在、お知らせはありません。
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

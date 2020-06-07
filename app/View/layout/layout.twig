@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-100">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %} - ACT Laboratory</title>
+    {% block header_scripts_add %}{% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {# font awsomeパッケージを利用します#}
+</head>
+
+<body>
+{# サイトタイトル・広告 #}
+<div class="container">
+    <div class="row">
+        <div class="mr-auto">
+            <h1><a href="/">ACT Laboratory</a></h1>
+        </div>
+        <div aria-hidden="true" class="mr-3" id="ad-area">
+            <!--nobanner-->
+        	<script type="text/javascript" src="https://cache1.value-domain.com/xa.j?site=actlab.s1010.xrea.com"></script>
+        </div> 
+    </div>
+</div>
+<div class="h2">
+    <span> </span>
+</div>
+{# メニュー #}
+{% include 'layout/menu.twig' %}
+
+{# 本文 #}
+<main role="main">
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+</main>
+
+{# フッタ #}
+{% include 'layout/footer.twig' %}
+
+{# 必須スクリプトをインポート #}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
+<script>
+    <!--
+    window.onload=function() {
+        document.getElementById("ad-area").childNodes[4].setAttribute("tabindex", "-1");
+    }
+    -->
+</script>
+
+{# 追加でスクリプトがほしいときにぶっこまれます #}
+{% block footer_scripts_add %}{% endblock %}
+</body>
+</html>
