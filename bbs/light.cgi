@@ -335,6 +335,7 @@ sub past_page {
 	my $tmpl = join('',<IN>);
 	close(IN);
 	
+	$tmpl =~ s/!bbs_title!/$cf{bbs_title}/g;
 	$tmpl =~ s/!past_num!/$in{pno}/g;
 	$tmpl =~ s|!icon:(\w+\.\w+)!|<img src="$cf{cmnurl}/$1" alt="" class="icon">|g;
 	$tmpl =~ s/!([a-z]+_cgi)!/$cf{$1}/g;
