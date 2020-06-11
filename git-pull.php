@@ -15,7 +15,7 @@ error_log("[{$date}] Pushed to {$json['ref']}\n",3,$log_file);
 
 if ($json['ref']=="refs/heads/{$branch_name}") { // 指定ブランチのpushイベントの時のみ実行
     $git_remote = "http://github.com/actlaboratory/site.git";
-    $command = "cd {$path_to_repository} && ${git} pull {$git_remote} {$branch_name} 2>&1";
+    $command = "cd {$path_to_repository} && git pull {$git_remote} {$branch_name} 2>&1";
     exec($command, $output, $exit_status);
 
     if ($exit_status > 0) {
