@@ -1,0 +1,13 @@
+# Confidential settings file
+src/settings.php
+bbs/init.cgi
+
+# BBS data file
+bbs/data/ses.cgi
+bbs/data/log.cgi
+bbs/data/past/*.cgi
+bbs/data/log.cgi
+bbs/data/log/*
+bbs/data/num.dat
+bbs/data/pastno.dat
+
