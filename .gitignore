@@ -11,3 +11,5 @@ bbs/data/log/*
 bbs/data/num.dat
 bbs/data/pastno.dat
 
+# logfile
+logs/git-pull.log
