@@ -31,11 +31,11 @@ return [
 
             'connection' => [
                 'driver' => 'pdo_mysql',
-                'host' => 'localhost',
+                'host' => getenv("DB_HOST",true),
                 'port' => '3306',
-                'user' => 'actlab',
-                'password' => '********',
-                'dbname' => 'actlab',
+                'user' => getenv("DB_USER",true),
+                'password' => getenv("DB_PASS",true),
+                'dbname' => getenv("DB_NAME",true),
                 'charset' => 'utf8'
             ]
         ]
