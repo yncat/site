@@ -16,8 +16,10 @@ class AdminPageHandler{
 
 	//admin/の時だけ、管理者ログインなどを行う
 	public function __invoke($request, $response, $next){
-		if(explode("/",$request->getUri()->getPath())[0]==="admin"){
-			if(explode("/",$request->getUri()->getPath())[1]==="login"){	//ログインページだけは無視
+//		var_dump($request->getUri());
+//		exit();
+		if(explode("/",$request->getUri()->getPath())[1]==="admin"){
+			if(explode("/",$request->getUri()->getPath())[2]==="login"){	//ログインページだけは無視
 				return $response = $next($request, $response);
 			}
 			if(empty($_SESSION["ID"])){

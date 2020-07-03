@@ -215,7 +215,9 @@ class Uri implements UriInterface
         }
 
         if ($basePath) {
-            $virtualPath = ltrim(substr($requestUri, strlen($basePath)), '/');
+//          $virtualPath = ltrim(substr($requestUri, strlen($basePath)), '/');
+            $virtualPath = substr($requestUri, strlen($basePath));
+
         }
 
         // Query string
@@ -839,7 +841,6 @@ class Uri implements UriInterface
         if ($authority !== '' && substr($basePath, 0, 1) !== '/') {
             $basePath = $basePath . '/' . $basePath;
         }
-
         return ($scheme !== '' ? $scheme . ':' : '')
             . ($authority ? '//' . $authority : '')
             . rtrim($basePath, '/');
