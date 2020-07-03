@@ -81,7 +81,6 @@ $app->post('/admin/profile', function (Request $request, Response $response) {
 function showProfileConfirm(array $data,$db,$view,$response,$message=""){
 	$data["message"]=$message;
 	MembersUtil::makeLinkCode($data);
-
     // Render view
     return $view->render($response, 'admin/profile/confirm.twig', $data);
 }
@@ -101,7 +100,7 @@ function profileParamCheck($input){
 	if(!ValidationUtil::checkParam($input,array("github"=>"/^[a-zA-Z0-9]{3,30}$/"))){
 		$message.="githubユーザ名が不正です。";
 	}
-	if(!empty($input["url"]) && !ValidationUtil::checkParam($input,array("url"=>"/^https?://([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+/.*$/"))){
+	if(!empty($input["url"]) && !ValidationUtil::checkParam($input,array("url"=>"@^https?://([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+/.*$@"))){
 		$message.="URLの形式が不正です。";
 	}
 	return $message;

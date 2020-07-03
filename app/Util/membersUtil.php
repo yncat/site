@@ -21,8 +21,8 @@ class MembersUtil{
 			$info["github_link"]=null;
 		}
 
-		if(isset($info["URL"])){
-			$info["URL_link"]="<p><a href=\"".$info["URL"]."\">個人サイト</a></p>";
+		if(isset($info["url"])){
+			$info["URL_link"]="<p><a href=\"".$info["url"]."\">個人サイト</a></p>";
 		} else {
 			$info["URL_link"]=null;
 		}
