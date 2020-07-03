@@ -98,7 +98,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 	$updaterequests=new Updaterequests($this->db);
 	$info=$updaterequests->select(array("id"=>$id));
 
-	if($info!==false && $id==$info["requester"]){
+	if($info!==false && $_SESSION["ID"]==$info["requester"]){
 		$info=$updaterequests->delete(array("id"=>$id));
 		$message="削除しました。";
 	} else {
