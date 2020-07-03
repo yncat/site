@@ -46,7 +46,7 @@ $app->post('/admin/request', function (Request $request, Response $response) {
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
-$app->post('/admin/request/request', function (Request $request, Response $response) {
+$app->post('/admin/request/{id}/request', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 	$message="";
 	if(!empty($input)){
