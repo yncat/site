@@ -98,7 +98,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 	$updaterequests=new Updaterequests($this->db);
 	$info=$updaterequests->select(array("id"=>$id));
 
-	if($info!==false && $_SESSION["ID"]==$info["requester"]){
+	if($info!==false && $_SESSION["id"]==$info["requester"]){
 		$info=$updaterequests->delete(array("id"=>$id));
 		$message="削除しました。";
 	} else {
@@ -110,7 +110,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 });
 
 function DeleteRequestConfirm(array $data,$db,$view,$response,$message=""){
-		$data["title"]=makeRequestTitle($data);
+	$data["title"]=makeRequestTitle($data);
 
 	// Render view
     return $view->render($response, 'admin/request/delete.twig', $data);
