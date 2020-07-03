@@ -38,3 +38,8 @@ class AdminPageHandler{
 	}
 }
 
+
+set_error_handler(function(int $errno, string $errstr, string $errfile, int $errline, array $errcontext){
+	$GLOBALS["app"]->getContainer()->get("logger")->error("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
+	return false;
+});
