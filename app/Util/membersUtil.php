@@ -7,7 +7,7 @@ use Model\Dao\Members;
 class MembersUtil{
 
 	static function makeLinkCode(array &$info){
-		if(isset($info["twitter"])){
+		if(!empty($info["twitter"])){
 			$info["twitter_link"]=
 			"<a href=\"https://twitter.com/".$info["twitter"]."?ref_src=twsrc%5Etfw\" class=\"twitter-follow-button\" data-show-count=\"false\">Twitter: @".$info["twitter"]."</a><script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";
 			//"<p><a href=\"https://twitter.com/".$info["twitter"]."\">Twitter</a></p>";
@@ -15,13 +15,13 @@ class MembersUtil{
 			$info["twitter_link"]=null;
 		}
 
-		if(isset($info["github"])){
+		if(!empty($info["github"])){
 			$info["github_link"]="<p><a href=\"https://github.com/".$info["github"]."\">gitHub</a></p>";
 		} else {
 			$info["github_link"]=null;
 		}
 
-		if(isset($info["url"])){
+		if(!empty($info["url"])){
 			$info["URL_link"]="<p><a href=\"".$info["url"]."\">個人サイト</a></p>";
 		} else {
 			$info["URL_link"]=null;
