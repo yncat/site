@@ -1,0 +1,32 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %} リクエストの削除 {% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			リクエストの削除
+		</h2>
+		<p>以下のリクエストを削除します。</p>
+	</div>
+
+		<div class="container rx-5 mx-5">
+			<p>requestID：{{ id }}</p>
+			<p>タイトル：{{ title }}</p>
+		</div>
+
+		<form action="delete" method="GET">
+			<input type="submit" value="　削除　">
+		</form>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

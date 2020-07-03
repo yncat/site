@@ -16,14 +16,15 @@
 		</h2>
 		<div class="container rx-5 mx-5">
 			<p>
-				承認・削除操作を行うリクエストを選択してください。
+				操作を行うリクエストを選択してください。
+				他人のリクエストの場合は承認画面、自分のリクエストの場合は削除画面にリンクします。
 			</p>
 		</div>
 	</div>
 
 	{% for request in requests %}
 		<div class="d-flex align-items-center  text-white bg-primary px-5">
-			<h3 class="h2"><a href="request/{{ request.id }}">No.{{ request.id }} {{ request.title }}</a></h3>
+			<h3 class="h2"><a href="request/{{ request.id }}/">No.{{ request.id }} {{ request.title }}</a></h3>
 		</div>
 	{% endfor %}
 
