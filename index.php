@@ -22,8 +22,8 @@ require __DIR__ . '/src/dependencies.php';
 // Register middleware
 require __DIR__ . '/src/middleware.php';
 
-+//SLIMのセッションを利用
-+$app->add(new \Slim\Middleware\Session([
+//SLIMのセッションを利用
+$app->add(new \Slim\Middleware\Session([
 	'name'        => 'slim_session',
 	'autorefresh' => true,
 	'lifetime'    => '1 hour',
