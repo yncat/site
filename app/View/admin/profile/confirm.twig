@@ -1,0 +1,64 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %} 入力内容確認 {% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			入力内容確認
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p>
+				プロフィールのプレビュー画面です。表示内容、全てのリンクの正常動作を確認して、問題なければＯＫボタンを押してください。
+			</p>
+		</div>
+	</div>
+
+	<div class="d-flex align-items-center  text-white bg-primary px-5">
+		<h3 class="h2">変更内容</h3>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title">
+				<div class="d-flex align-items-center px-5">
+					<h4 class="h2">{{ name }}</h4>
+				</div>
+			</div>
+			<div class="card-text">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="container pl-5">
+							<p>{{ introduction | raw }}</p>
+						</div>
+					</div>
+					<div class="hidden-xs col-sm-3">
+						{{ links | raw }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<form method="POST" action="request">
+		<input type="hidden" name="name" value="{{ name }}">
+		<input type="hidden" name="introduction" value="{{ introduction }}">
+		<input type="hidden" name="twitter" value="{{ twitter }}">
+		<input type="hidden" name="github" value="{{ github }}">
+		<input type="hidden" name="url" value="{{ url }}">
+		<input type="hidden" name="type" value="publicInformation">
+		<input type="hidden" name="id" value="{{ id }}">
+		<input type="submit" value="　ＯＫ　">
+	</form>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

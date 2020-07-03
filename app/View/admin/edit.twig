@@ -1,0 +1,153 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	{% if title is defined %}
+		{{ title }}
+	{% else %}
+		新規ソフトウェア登録
+	{% endif %}
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+<form method="post" autocomplete="off">
+
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{% if type!="new" %}
+				{{ title }}
+				<input type="hidden" name="title" value="{{ title }}">
+			{% else %}
+				<label>タイトル：
+					<input type="text" name="title" value="{{ title }}"required>
+				</label>
+			{% endif %}
+		</h2>
+		<div class="container py-5 text-center">
+			{% if type!="new" %}
+				<span class="h2">{{ keyword }}</span>
+				<input type="hidden" name="keyword" value="{{ keyword }}">
+			{% else %}
+				<label class="h2">キーワード(半角大文字のみ)：<br>
+					<input type="text" name="keyword" value="{{ keyword }}" required>
+				</label>
+			{% endif %}
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-xl-8">
+			<div class="text-white bg-primary p-1">
+				<h3>概要</h3>
+			</div>
+			<div class="container py-5">
+				<div class="row">
+					<div class="col-3">
+						<label>概要(120字以内)</label>
+					</div>
+					<div class="col-9">
+						<textarea name="description" style="width:100%;" required>{{ description }}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-white bg-primary p-1">
+				<h3>特徴・機能</h3>
+			</div>
+			<div class="container py-5">
+				<textarea style="width:100%; height:10em;" name="features" required>{{ features }}</textarea>
+			</div>
+		</div>
+		<div class="col-xl-1">
+			<!-- 余白スペース -->
+		</div>
+		<div class="col-xl-3">
+			<div class="text-white bg-primary text-center">
+				<h2>ダウンロード</h2>
+			</div>
+			<div class="container">
+				<label>
+					スナップショットタグ名
+					<input type="text" name="snapshotTag" value="{{ snapshotTag }}" required>
+				</label>
+				<label>
+					スナップショットファイル名
+					<input name="snapshotFile" value="{{ snapshotFile }}" required>
+				</label>
+			</div>
+
+			<div class="text-white bg-primary text-center">
+				<h2>関連リンク</h2>
+			</div>
+			<div class="container">
+				<label>
+					GitHubリポジトリ
+					<input name="gitHubURL" value="{{ gitHubURL }}" required>
+				</label>
+			</div>
+
+			<div class="text-white bg-primary text-center">
+				<h2>主担当メンバー</h2>
+			</div>
+			<div class="container">
+				<label>
+					主担当メンバー選択
+					<select name="staff" >
+						{% for member in members %}
+							{% if staff == member.id %}
+								<option value="{{member.id}}" selected>{{member.name}}</option>
+							{% else %}
+								<option value="{{member.id}}">{{member.name}}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</label>
+			</div>
+
+			<input type="submit" class="m-5 p-2 h2 text-white bg-primary text-center" value="確認画面へ">
+		</div>
+	</div>
+
+	<!--
+	{% if title==null %}
+		<div class="text-white bg-primary">
+			<h2>公開バージョン選択</h2>
+		</div>
+		<p>公開前にGitHubでソフトウェアがリリースされ、配布ファイルが登録されている必要があります。</p>
+		<div class="container my-5">
+			<label>
+				バージョン番号(1.0.0のように.(ピリオド)2箇所を含む数値で指定)：<br>
+				<input name="version" required>
+			</label>
+			<label>
+				リリース選択(ここに選択肢が表示されない場合、正しくリリースされていません。</br>
+				<select name="release" required>
+					{% for release in draft %}
+						<option value="{{ release.tag_name }}">{{ release.tag_name }}</option>
+					{% endfor %}
+					{% for release in releases %}
+						<option value="{{ release.tag_name }}">{{ release.tag_name }}</option>
+					{% endfor %}
+				</select>
+			</label>
+		</div>
+	{% endif %}
+	--!>
+	<input type="hidden" name="type" value="{{ type }}">
+</form>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

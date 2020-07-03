@@ -314,7 +314,8 @@ class App
         } catch (InvalidMethodException $e) {
             $response = $this->processInvalidMethod($e->getRequest(), $response);
         } finally {
-            $output = ob_get_clean();
+            //$output = ob_get_clean();
+			$output = ob_get_contents();
         }
 
         if (!empty($output) && $response->getBody()->isWritable()) {

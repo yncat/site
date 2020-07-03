@@ -1,0 +1,83 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	管理者ページログイン
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			管理者ページログイン
+		</h2>
+		<div class="container py-5 text-center">
+			<p>メンバー用のログインページです。登録済みメールアドレスとパスワードでログインしてください。万一PWを忘れた場合には、下記の新規登録車用のパスワードハッシュ生成機能を用いてハッシュを生成後、管理者に送ってください。手動でDB更新します。</p>
+		</div>
+	</div>
+
+
+	<div class="text-white bg-primary p-1">
+		<h3>既存メンバー用</h3>
+	</div>
+	<form method="post">
+		<div class="container py-5">
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>email</label>
+				</div>
+				<div class="col-9">
+					<input name="email" required value="{{ email }}">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>password</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="password" required value="">
+				</div>
+			</div>
+			<input type="submit" value="ログイン">
+		</div>
+	</form>
+
+	<div class="text-white bg-primary p-1">
+		<h3>新規メンバー用補助ツール</h3>
+	</div>
+	<form method="post" action="login/new">
+		<div class="container py-5">
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>password</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="password" required value="">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>password(confirm)</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="password_confirm" required value="">
+				</div>
+			</div>
+			<input type="submit" value="ハッシュ生成">
+		</div>
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

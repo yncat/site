@@ -1,0 +1,150 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	プロフィール編集
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			プロフィール編集
+		</h2>
+		<div class="container">
+			<p>
+				登録情報を変更します。
+				公開情報の変更には他のメンバーによる確認、メールアドレスの変更には新たなメールアドレスに届く確認メールに記載されたリンクのクリックが必用です。
+				また、パスワードの変更に成功すると、直ちに管理者ページからログアウトされます。
+			</p>
+		</div>
+	</div>
+
+
+	<div class="text-white bg-primary p-1">
+		<h3>公開情報変更</h3>
+	</div>
+	<form method="post">
+		<div class="container py-5">
+			<div class="row">
+				<div class="col-3">
+					<label>表示名</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="name" value="{{ name }}" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>自己紹介(改行は&lt;br&gt;を利用)</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="introduction" value="{{ introduction }}" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>Twitter<br>(@はつけずにユーザ名のみ)</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="twitter" value="{{ twitter }}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>GitHubUserName</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="github" value="{{ github }}" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>personalWEBsiteURL</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="url" value="{{ url }}">
+				</div>
+			</div>
+			<input type="hidden" name="type" value="publicInformation">
+			<input type="hidden" name="id" value="{{ id }}">
+			<input type="submit" value="確認">
+		</div>
+	</form>
+
+	<div class="text-white bg-primary p-1">
+		<h3>登録メールアドレス変更</h3>
+	</div>
+	<form method="post">
+		<div class="container py-5">
+			<div class="row">
+				<div class="col-3">
+					<label>新しいメールアドレス</label>
+				</div>
+				<div class="col-9">
+					<input type="email" name="new" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>確認のため再入力</label>
+				</div>
+				<div class="col-9">
+					<input type="email" name="new_confirm" required>
+				</div>
+			</div>
+			<input type="hidden" name="type" value="email">
+			<input type="submit" value="変更">
+		</div>
+	</form>
+
+
+	<div class="text-white bg-primary p-1">
+		<h3>パスワード変更</h3>
+	</div>
+	<form method="post">
+		<div class="container py-5">
+			<div class="row">
+				<div class="col-3">
+					<label>現在のパスワード</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="pw_now" required>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-3">
+					<label>新しいパスワード</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="pw_new" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>確認のため再入力</label>
+				</div>
+				<div class="col-9">
+					<input type="password" name="pw_new_confirm" required>
+				</div>
+			</div>
+			<input type="hidden" name="type" value="password">
+			<input type="submit" value="変更">
+		</div>
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

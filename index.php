@@ -16,18 +16,19 @@ require __DIR__ . '//vendor/larapack/dd/src/helper.php';
 $settings = require __DIR__ . '/src/settings.php';
 $app = new \Slim\App($settings);
 
-//SLIMのセッションを利用
-$app->add(new \Slim\Middleware\Session([
-    'name'        => 'slim_session',
-    'autorefresh' => true,
-    'lifetime'    => '1 hour'
-]));
-
 // Set up dependencies
 require __DIR__ . '/src/dependencies.php';
 
 // Register middleware
 require __DIR__ . '/src/middleware.php';
+
++//SLIMのセッションを利用
++$app->add(new \Slim\Middleware\Session([
+	'name'        => 'slim_session',
+	'autorefresh' => true,
+	'lifetime'    => '1 hour',
+	'ini_settings'=> array('session.use_trans_sid'=>1)
+]));
 
 // load utils
 $utils = glob(__DIR__ . '/app/Util/*.php');
@@ -40,6 +41,5 @@ $routers = glob(__DIR__ . '/app/Controller/*/*.*');
 foreach ($routers as $router) {
     require $router;
 }
-
 // Run app
 $app->run();

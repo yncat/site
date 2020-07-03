@@ -2,6 +2,7 @@
 
 namespace Util;
 
+use Model\Dao\Members;
 
 class MembersUtil{
 
@@ -36,5 +37,22 @@ class MembersUtil{
 		if(isset($info["URL_link"])){
 			$info["links"].=$info["URL_link"]."\n";
 		}
+	}
+
+	//セッションのログイン情報の有効性確認
+	static function check($db){
+	    $members=new Members($db);
+
+		if(empty($_SESSION["ID"]) || empty($_SESSION["updated"])){
+			return false;		//パラメータ不足
+		}
+		$info=$members->select(array("id"=>$_SESSION["ID"]));
+		if($info===false){
+			return false;
+		}
+		if($info["updated"]>$_SESSION["updated"]){
+			return false;
+		}
+		return true;
 	}
 }

@@ -1,0 +1,79 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}管理ソフトウェア選択{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			管理者ページ
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p></p>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title text-white bg-primary">
+				<h3><a href="request">更新リクエストの確認</a></h3>
+			</div>
+			<div class="card-text">
+				<div class="container pl-5">
+					<p>他のメンバーからの更新リクエストの承認、自分が出した更新リクエストの削除を行います。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title text-white bg-primary">
+				<h3><a href="softwares/edit/NEW">新規ソフトウェア公開</a></h3>
+			</div>
+			<div class="card-text">
+				<div class="container pl-5">
+					<p>GitHubでの準備が整ったソフトの公開作業を行います。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title text-white bg-primary">
+				<h3><a href="softwares/">公開済みソフトウェア管理</a></h3>
+			</div>
+			<div class="card-text">
+				<div class="container pl-5">
+					<p>公開中ソフトウェアの上方修正・アップデート配信を行います。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body">
+			<div class="card-title text-white bg-primary">
+				<h3><a href="profile">プロフィール修正</a></h3>
+			</div>
+			<div class="card-text">
+				<div class="container pl-5">
+					<p>メンバー情報を修正します。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

@@ -16,4 +16,10 @@ class ValidationUtil{
 		}
 		return true;
 	}
+
+	//$sがツイート可能な文字数か否かを確認
+	//$sにはURLは含まず、代わりに$urlに個数のみを指定しておく
+	static function checkTweetLength($s,$url=0){
+		return mb_strwidth+$url*11.5<=280;
+	}
 }

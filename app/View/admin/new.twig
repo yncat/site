@@ -1,0 +1,46 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	管理者ページ新規登録補助ツール
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			管理者ページ登録補助ツール
+		</h2>
+		<div class="container py-5 text-center">
+			<p>以下の項目を、管理者にお伝えください。</p>
+		</div>
+	</div>
+
+	<div class="text-white bg-primary p-1">
+		<h3>登録に必要な項目</h3>
+	</div>
+	<div class="my-5">
+		<ul>
+			<li>表示名</li>
+			<li>登録メールアドレス(非公開)</li>
+			<li>パスワードハッシュ： {{hash }}</li>
+			<li>メンバー紹介に掲載する文章</li>
+			<li>TwitterAccount(任意・公開)</li>
+			<li>websiteURL(任意・公開)</li>
+			<li>gitHubUserName(公開)</li>
+		</ul>
+	</div>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
