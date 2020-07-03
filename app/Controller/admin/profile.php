@@ -91,7 +91,7 @@ function profileParamCheck($input){
 	if(!ValidationUtil::checkParam($input,array("name"=>"/^.{1,16}$/u"))){
 		$message.="表示名は１～16字で入力してください。";
 	}
-	if(!ValidationUtil::checkParam($input,array("introduction"=>"/^.{10,300}$/u"))){
+	if(!ValidationUtil::checkParam($input,array("introduction"=>"/^.{10,700}$/us"))){
 		$message.="自己紹介は10～300字で入力してください。";
 	}
 	if(!empty($input["twitter"]) && !ValidationUtil::checkParam($input,array("twitter"=>"/^[a-zA-Z0-9_]{3,15}$/"))){
