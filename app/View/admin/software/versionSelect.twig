@@ -1,0 +1,92 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	公開バージョン選択
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ title }} 公開バージョンの選択
+		</h2>
+		<div class="container py-5 text-center">
+			<p>ドラフトとしてリリースされ、かつファイルが登録されているものを一覧しています。</p>
+			<p>公開するバージョンを選択し、リリースに必要な情報を入力してください。</p>
+		</div>
+	</div>
+
+
+	<form method="POST" class="mb-5">
+		<div class="text-white bg-primary p-1">
+			<h3>登録バージョン選択</h3>
+		</div>
+
+		{% for version in drafts %}
+			<div class="container py-5">
+				<div class="row mb-3">
+					<input type="radio" id="radio-{{ version.tag_name }}" name="version" value="{{ version.tag_name }}">
+					<div class="col-3">
+						<label for="radio-{{ version.tag_name }}">
+							バージョン：<a href="{{ version.html_url }}">{{ version.tag_name }}</a>
+						</label>
+					</div>
+					<div class="col-5">
+						<p>更新日時：{{ version.created_at }}</p>
+						<p>{{ version.body }}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+		<div class="text-white bg-primary p-1 my-5">
+			<h3>後悔コメント入力</h3>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-3">
+				<label>お知らせ文字列</label>
+			</div>
+			<div class="col-9">
+				<input type="text" name="infoString" required value="{{ infoString }}">
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-3">
+				<label>バージョン履歴掲載情報</label>
+			</div>
+			<div class="col-9">
+				<textarea name="detailString" required>{{ detailString }}</textarea>
+			</div>
+		</div>
+
+		<input type="hidden" name="title" value="{{ title }}">
+		<input type="hidden" name="type" value="{{ type }}">
+		<input type="hidden" name="keyword" value="{{ keyword }}">
+		<input type="hidden" name="description" value="{{ description }}">
+		<input type="hidden" name="features" value="{{ features }}">
+		<input type="hidden" name="snapshotTag" value="{{ snapshotTag }}">
+		<input type="hidden" name="snapshotFile" value="{{ snapshotFile }}">
+		<input type="hidden" name="gitHubURL" value="{{ gitHubURL }}">
+		<input type="hidden" name="staff" value="{{ staff }}">
+		<input type="hidden" name="step" value="version">
+
+		<input type="submit" value="次へ">
+		</div>
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

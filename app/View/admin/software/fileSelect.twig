@@ -1,0 +1,99 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	公開ファイル選択
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ title }} 公開ファイルの選択
+		</h2>
+		<div class="container py-5 text-center">
+			<p>バージョン {{ version }} としてリリースするファイルを指定してください。</p>
+		</div>
+	</div>
+
+
+	<form method="post" class="mb-5">
+		<div class="text-white bg-primary p-1">
+			<h3>公開ファイル選択</h3>
+		</div>
+
+		{% for file in files %}
+			<div class="container py-5">
+				<div class="row mb-3">
+					<input type="radio" id="radio-{{ file.name }}" name="file" value="{{ file.name }}">
+					<div class="col-3">
+						<label for="radio-{{ file.name }}">
+							<a href="{{ file.browser_download_url }}">{{ file.name }}</a>
+						</label>
+					</div>
+					<div class="col-5">
+						<p>更新日時：{{ file.updated_at }}</p>
+						<p>サイズ　：{{ file.size }} Bytes
+						<p>{{ file.label }}</p>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+		{% if needPatch %}
+
+			<div class="text-white bg-primary p-1">
+				<h3>公開パッチファイル選択</h3>
+			</div>
+
+			{% for file in files %}
+				<div class="container py-5">
+					<div class="row mb-3">
+						<input type="radio" id="radio-{{ file.name }}" name="patch" value="{{ file.name }}">
+						<div class="col-3">
+							<label for="radio-{{ file.name }}">
+								<a href="{{ file.browser_download_url }}">{{ file.name }}</a>
+							</label>
+						</div>
+						<div class="col-5">
+							<p>更新日時：{{ file.updated_at }}</p>
+							<p>サイズ　：{{ file.size }} Bytes
+							<p>{{ file.label }}</p>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		<input type="hidden" name="title" value="{{ title }}">
+		<input type="hidden" name="type" value="{{ type }}">
+		<input type="hidden" name="keyword" value="{{ keyword }}">
+		<input type="hidden" name="description" value="{{ description }}">
+		<input type="hidden" name="features" value="{{ features }}">
+		<input type="hidden" name="snapshotTag" value="{{ snapshotTag }}">
+		<input type="hidden" name="snapshotFile" value="{{ snapshotFile }}">
+		<input type="hidden" name="gitHubURL" value="{{ gitHubURL }}">
+		<input type="hidden" name="staff" value="{{ staff }}">
+		<input type="hidden" name="version" value="{{ version }}">
+		<input type="hidden" name="infoString" value="{{ infoString }}">
+		<input type="hidden" name="detailString" value="{{ detailString }}">
+		<input type="hidden" name="step" value="file">
+
+		<input type="submit" value="次へ">
+		</div>
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

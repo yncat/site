@@ -27,13 +27,11 @@ $app->get('/admin/softwares/{keyword}', function (Request $request, Response $re
 		SoftwareUtil::makeTextVersion($version);
 	}
 
-	setlocale(LC_CTYPE,"ja_JP.UTF-8");
-	$f=fopen("viewParts/SoftwareFeatures/".$data["about"]["keyword"].".tsv","r");
-	$data["features"]=array();
-	while($feature=fgetcsv($f,0,"\t")){
-		$data["features"][]=$feature;
+	//split features
+	$data["about"]["features"]=explode("\n",$data["about"]["features"]);
+	for($i=0;$i<count($data["about"]["features"]);$i++){
+		$data["about"]["features"][$i]=explode("\\t",$data["about"]["features"][$i]);
 	}
-	fclose($f);
 
 	$data["staff"]=$members->select(array("id"=>$data["about"]["staff"]));
 	MembersUtil::makeLinkCode($data["staff"]);

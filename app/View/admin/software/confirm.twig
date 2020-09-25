@@ -1,0 +1,115 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	{{ title }} 公開情報最終確認
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+<form method="post" autocomplete="off">
+
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ title }}　公開情報最終確認
+		</h2>
+		<input type="hidden" name="title" value="{{ title }}">
+		<div class="container py-5 text-center">
+			<p>
+				新規公開ソフトウェア情報の最終確認です。誤字・脱字を含めた記述内容と、全てのリンクの繊維を確認して問題なければＯＫボタンを押してください。更新リクエストが送信されます。
+			</p>
+		</div>
+	</div>
+
+	<dl>
+		<dt>キーワード</dt>
+		<dd>{{ keyword }}</dd>
+	</dl>
+	<input type="hidden" name="keyword" value="{{ keyword }}">
+
+	<dl>
+		<dt>概要</dt>
+		<dd>{{ description }}</dd>
+	</dl>
+	<input type="hidden" name="description" value="{{ description }}">
+
+	<dl>
+		<dt>features</dt>
+		<dd>{{ features }}</dd>
+	</dl>
+	<input type="hidden" name="features" value="{{ features }}">
+
+	<dl>
+		<dt>リポジトリ</dt>
+		<dd><a href="https://github.com/{{ gitHubURL }}">{{ gitHubURL }}</a></dd>
+	</dl>
+	<input type="hidden" name="gitHubURL" value="{{ gitHubURL }}">
+
+	<dl>
+		<dt>スナップショットタグ名</dt>
+		<dd>{{ snapshotTag }}</dd>
+	</dl>
+	<input type="hidden" name="snapshotTag" value="{{ snapshotTag }}">
+
+	<dl>
+		<dt>スナップショットファイル</dt>
+		<dd><a href="https://github.com/{{ gitHubURL }}releases/download/{{ snapshotTag }}/{{ snapshotFile }}">{{ snapshotFile }}</a></dd>
+	</dl>
+	<input type="hidden" name="snapshotFile" value="{{ snapshotFile }}">
+
+	<dl>
+		<dt>主担当メンバー</dt>
+		<dd>ID:{{ staff }}</dd>
+	</dl>
+	<input type="hidden" name="staff" value="{{ staff }}">
+
+	<dl>
+		<dt>リリースバージョン</dt>
+		<dd><a href="{{ releaseUrl }}">{{ version }}</a></dd>
+	</dl>
+	<input type="hidden" name="version" value="{{ version }}">
+	<input type="hidden" name="releaseId" value="{{ releaseId }}">
+	<input type="hidden" name="releaseUrl" value="{{ releaseUrl }}">
+
+	<dl>
+		<dt>お知らせ文字列</dt>
+		<dd>{{ infoString }}</dd>
+	</dl>
+	<input type="hidden" name="infoString" value="{{ infoString }}">
+
+	<dl>
+		<dt>バージョン履歴掲載情報</dt>
+		<dd><pre>{{ detailString }}</pre></dd>
+	</dl>
+	<input type="hidden" name="detailString" value="{{ detailString }}">
+
+	<dl>
+		<dt>リリースファイル</dt>
+		<dd><a href="{{ fileUrl }}">{{ file }}</a></dl>
+	<input type="hidden" name="file" value="{{ file }}">
+	<input type="hidden" name="fileUrl" value="{{ fileUrl }}">
+
+
+	<input type="hidden" name="step" value="confirm">
+	<input type="hidden" name="type" value="{{ type }}">
+
+	<input type="submit" value="ＯＫ">
+</form>
+
+<div class="my-5">
+</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

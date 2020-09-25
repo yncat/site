@@ -19,7 +19,8 @@ class GitHubUtil{
 		$header=array(
 			"User-Agent: ACTLaboratory-webadmin",
 			"Accept: application/vnd.github.v3+json",
-			"Authorization: token 84b3f4fcae5afb0dd67d1831e1dcb3cefd144d47",
+
+			"Authorization: token ".getenv("GITHUB_TOKEN"),
 			"Time-Zone: Asia / Tokyo",
 			"Content-Type: application/json; charset=utf-8",
 			"Content-Length:".strlen($data)

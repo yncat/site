@@ -22,7 +22,7 @@ class Softwares extends Dao{
 		$queryBuilder = new QueryBuilder($this->db);
 		$queryBuilder
 			->select(
-				"A.id, A.title, A.keyword, A.description, A.flag,".
+				"A.id, A.title, A.keyword, A.description, A.gitHubURL, A.flag,".
 				"B.major, B.minor, B.patch,B.released_at, B.updater_URL, B.hist_text")
 			->from("softwares","A")
 			->join("A","(".$subQueryBuilder->getSQL().")","B","A.id=B.software_id")

@@ -20,19 +20,19 @@
 
 
 	<div class="row">
-		<div class="col-xl-8">
+		<div class="col-xl-9 pr-1">
 			<div class="text-white bg-primary p-1">
-				<h3>概要</h3>
+				<h3 class="my-0">概要</h3>
 			</div>
 			<div class="container py-5">
 				<p>{{ about.description }}</p>
 			</div>
 			<div class="text-white bg-primary p-1">
-				<h3>特徴・機能</h3>
+				<h3 class="my-0">特徴・機能</h3>
 			</div>
 			<div class="container py-5">
 				<ul class="list-group">
-					{% for feature in features %}
+					{% for feature in about.features %}
 						<li class="my-3">
 							<h3>{{ feature.0 }}</h3>
 							<div class="container">
@@ -43,29 +43,26 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-xl-1">
-			<!-- 余白スペース -->
-		</div>
 		<div class="col-xl-3">
-			<div class="text-white bg-primary text-center">
-				<h2>ダウンロード</h2>
+			<div class="text-white bg-primary text-center mb-2">
+				<h3 class="my-0">ダウンロード</h3>
 			</div>
 			<div class="container">
-				<p><a class="btn btn-primary btn-lg" href="{{ versions.0.package_URL }}">最新版ダウンロード</a></p>
-				<p><a class="btn" href="{{ about.snapshotURL }}">開発中α版ダウンロード</a></p>
+				<p class="text-center"><a class="btn btn-primary btn-lg" href="{{ versions.0.package_URL }}">最新版ダウンロード</a></p>
+				<p class="text-center"><a class="btn" href="{{ about.snapshotURL }}">開発中α版ダウンロード</a></p>
 			</div>
 
 			<div class="text-white bg-primary text-center">
-				<h2>関連リンク</h2>
+				<h3 class="my-0">関連リンク</h2>
 			</div>
 			<div class="container">
-				<p><a class="btn" href="{{ about.gitHubURL }}">GitHubリポジトリ</a></p>
+				<p><a class="btn" href="https://github.com/{{ about.gitHubURL }}">GitHubリポジトリ</a></p>
 			</div>
 
 			<div class="text-white bg-primary text-center">
-				<h2>主担当メンバー</h2>
+				<h3 class="my-0">主担当メンバー</h2>
 			</div>
-			<div class="container">
+			<div class="container my-3">
 				<div class="text-center">
 					<p class="font-weight-bold">{{ staff.name }}</p>
 					<br>
@@ -76,7 +73,7 @@
 	</div>
 
 	<div class="text-white bg-primary p-1">
-		<h3>バージョン一覧</h3>
+		<h3 class="my-0">バージョン一覧</h3>
 	</div>
 	<div class="container pb-5 mb-5">
 		{% for version in versions %}
@@ -86,7 +83,10 @@
 						<div class="col-10">
 							<h3>{{ version.versionText }}</h3>
 							<div class="container">
-								{{ version.hist_text }}
+								<p><b>{{ version.released_at }}</b></p>
+								{%for hist in version.hist_text %}
+									<p>{{ hist }}
+								{% endfor %}
 							</div>
 						</div>
 						<div class="col-2">

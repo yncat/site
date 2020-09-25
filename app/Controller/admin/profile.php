@@ -136,5 +136,3 @@ function setProfile($input,$db){
 		return "更新が完了しました。";
 	}
 }
-
-

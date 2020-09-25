@@ -2,7 +2,7 @@
 {% extends "layout/layout.twig" %}
 
 {# タイトル #}
-{% block title %}管理ソフトウェア選択{% endblock %}
+{% block title %}管理者ページ{% endblock %}
 
 {# スタイルシートの追加 #}
 {% block header_scripts_add %}
@@ -21,8 +21,8 @@
 
 	<div class="card">
 		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="request">更新リクエストの確認</a></h3>
+			<div class="card-title bg-primary">
+				<h3><a href="request" class="text-white">更新リクエストの確認</a></h3>
 			</div>
 			<div class="card-text">
 				<div class="container pl-5">
@@ -35,7 +35,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="card-title text-white bg-primary">
-				<h3><a href="softwares/edit/NEW">新規ソフトウェア公開</a></h3>
+				<h3><a href="softwares/edit/NEW" class="text-white">新規ソフトウェア公開</a></h3>
 			</div>
 			<div class="card-text">
 				<div class="container pl-5">
@@ -48,7 +48,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="card-title text-white bg-primary">
-				<h3><a href="softwares/">公開済みソフトウェア管理</a></h3>
+				<h3><a href="softwares/" class="text-white">公開済みソフトウェア管理</a></h3>
 			</div>
 			<div class="card-text">
 				<div class="container pl-5">
@@ -61,7 +61,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="card-title text-white bg-primary">
-				<h3><a href="profile">プロフィール修正</a></h3>
+				<h3><a href="profile" class="text-white">プロフィール修正</a></h3>
 			</div>
 			<div class="card-text">
 				<div class="container pl-5">
