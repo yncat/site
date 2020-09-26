@@ -38,6 +38,7 @@
 	SetEnv DB_NAME 'actlab'
 	SetEnv DB_PASS '********'
 	SetEnv BBS_PASS '********'
+	SetEnv GITHUB_TOKEN '********'
 - その他の環境については上記を適宜読み替える。
 
 ## 利用ライブラリ
