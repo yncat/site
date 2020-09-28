@@ -25,10 +25,10 @@
 			<div class="card-body">
 				<div class="card-title text-white bg-primary">
 					<div class="row">
-						<div class="col-sx-12 col-sm-9 d-flex align-items-center px-5">
+						<div class="col-sx-12 col-sm-8 col-lg-9 d-flex align-items-center px-5">
 							<h3 class="h2 my-0">{{ soft.title }}</h3>
 						</div>
-						<div class="hidden-xs col-sm-3 align-items-center">
+						<div class="hidden-xs col-sm-4 col-lg-3 align-items-center">
 							<p class="my-1">バージョン:{{ soft.versionText }}</p>
 							<p class="my-1">最終更新:{{ soft.released_at }}</p>
 						</div>
@@ -36,13 +36,15 @@
 				</div>
 				<div class="card-text">
 					<div class="row py-3">
-						<div class="col-sm-9">
+						<div class="col-md-8 col-lg-9">
 							<div class="container pl-5">
 								<p>{{ soft.description }}</p>
 							</div>
 						</div>
-						<div class="hidden-xs col-sm-3">
-							<a class="btn btn-primary" href="{{ soft.keyword }}">詳細・ダウンロード</a>
+						<div class="text-center align-items-center col-md-4 col-lg-3">
+							<div class="text-center align-items-center">
+								<a class="btn btn-success" href="{{ soft.keyword }}">詳細・ダウンロード</a>
+							</div>
 						</div>
 					</div>
 				</div>
