@@ -1,6 +1,6 @@
 # Confidential settings file
-src/settings.php
 bbs/init.cgi
+.htaccess
 
 # BBS data file
 bbs/data/ses.cgi
