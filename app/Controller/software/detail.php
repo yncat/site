@@ -26,7 +26,7 @@ $app->get('/software/{keyword}', function (Request $request, Response $response,
 		$data["about"]["features"][$i]=explode("\\t",$data["about"]["features"][$i]);
 	}
 
-	$data["versions"]=$softwareVersions->select(array("software_id"=>$data["about"]["id"]),"released_at","DESC",0,true);
+	$data["versions"]=$softwareVersions->select(array("software_id"=>$data["about"]["id"]),"major*1000000+minor*1000+patch","DESC",0,true);
 	foreach($data["versions"] as &$version){
 		SoftwareUtil::makeTextVersion($version);
 		$version["hist_text"]=explode("\n",$version["hist_text"]);
