@@ -14,9 +14,9 @@ class Softwares extends Dao{
 		$subQueryBuilder
 			->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.updater_URL, t1.hist_text")
 			->from("software_versions","t1")
-			->orderBy("released_at","DESC")
+			->orderBy("t1.released_at","DESC")
 			->where("NOT EXISTS(
-				SELECT 1 FROM software_versions t2 WHERE t1.software_id=t2.software_id AND t1.released_at < t2.released_at
+				SELECT 1 FROM software_versions t2 WHERE t1.software_id=t2.software_id AND t1.major*1000000+t1.minor*1000+t1.patch < t2.major*1000000+t2.minor*1000+t2.patch
 			)");
 
 		$queryBuilder = new QueryBuilder($this->db);
