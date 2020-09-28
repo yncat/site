@@ -19,15 +19,26 @@
 	{% endif %}
 
 	<div class="jumbotron">
-		<h2 class="text-center">
-			{{ title }}　公開情報最終確認
-		</h2>
+		{% if type=="new" %}
+			<h2 class="text-center">
+				{{ title }}　公開情報最終確認
+			</h2>
+			<div class="container py-5 text-center">
+				<p>
+					新規公開ソフトウェア情報の最終確認です。誤字・脱字を含めた記述内容と、全てのリンクの繊維を確認して問題なければＯＫボタンを押してください。更新リクエストが送信されます。
+				</p>
+			</div>
+		{% else %}
+			<h2 class="text-center">
+				{{ title }}　公開情報変更最終確認
+			</h2>
+			<div class="container py-5 text-center">
+				<p>
+					ソフトウェア情報変更の最終確認です。誤字・脱字を含めた記述内容と、全てのリンクの繊維を確認して問題なければＯＫボタンを押してください。更新リクエストが送信されます。
+				</p>
+			</div>
+		{% endif %}
 		<input type="hidden" name="title" value="{{ title }}">
-		<div class="container py-5 text-center">
-			<p>
-				新規公開ソフトウェア情報の最終確認です。誤字・脱字を含めた記述内容と、全てのリンクの繊維を確認して問題なければＯＫボタンを押してください。更新リクエストが送信されます。
-			</p>
-		</div>
 	</div>
 
 	<dl>
@@ -72,32 +83,33 @@
 	</dl>
 	<input type="hidden" name="staff" value="{{ staff }}">
 
-	<dl>
-		<dt>リリースバージョン</dt>
-		<dd><a href="{{ releaseUrl }}">{{ version }}</a></dd>
-	</dl>
-	<input type="hidden" name="version" value="{{ version }}">
-	<input type="hidden" name="releaseId" value="{{ releaseId }}">
-	<input type="hidden" name="releaseUrl" value="{{ releaseUrl }}">
+	{% if type=="new" %}
+		<dl>
+			<dt>リリースバージョン</dt>
+			<dd><a href="{{ releaseUrl }}">{{ version }}</a></dd>
+		</dl>
+		<input type="hidden" name="version" value="{{ version }}">
+		<input type="hidden" name="releaseId" value="{{ releaseId }}">
+		<input type="hidden" name="releaseUrl" value="{{ releaseUrl }}">
 
-	<dl>
-		<dt>お知らせ文字列</dt>
-		<dd>{{ infoString }}</dd>
-	</dl>
-	<input type="hidden" name="infoString" value="{{ infoString }}">
+		<dl>
+			<dt>お知らせ文字列</dt>
+			<dd>{{ infoString }}</dd>
+		</dl>
+		<input type="hidden" name="infoString" value="{{ infoString }}">
 
-	<dl>
-		<dt>バージョン履歴掲載情報</dt>
-		<dd><pre>{{ detailString }}</pre></dd>
-	</dl>
-	<input type="hidden" name="detailString" value="{{ detailString }}">
+		<dl>
+			<dt>バージョン履歴掲載情報</dt>
+			<dd><pre>{{ detailString }}</pre></dd>
+		</dl>
+		<input type="hidden" name="detailString" value="{{ detailString }}">
 
-	<dl>
-		<dt>リリースファイル</dt>
-		<dd><a href="{{ fileUrl }}">{{ file }}</a></dl>
-	<input type="hidden" name="file" value="{{ file }}">
-	<input type="hidden" name="fileUrl" value="{{ fileUrl }}">
-
+		<dl>
+			<dt>リリースファイル</dt>
+			<dd><a href="{{ fileUrl }}">{{ file }}</a></dl>
+		<input type="hidden" name="file" value="{{ file }}">
+		<input type="hidden" name="fileUrl" value="{{ fileUrl }}">
+	{% endif %}
 
 	<input type="hidden" name="step" value="confirm">
 	<input type="hidden" name="type" value="{{ type }}">

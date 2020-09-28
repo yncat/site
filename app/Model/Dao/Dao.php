@@ -151,9 +151,8 @@ abstract class Dao {
 	 *
 	 * 情報の更新を行う関数
 	 *
-	 * idというカラムは予約語で、各テーブルの主キーとなります。
-	 *
 	 * @param array $param 更新したい情報をid込みでセットします
+	 * @param array $primaryKeys 更新する行を特定するために使うカラムの名前を指定します。ここで指定したカラムは$paramに含まれている必要があります。
 	 */
 
 	public function update(array $param,array $primaryKeys=array("id"))
@@ -174,8 +173,8 @@ abstract class Dao {
 				$queryBuilder->set($key, ":$key");
 				$queryBuilder->setParameter(":$key", $val);
 			} else {
-				//idというカラム名の場合は、更新するIDを指定します
-				$queryBuilder->where($key . "=$val");
+				$queryBuilder->where($key."=:$key");
+				$queryBuilder->setParameter(":$key", $val);
 			}
 		}
 

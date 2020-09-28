@@ -31,6 +31,9 @@ function makeRequestTitle($request){
 	if($request["type"]==="update"){
 		return $request["requester"]."からバージョンアップ配信要求(".$request["identifier"].")";
 	}
+	if($request["type"]==="edit"){
+		return $request["requester"]."から".$request["identifier"]."の公開情報変更要求";
+	}
 }
 
 $app->post('/admin/request', function (Request $request, Response $response) {
@@ -48,6 +51,11 @@ $app->post('/admin/request', function (Request $request, Response $response) {
 				$check.=paramCheck3($input);
 				if ($check==""){
 					$message=setNew($input,$this->db);
+				}
+			} else if ($input["type"]=="edit"){
+				$check=paramCheck($input);
+				if ($check==""){
+					$message=setEdit($input,$this->db);
 				}
 			} else if ($input["type"]=="update"){
 				$check=paramCheck2($input);
@@ -83,6 +91,12 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 				$check.=paramCheck3($input);
 				if ($check==""){
 					$message=setNew($input,$this->db);
+				}
+			}
+			if ($input["type"]=="edit"){
+				$check=paramCheck($input);
+				if ($check==""){
+					$message=setEdit($input,$this->db);
 				}
 			}
 			if($input["type"]==="update"){
@@ -125,7 +139,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		if($info["type"]==="publicInformation"){
 			return showProfileConfirm($data,$this->db,$this->view,$response,"");
 		}
-		if($info["type"]==="new"){
+		if($info["type"]==="new" || $info["type"]==="edit"){
 			return showNewConfirm($data,$this->db,$this->view,$response,"");
 		}
 		if($info["type"]==="update"){

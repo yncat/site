@@ -91,7 +91,11 @@ $app->post('/admin/softwares/edit/{keyword}', function (Request $request, Respon
 		return showEditor($data,$this->db,$this->view,$response);
 	} else {
 		if($input["type"]=="edit"){
-			return showConfirm($input,$this->db,$this->view,$response);
+			if ($input["step"]!="confirm"){
+				return showConfirm($input,$this->db,$this->view,$response);
+			} else {
+				return $response->withRedirect($request->getUri()->getBasePath().'/admin/request',307);
+			}
 		}
 
 		$data=$input;
@@ -157,9 +161,6 @@ function showNewConfirm(array $data,$db,$view,$response){
 }
 
 function showConfirm(array $data,$db,$view,$response){
-	print("準備中。。。");
-	exit();
-
     // Render view
     return $view->render($response, 'admin/software/confirm.twig', $data);
 }
@@ -351,6 +352,57 @@ function setNew($input,$db){
 		$softwareVersions->insert($versionData);
 
 		$informations=new Informations($db);
+
+		$updaterequests->delete(array("id"=>$request["id"]));
+		return "更新が完了しました。";
+	}
+}
+
+
+
+
+
+
+
+function setEdit($input,$db){
+	$updaterequests=new Updaterequests($db);
+	$request = $updaterequests->select(array(
+		"type"=>"edit",
+		"identifier"=>"".$input["keyword"]
+	));
+
+	if($request===false or $request["requester"]==$_SESSION["ID"]){
+		$updaterequests->delete(array(
+			"type"=>"edit",
+			"identifier"=>$input["keyword"],
+			"requester"=>$_SESSION["ID"],
+		));
+		$no=$updaterequests->insert(array(
+			"requester"=>$_SESSION["ID"],
+			"type"=>"edit",
+			"identifier"=>$input["keyword"],
+			"value"=>serialize($input)
+		));
+		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
+	} else {	#他人が確認したのでDB反映
+		$updaterequests=new Updaterequests($db);
+		$request = $updaterequests->select(array(
+			"type"=>"edit",
+			"identifier"=>$input["keyword"]
+		));
+		$info=unserialize($request["value"]);
+		$softData=array(
+			"title"=>$info["title"],
+			"keyword"=>$info["keyword"],
+			"description"=>$info["description"],
+			"features"=>$info["features"],
+			"gitHubURL"=>$info["gitHubURL"],
+			"snapshotURL"=>"https://github.com/".$info["gitHubURL"]."releases/download/".$info["snapshotTag"]."/".$info["snapshotFile"],
+			"staff"=>$info["staff"],
+			"flag"=>0
+		);
+		$softwares=new Softwares($db);
+		$id=$softwares->update($softData,array("keyword"));
 
 		$updaterequests->delete(array("id"=>$request["id"]));
 		return "更新が完了しました。";
