@@ -312,7 +312,7 @@ function setNew($input,$db){
 			"keyword"=>$info["keyword"],
 			"description"=>$info["description"],
 			"features"=>$info["features"],
-			"gitHubURL"=>"https://github.com/".$info["gitHubURL"],
+			"gitHubURL"=>$info["gitHubURL"],
 			"snapshotURL"=>"https://github.com/".$info["gitHubURL"]."releases/download/".$info["snapshotTag"]."/".$info["snapshotFile"],
 			"staff"=>$info["staff"],
 			"flag"=>0
@@ -329,7 +329,7 @@ function setNew($input,$db){
 			"patch"=>$version[3],
 
 			"hist_text"=>$info["detailString"],
-			"package_URL"=>$info["fileUrl"],
+			"package_URL"=>"https://github.com/".$info["gitHubURL"]."releases/download/".$info["version"]."/".$info["file"],
 			"updater_URL"=>null,
 			"update_min_Major"=>null,
 			"update_min_minor"=>null,
