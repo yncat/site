@@ -36,7 +36,7 @@ $app->get('/admin/softwares/edit/{keyword}',function (Request $request, Response
 			$data["title"]=$about["title"];
 			$data["description"]=$about["description"];
 			$data["features"]=$about["features"];
-			$data["gitHubURL"]=substr($about["gitHubURL"],19);
+			$data["gitHubURL"]=$about["gitHubURL"];
 			$data["staff"]=$about["staff"];
 			$data["snapshotTag"]=preg_replace("[^.+releases/download/([^/]+)/.+$]","$1",$about["snapshotURL"]);
 			$data["snapshotFile"]=preg_replace("[^.+releases/download/[^/]+/(.+)$]","$1",$about["snapshotURL"]);
