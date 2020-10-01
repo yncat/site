@@ -1,0 +1,28 @@
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %} 公開情報・規約等 {% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			公開情報・規約等
+		</h2>
+	</div>
+	<div class="container p-5">
+		<ul>
+			<li><a href="policy">プライバシーポリシー</a>
+		</ul>
+	</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
