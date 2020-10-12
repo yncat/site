@@ -16,10 +16,12 @@ CREATE TABLE members(
 	id int UNSIGNED auto_increment,
 	name char(32) NOT NULL,
 	email char(255),
+	password_hash char(255),
 	introduction text,
 	twitter char(32),
 	URL char(255),
 	github char(32),
+	updated int(10) unsigned NOT NULL,
 	flag int DEFAULT 0 NOT NULL,
 	PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
