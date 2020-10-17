@@ -59,6 +59,7 @@ CREATE TABLE software_versions(
 	hist_text text NOT NULL,
 	package_URL char(255),
 	updater_URL char(255),
+	updater_hash char(32),
 	update_min_Major TINYINT,
 	update_min_minor TINYINT,
 

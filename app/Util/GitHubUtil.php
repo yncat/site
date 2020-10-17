@@ -39,4 +39,19 @@ class GitHubUtil{
 		return json_decode($result,true);
 	}
 
+	static function get_assets($assets_url){
+		$header=array(
+			"Accept: application/octet-stream",
+			"Authorization: token ".getenv("GITHUB_TOKEN"),
+		);
+		$handle = curl_init($assets_url);
+		curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($handle, CURLOPT_USERAGENT, "ACTLaboratory-webadmin");
+		curl_setopt($handle, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($handle, CURLOPT_FOLLOWLOCATION, true);
+		$content = curl_exec($handle);
+		curl_close($handle);
+		return $content;
+	}
+
 }

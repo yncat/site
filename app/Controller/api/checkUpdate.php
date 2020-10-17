@@ -43,6 +43,7 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		$json["updater_url"] = $software["updater_URL"];
 		$json["update_version"] = $software["versionText"];
 		$json["update_description"] = $software["hist_text"];
+		$json["updater_hash"] = $software["updater_hash"];
 		return $response->withJson($json,200,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}
 
