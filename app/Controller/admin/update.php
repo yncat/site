@@ -183,12 +183,12 @@ function setUpdate($input,$db){
 		$softwareVersions->insert($versionData);
 
 		$informations=new Informations($db);
-		var_dump($informations->insert(array(
+		$informations->insert(array(
 			"title"=>$info["infoString"],
 			"date"=>date("Y-m-d"),
 			"url"=>"/software/".$info["keyword"],
 			0
-		)));
+		));
 		$ret = GitHubUtil::connect("/repos/".$soft["gitHubURL"]."releases/assets/".$info_assets["id"], "DELETE");
 
 		//検証とドラフトのリリース

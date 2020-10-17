@@ -341,12 +341,12 @@ function setNew($input,$db){
 		$gitData=GitHubUtil::connect("/repos/".$info["gitHubURL"]."releases/".$info["releaseId"],"PATCH",array("draft"=>false));
 
 		$informations=new Informations($db);
-		var_dump($informations->insert(array(
+		$informations->insert(array(
 			"title"=>$info["infoString"],
 			"date"=>date("Y-m-d"),
 			"url"=>"/software/".$info["keyword"],
 			0
-		)));
+		));
 
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);

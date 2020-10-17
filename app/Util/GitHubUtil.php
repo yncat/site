@@ -35,7 +35,6 @@ class GitHubUtil{
 				)
 		);
 		$result=file_get_contents($baseUrl.$url, false, stream_context_create($context));
-		//var_dump($http_response_header);
 		return json_decode($result,true);
 	}
 
