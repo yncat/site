@@ -12,7 +12,7 @@ class Softwares extends Dao{
 
 		$subQueryBuilder = new QueryBuilder($this->db);
 		$subQueryBuilder
-			->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.updater_URL, t1.hist_text")
+			->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.updater_URL, t1.hist_text, t1.updater_hash")
 			->from("software_versions","t1")
 			->orderBy("t1.released_at","DESC")
 			->where("NOT EXISTS(
@@ -23,7 +23,7 @@ class Softwares extends Dao{
 		$queryBuilder
 			->select(
 				"A.id, A.title, A.keyword, A.description, A.gitHubURL, A.flag,".
-				"B.major, B.minor, B.patch,B.released_at, B.updater_URL, B.hist_text")
+				"B.major, B.minor, B.patch,B.released_at, B.updater_URL, B.hist_text, B.updater_hash")
 			->from("softwares","A")
 			->join("A","(".$subQueryBuilder->getSQL().")","B","A.id=B.software_id")
 			->orderBy("B.released_at","DESC");
