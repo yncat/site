@@ -32,20 +32,20 @@ function connect_github($url,$method="GET",$param=array()){
 }
 if(!isset($_GET["repo_name"], $_GET["tag_name"], $_GET["password"])){
 	http_response_code(400);
-	exit("bad request");
+	exit("Bad request\n");
 }
 if($_GET["password"] != getenv("SCRIPT_PASSWORD")){
 	http_response_code(400);
-	exit("invalid password");
+	exit("Invalid password\n");
 }
 $repo_url = $_GET["repo_name"];
 $tag_name = $_GET["tag_name"];
 $json = connect_github("/repos/".$repo_url."/releases/tags/".$tag_name);
 if(isset($json["message"])){
 	http_response_code(400);
-	exit("skiped to delete release because the release not found.");
+	exit("Skiped to delete release because the release not found.\n");
 }
 $release_id = $json["id"];
 $json = connect_github("/repos/".$repo_url."/releases/".$release_id, "DELETE");
-echo("success");
+echo("Success!\n");
 ?>
