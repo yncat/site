@@ -43,8 +43,9 @@ $tag_name = $_GET["tag_name"];
 $json = connect_github("/repos/".$repo_url."/releases/tags/".$tag_name);
 if(isset($json["message"])){
 	http_response_code(400);
-	exit("not found");
+	exit("skiped to delete release because the release not found.");
 }
 $release_id = $json["id"];
 $json = connect_github("/repos/".$repo_url."/releases/".$release_id, "delete");
+echo("success");
 ?>
