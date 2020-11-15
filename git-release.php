@@ -46,6 +46,6 @@ if(isset($json["message"])){
 	exit("skiped to delete release because the release not found.");
 }
 $release_id = $json["id"];
-$json = connect_github("/repos/".$repo_url."/releases/".$release_id, "delete");
+$json = connect_github("/repos/".$repo_url."/releases/".$release_id, "DELETE");
 echo("success");
 ?>
