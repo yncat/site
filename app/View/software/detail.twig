@@ -84,9 +84,8 @@
 							<h4>{{ version.versionText }}</h4>
 							<div class="container">
 								<p><b>{{ version.released_at }}</b></p>
-								<p>
 								{%for hist in version.hist_text %}
-									<li>{{ hist | raw}}</li>
+									{{ hist | raw}}
 								{% endfor %}
 							</div>
 						</div>
