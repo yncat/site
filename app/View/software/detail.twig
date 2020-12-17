@@ -36,7 +36,7 @@
 						<li class="my-3">
 							<h4>{{ feature.0 }}</h4>
 							<div class="container">
-								{{ feature.1 }}
+								{{ feature.1 | raw }}
 							</div>
 						</li>
 					{% endfor %}
@@ -84,9 +84,11 @@
 							<h4>{{ version.versionText }}</h4>
 							<div class="container">
 								<p><b>{{ version.released_at }}</b></p>
-								{%for hist in version.hist_text %}
-									<p>{{ hist }}
-								{% endfor %}
+								<ul>
+									{%for hist in version.hist_text %}
+										<li>{{ hist | raw}}</li>
+									{% endfor %}
+								</ul>
 							</div>
 						</div>
 						<div class="col-md-3 col-lg-2 text-center">
