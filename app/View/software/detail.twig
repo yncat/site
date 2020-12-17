@@ -85,7 +85,7 @@
 							<div class="container">
 								<p><b>{{ version.released_at }}</b></p>
 								{%for hist in version.hist_text %}
-									{{ hist | raw}}
+									{{ hist | nl2br }}
 								{% endfor %}
 							</div>
 						</div>
