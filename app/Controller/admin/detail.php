@@ -11,7 +11,7 @@ use Util\GitHubUtil;
 
 
 $app->get('/admin/softwares/{keyword}', function (Request $request, Response $response, $args) {
-	$keyword=$args{"keyword"};
+	$keyword=$args["keyword"];
 
     $softwares = new Softwares($this->db);
     $softwareVersions = new SoftwareVersions($this->db);

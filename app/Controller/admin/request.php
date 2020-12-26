@@ -117,12 +117,12 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 });
 
 $app->post('/admin/request/{id}/', function (Request $request, Response $response,$args) {
-	$id=$args{"id"};
+	$id=$args["id"];
 	return $response->withRedirect($request->getUri()->getBasePath().'/admin/request/'.$id.'/request',307);
 });
 
 $app->get('/admin/request/{id}/', function (Request $request, Response $response,$args) {
-	$id=$args{"id"};
+	$id=$args["id"];
 	$updaterequests=new Updaterequests($this->db);
 	$info=$updaterequests->select(array("id"=>$id));
 	$data=unserialize($info["value"]);
@@ -155,7 +155,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 });
 
 $app->get('/admin/request/{id}/delete', function (Request $request, Response $response,$args) {
-	$id=$args{"id"};
+	$id=$args["id"];
 	$updaterequests=new Updaterequests($this->db);
 	$info=$updaterequests->select(array("id"=>$id));
 
