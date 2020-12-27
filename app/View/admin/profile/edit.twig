@@ -88,18 +88,18 @@
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-3">
-					<label>新しいメールアドレス</label>
+					<label for="new_input">新しいメールアドレス</label>
 				</div>
 				<div class="col-9">
-					<input type="email" name="new" required>
+					<input id="new_input" type="email" name="new" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>確認のため再入力</label>
+					<label for="new_confirm_input">確認のため再入力</label>
 				</div>
 				<div class="col-9">
-					<input type="email" name="new_confirm" required>
+					<input id="new_confirm_input" type="email" name="new_confirm" required>
 				</div>
 			</div>
 			<input type="hidden" name="type" value="email">
@@ -115,27 +115,27 @@
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-3">
-					<label>現在のパスワード</label>
+					<label for="pw_now_input">現在のパスワード</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_now" required>
+					<input id="pw_now_input" type="password" name="pw_now" required>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-3">
-					<label>新しいパスワード</label>
+					<label for="pw_new_input">新しいパスワード</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_new" required>
+					<input id="pw_new_input" type="password" name="pw_new" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>確認のため再入力</label>
+					<label for="pw_new_confirm_input">確認のため再入力</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_new_confirm" required>
+					<input id="pw_new_confirm_input" type="password" name="pw_new_confirm" required>
 				</div>
 			</div>
 			<input type="hidden" name="type" value="password">
