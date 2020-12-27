@@ -37,42 +37,42 @@
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-3">
-					<label>表示名</label>
+					<label for="name_input">表示名</label>
 				</div>
 				<div class="col-9">
-					<input type="text" name="name" value="{{ name }}" required>
+					<input id="name_input" type="text" name="name" value="{{ name }}" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>自己紹介(改行は&lt;br&gt;を利用)</label>
+					<label for="introduction_area">自己紹介(改行は&lt;br&gt;を利用)</label>
 				</div>
 				<div class="col-9">
-					<textarea name="introduction" style="width: 100%;" required>{{ introduction }}</textarea>
+					<textarea id="introduction_area" name="introduction" style="width: 100%;" required>{{ introduction }}</textarea>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>Twitter<br>(@はつけずにユーザ名のみ)</label>
+					<label for="twitter_input">Twitter<br>(@はつけずにユーザ名のみ)</label>
 				</div>
 				<div class="col-9">
-					<input type="text" name="twitter" value="{{ twitter }}">
+					<input id="twitter_input" type="text" name="twitter" value="{{ twitter }}">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>GitHubUserName</label>
+					<label for="github_input">GitHubのユーザー名</label>
 				</div>
 				<div class="col-9">
-					<input type="text" name="github" value="{{ github }}" required>
+					<input id="github_input" type="text" name="github" value="{{ github }}" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>personalWEBsiteURL</label>
+					<label for="url_input">個人ホームページURL</label>
 				</div>
 				<div class="col-9">
-					<input type="text" name="url" value="{{ url }}">
+					<input id="url_input" type="text" name="url" value="{{ url }}">
 				</div>
 			</div>
 			<input type="hidden" name="type" value="publicInformation">
@@ -88,18 +88,18 @@
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-3">
-					<label>新しいメールアドレス</label>
+					<label for="new_input">新しいメールアドレス</label>
 				</div>
 				<div class="col-9">
-					<input type="email" name="new" required>
+					<input id="new_input" type="email" name="new" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>確認のため再入力</label>
+					<label for="new_confirm_input">確認のため再入力</label>
 				</div>
 				<div class="col-9">
-					<input type="email" name="new_confirm" required>
+					<input id="new_confirm_input" type="email" name="new_confirm" required>
 				</div>
 			</div>
 			<input type="hidden" name="type" value="email">
@@ -115,27 +115,27 @@
 		<div class="container py-5">
 			<div class="row">
 				<div class="col-3">
-					<label>現在のパスワード</label>
+					<label for="pw_now_input">現在のパスワード</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_now" required>
+					<input id="pw_now_input" type="password" name="pw_now" required>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-3">
-					<label>新しいパスワード</label>
+					<label for="pw_new_input">新しいパスワード</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_new" required>
+					<input id="pw_new_input" type="password" name="pw_new" required>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					<label>確認のため再入力</label>
+					<label for="pw_new_confirm_input">確認のため再入力</label>
 				</div>
 				<div class="col-9">
-					<input type="password" name="pw_new_confirm" required>
+					<input id="pw_new_confirm_input" type="password" name="pw_new_confirm" required>
 				</div>
 			</div>
 			<input type="hidden" name="type" value="password">
