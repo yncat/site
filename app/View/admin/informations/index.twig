@@ -1,0 +1,63 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	お知らせ配信
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			お知らせ配信
+		</h2>
+		<div class="container">
+			<p>
+				トップページに表示されるお知らせを配信します。
+				配信には他のメンバーによる確認が必要です。
+			</p>
+		</div>
+	</div>
+
+
+	<div class="text-white bg-primary p-1">
+		<h3>配信内容</h3>
+	</div>
+	<form method="post">
+		<div class="container py-5">
+			<div class="row">
+				<div class="col-3">
+					<label>内容</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="infoString" value="{{ infoString }}" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<label>URL</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="infoURL" value="{{ infoURL }}">
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="type" value="informations">
+		<input type="hidden" name="step" value="{{ step }}">
+		<input type="submit" value="次へ">
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

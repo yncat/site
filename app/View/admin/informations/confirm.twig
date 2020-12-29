@@ -1,0 +1,70 @@
+	{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# タイトル #}
+{% block title %}
+	{{ title }} お知らせ情報最終確認
+{% endblock %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+<form method="post" autocomplete="off">
+
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ title }}　お知らせ情報最終確認
+		</h2>
+		<div class="container py-5 text-center">
+			<p>
+				{% if step=="confirm" %}
+					お知らせ配信の最終確認です。誤字・脱字を含めた記述内容と、リンクの繊維を確認して問題なければＯＫボタンを押してください。配信リクエストが送信されます。
+				{% else %}
+					お知らせ配信の最終確認です。誤字・脱字を含めた記述内容と、リンクの繊維を確認して問題なければ承認ボタンを押してください。お知らせが配信されます。
+				{% endif %}
+			</p>
+		</div>
+
+	</div>
+
+	<dl>
+		<dt>内容</dt>
+		<dd>{{ infoString }}</dd>
+	</dl>
+	<input type="hidden" name="infoString" value="{{ infoString }}">
+
+	<dl>
+		<dt>URL</dt>
+		<dd><a href={{ infoURL }}>{{ infoURL }}</a></dd>
+	</dl>
+	<input type="hidden" name="infoURL" value="{{ infoURL }}">
+
+	<input type="hidden" name="type" value="{{ type }}">
+	<input type="hidden" name="step" value="{{ step }}">
+	{% if step=="approve" %}
+		<input type="hidden" name="requestId" value="{{ requestId }}">
+	{% endif %}
+
+	<div class="my-5"></div>
+	{% if step=="confirm" %}
+		<input type="submit" value="ＯＫ">
+	{% else %}
+		<input type="submit" value="承認">
+	{% endif %}
+</form>
+
+<div class="my-3">
+</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

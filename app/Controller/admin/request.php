@@ -34,8 +34,12 @@ function makeRequestTitle($request){
 	if($request["type"]==="edit"){
 		return $request["requester"]."から".$request["identifier"]."の公開情報変更要求";
 	}
+	if($request["type"]==="informations"){
+		return $request["requester"]."からのお知らせ配信要求";
+	}
 }
 
+// 更新リクエスト送信処理
 $app->post('/admin/request', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 	$message="";
@@ -75,6 +79,7 @@ $app->post('/admin/request', function (Request $request, Response $response) {
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
+// 更新リクエスト承認処理
 $app->post('/admin/request/{id}/request', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 	$message="";
@@ -106,6 +111,12 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 					$message=setUpdate($input,$this->db);
 				}
 			}
+			if($input["type"]==="informations"){
+				$check=informationsCheck($input);
+				if($check===""){
+					$message=setInformationsApprove($input,$this->db,$this->view,$response);
+				}
+			}
 		}
 	}
 	if($message===""){
@@ -116,11 +127,13 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
+// 更新リクエスト確認URLへ
 $app->post('/admin/request/{id}/', function (Request $request, Response $response,$args) {
 	$id=$args["id"];
 	return $response->withRedirect($request->getUri()->getBasePath().'/admin/request/'.$id.'/request',307);
 });
 
+// 更新リクエスト確認および削除確認画面表示
 $app->get('/admin/request/{id}/', function (Request $request, Response $response,$args) {
 	$id=$args["id"];
 	$updaterequests=new Updaterequests($this->db);
@@ -132,6 +145,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		if($info["requester"]==$_SESSION["ID"]){
 			$members=new Members($this->db);
 
+			// 自分のリクエストならば削除へ
 			$info["requester"]=$members->select(array("id"=>$info["requester"]))["name"];
 			return deleteRequestConfirm($info,$this->db,$this->view,$response,"");
 		}
@@ -145,6 +159,10 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		if($info["type"]==="update"){
 			return showUpdateConfirm($data,$this->db,$this->view,$response,"");
 		}
+		if($info["type"]==="informations"){
+			$data["requestId"]=$id;
+			return showInformationsConfirm($data,"approve",$this->view,$response,"");
+		}
 	}
 	if($message===""){
 		$message="不正なリクエストのため、処理を中止しました。";
@@ -154,6 +172,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
+// 更新リクエスト削除処理
 $app->get('/admin/request/{id}/delete', function (Request $request, Response $response,$args) {
 	$id=$args["id"];
 	$updaterequests=new Updaterequests($this->db);
@@ -171,6 +190,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
+// 更新リクエスト削除確認表示
 function deleteRequestConfirm(array $data,$db,$view,$response,$message=""){
 	$data["title"]=makeRequestTitle($data);
 
