@@ -97,10 +97,10 @@ function profileParamCheck($input){
 	if(!empty($input["twitter"]) && !ValidationUtil::checkParam($input,array("twitter"=>"/^[a-zA-Z0-9_]{3,15}$/"))){
 		$message.="TwitterIDは先頭の@をつけずに、英数字及び_からなる3～15字の文字列で指定してください。";
 	}
-	if(!ValidationUtil::checkParam($input,array("github"=>"/^[a-zA-Z0-9]{3,30}$/"))){
+	if(!ValidationUtil::checkParam($input,array("github"=>"/(?=^[a-zA-Z0-9][a-zA-Z0-9\\-]{1,28}[a-zA-Z0-9]$)(?!^.*-{2,}.*$)/"))){
 		$message.="githubユーザ名が不正です。";
 	}
-	if(!empty($input["url"]) && !ValidationUtil::checkParam($input,array("url"=>"@^https?://([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+/.*$@"))){
+	if(!empty($input["url"]) && !ValidationUtil::checkParam($input,array("url"=>ValidationUtil::URL_PATTERN))){
 		$message.="URLの形式が不正です。";
 	}
 	return $message;

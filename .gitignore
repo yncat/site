@@ -13,3 +13,4 @@ bbs/data/pastno.dat
 
 # logfile
 logs/
+./workspace.code-workspace

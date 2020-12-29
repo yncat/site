@@ -13,7 +13,7 @@ use Util\GitHubUtil;
 
 
 $app->get('/admin/softwares/update/{keyword}',function (Request $request, Response $response, $args) {
-	$keyword=$args{"keyword"};
+	$keyword=$args["keyword"];
 	return versionSelect($keyword,"",array(),$this->db,$this->view,$response);
 });
 
