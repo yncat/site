@@ -2,7 +2,7 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\informations;
+use Model\Dao\Informations;
 use Model\Dao\Updaterequests;
 use Util\ValidationUtil;
 
