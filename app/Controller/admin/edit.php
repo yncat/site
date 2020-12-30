@@ -12,6 +12,7 @@ use Util\MembersUtil;
 use Util\GitHubUtil;
 
 
+// ソフトウェア情報作成・修正へ
 $app->get('/admin/softwares/edit/{keyword}',function (Request $request, Response $response, $args) {
 	$keyword=$args["keyword"];
 
@@ -22,6 +23,7 @@ $app->get('/admin/softwares/edit/{keyword}',function (Request $request, Response
 	if ($keyword=="NEW"){
 		$data["keyword"]="";
 		$data["type"]="new";
+		$data["flag"]="0";
 	} else {
 		$data["keyword"]=$keyword;
 		$data["type"]="edit";
@@ -40,6 +42,12 @@ $app->get('/admin/softwares/edit/{keyword}',function (Request $request, Response
 			$data["staff"]=$about["staff"];
 			$data["snapshotTag"]=preg_replace("[^.+releases/download/([^/]+)/.+$]","$1",$about["snapshotURL"]);
 			$data["snapshotFile"]=preg_replace("[^.+releases/download/[^/]+/(.+)$]","$1",$about["snapshotURL"]);
+			if($about["flag"]&FLG_HIDDEN==FLG_HIDDEN){
+				$data["hidden"]="yes";
+			}else{
+				$data["hidden"]="no";
+			}
+			$data["flag"]=$about["flag"];
 		}
 
 	}
@@ -55,6 +63,7 @@ function showEditor(array $data,$db,$view,$response){
     return $view->render($response, 'admin/software/edit.twig', $data);
 }
 
+// ソフトウェア情報を検証して確認へ
 $app->post('/admin/softwares/edit/{keyword}', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 
@@ -290,6 +299,11 @@ function setNew($input,$db){
 			"identifier"=>$input["keyword"],
 			"requester"=>$_SESSION["ID"],
 		));
+		if($input["hidden"]!="no"){
+			$input["flag"]=FLG_HIDDEN;
+		}else{
+			$input["flag"]=0;
+		}
 		$no=$updaterequests->insert(array(
 			"requester"=>$_SESSION["ID"],
 			"type"=>"new",
@@ -316,7 +330,7 @@ function setNew($input,$db){
 			"gitHubURL"=>$info["gitHubURL"],
 			"snapshotURL"=>"https://github.com/".$info["gitHubURL"]."releases/download/".$info["snapshotTag"]."/".$info["snapshotFile"],
 			"staff"=>$info["staff"],
-			"flag"=>0
+			"flag"=>$info["flag"]
 		);
 		$softwares=new Softwares($db);
 		$id=$softwares->insert($softData);
@@ -377,6 +391,11 @@ function setEdit($input,$db){
 			"identifier"=>$input["keyword"],
 			"requester"=>$_SESSION["ID"],
 		));
+		if($input["hidden"]!="no"){
+			$input["flag"]=$input["flag"]|FLG_HIDDEN;
+		}else{
+			$input["flag"] = $input["flag"]&(~FLG_HIDDEN);
+		}
 		$no=$updaterequests->insert(array(
 			"requester"=>$_SESSION["ID"],
 			"type"=>"edit",
@@ -399,7 +418,7 @@ function setEdit($input,$db){
 			"gitHubURL"=>$info["gitHubURL"],
 			"snapshotURL"=>"https://github.com/".$info["gitHubURL"]."releases/download/".$info["snapshotTag"]."/".$info["snapshotFile"],
 			"staff"=>$info["staff"],
-			"flag"=>0
+			"flag"=>$info["flag"]
 		);
 		$softwares=new Softwares($db);
 		$id=$softwares->update($softData,array("keyword"));

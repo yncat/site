@@ -117,8 +117,18 @@
 					</select>
 				</label>
 			</div>
+			<input type="hidden" name="hidden" value="no">
+			
+			<div class="my-5"></div>
+			<div class="container">
+				{% if hidden == "no" %}
+					<input type="checkbox" name="hidden" value="yes">このソフトウェアを隠す<>
+				{% else %}
+					<input type="checkbox" name="hidden" value="yes" checked>このソフトウェアを隠す</>
+				{% endif %}
+			</div>
 
-			<input type="submit" class="m-5 p-2 h2 text-white bg-primary text-center" value="確認画面へ">
+			<input type="submit" class="m-5 p-2 h2 text-white bg-primary text-center" value="次へ">
 		</div>
 	</div>
 
@@ -147,7 +157,9 @@
 		</div>
 	{% endif %}
 	--!>
+	<input type="hidden" name="step" value="edit">
 	<input type="hidden" name="type" value="{{ type }}">
+	<input type="hidden" name="flag" value="{{ flag }}">
 </form>
 {% endblock %}
 
