@@ -10,7 +10,8 @@ $app->get('/software/', function (Request $request, Response $response) {
     $softwares = new softwares($this->db);
 
     $data = [];
-	$data["softwares"]=$softwares->getLatest();
+    // フラグによって隠されたソフトウェア以外を抽出
+    $data["softwares"]=$softwares->getLatest(null, FLG_HIDDEN);
 	foreach($data["softwares"] as &$software){
 		SoftwareUtil::makeTextVersion($software);
 	}
