@@ -11,7 +11,7 @@ $app->get('/', function (Request $request, Response $response) {
     $info = new Informations($this->db);
 
     $data = [];
-	$data["informations"]=$info->select(array(),"id","desc",5,true);
+	$data["informations"]=$info->select(array(),"id","desc",20,true);
 	//相対パスのURLは絶対に直す
 	foreach($data["informations"] as &$info){
 		if (!empty($info["url"]) && $info["url"][0]=="/"){
