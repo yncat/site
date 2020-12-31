@@ -190,13 +190,16 @@ function setUpdate($input,$db){
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);
 
-		$informations=new Informations($db);
-		$informations->insert(array(
-			"title"=>$info["infoString"],
-			"date"=>date("Y-m-d"),
-			"url"=>"/software/".$info["keyword"],
-			0
-		));
+		// お知らせ配信が必要ならば書き込み
+		if(!empty($info["infoString"])){
+			$informations=new Informations($db);
+			$informations->insert(array(
+				"title"=>$info["infoString"],
+				"date"=>date("Y-m-d"),
+				"url"=>"/software/".$info["keyword"],
+				0
+			));
+		}
 		$ret = GitHubUtil::connect("/repos/".$soft["gitHubURL"]."releases/assets/".$info_assets["id"], "DELETE");
 
 		//検証とドラフトのリリース

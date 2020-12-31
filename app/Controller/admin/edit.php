@@ -229,10 +229,12 @@ function paramCheck2($input){
 		$message.="バージョンが指定されていません。";
 	}
 
-	if (ValidationUtil::checkParam($input,array(
-		"infoString"=>"/^.{10,100}$/"
-	))==false){
-		$message.="お知らせ文字列は10～100字で入力してください。";
+	if(!empty($input["infoString"])){
+		if (ValidationUtil::checkParam($input,array(
+			"infoString"=>"/^.{10,100}$/"
+		))==false){
+			$message.="お知らせ文字列は10～100字で入力してください。";
+		}
 	}
 
 	if (ValidationUtil::checkParam($input,array(
@@ -354,13 +356,15 @@ function setNew($input,$db){
 		//検証とドラフトのリリース
 		$gitData=GitHubUtil::connect("/repos/".$info["gitHubURL"]."releases/".$info["releaseId"],"PATCH",array("draft"=>false));
 
-		$informations=new Informations($db);
-		$informations->insert(array(
-			"title"=>$info["infoString"],
-			"date"=>date("Y-m-d"),
-			"url"=>"/software/".$info["keyword"],
-			0
-		));
+		if(!empty(info["infoString"])){
+			$informations=new Informations($db);
+			$informations->insert(array(
+				"title"=>$info["infoString"],
+				"date"=>date("Y-m-d"),
+				"url"=>"/software/".$info["keyword"],
+				0
+			));
+		}
 
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);
