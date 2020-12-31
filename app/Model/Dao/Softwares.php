@@ -28,12 +28,14 @@ class Softwares extends Dao{
 			->join("A","(".$subQueryBuilder->getSQL().")","B","A.id=B.software_id")
 			->orderBy("B.released_at","DESC");
 
+		$queryBuilder->where("A.flag & $excludeFlag = 0");
+
 		//キーワード指定の時は１件しかいらない
 		if($keyword!=null){
-			$queryBuilder->where("A.keyword = :kwd")
+			$queryBuilder->andWhere("A.keyword = :kwd")
 				-> setParameter(":kwd", $keyword);
 		}
-		$queryBuilder->where("A.flag & $excludeFlag = 0");
+
 
 		$query = $queryBuilder->execute();
 		return $query->FetchALL();
