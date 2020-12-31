@@ -58,8 +58,8 @@
 				<label>お知らせ文字列</label>
 			</div>
 			<div class="col-9">
-				<input type="text" name="infoString" required value="{{ infoString }}">
-				※この欄ではタグの利用はできません。
+				<input class="col-9" type="text" name="infoString" required value="{{ infoString }}">
+				<br>※この欄ではタグの利用はできません。
 			</div>
 		</div>
 		<div class="row mb-3">
@@ -67,8 +67,8 @@
 				<label>バージョン履歴掲載情報</label>
 			</div>
 			<div class="col-9">
-				<textarea name="detailString" required>{{ detailString }}</textarea>
-				<p>※この欄の入力内容はアップデータとウェブの両方に表示されるため、HTMLタグの利用はできません。改行は、<br>ではなく通常の文章入力時と同様に改行コードで行ってください。
+				<textarea class="col-9" name="detailString" required>{{ detailString }}</textarea>
+				<p>※この欄の入力内容はアップデータとウェブの両方に表示されるため、HTMLタグの利用はできません。改行は、&lt;br&gt;ではなく通常の文章入力時と同様に改行コードで行ってください。
 			</div>
 		</div>
 

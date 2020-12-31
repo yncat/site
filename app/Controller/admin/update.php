@@ -46,6 +46,14 @@ function versionSelect($keyword,$message,$out,$db,$view,$response){
 	if(empty($out["drafts"])){
 		$out["message"].="現在のバージョンより新しいドラフトリリースがありません。\n";
 	}
+	
+	if($info["flag"]&FLG_HIDDEN==FLG_HIDDEN){
+		$out["hidden"]="yes";
+	}else{
+		$out["hidden"]="no";
+	}
+	$out["flag"]=$info["flag"];
+	
 	return showVersionSelector($out,$db,$view,$response);
 }
 
