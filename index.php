@@ -41,5 +41,9 @@ $routers = glob(__DIR__ . '/app/Controller/*/*.*');
 foreach ($routers as $router) {
     require $router;
 }
+$routers = glob(__DIR__ . '/app/Controller/*.*');
+foreach ($routers as $router) {
+    require $router;
+}
 // Run app
 $app->run();

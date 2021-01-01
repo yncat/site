@@ -46,6 +46,14 @@ function versionSelect($keyword,$message,$out,$db,$view,$response){
 	if(empty($out["drafts"])){
 		$out["message"].="現在のバージョンより新しいドラフトリリースがありません。\n";
 	}
+	
+	if($info["flag"]&FLG_HIDDEN==FLG_HIDDEN){
+		$out["hidden"]="yes";
+	}else{
+		$out["hidden"]="no";
+	}
+	$out["flag"]=$info["flag"];
+	
 	return showVersionSelector($out,$db,$view,$response);
 }
 
@@ -182,13 +190,16 @@ function setUpdate($input,$db){
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);
 
-		$informations=new Informations($db);
-		$informations->insert(array(
-			"title"=>$info["infoString"],
-			"date"=>date("Y-m-d"),
-			"url"=>"/software/".$info["keyword"],
-			0
-		));
+		// お知らせ配信が必要ならば書き込み
+		if(!empty($info["infoString"])){
+			$informations=new Informations($db);
+			$informations->insert(array(
+				"title"=>$info["infoString"],
+				"date"=>date("Y-m-d"),
+				"url"=>"/software/".$info["keyword"],
+				0
+			));
+		}
 		$ret = GitHubUtil::connect("/repos/".$soft["gitHubURL"]."releases/assets/".$info_assets["id"], "DELETE");
 
 		//検証とドラフトのリリース

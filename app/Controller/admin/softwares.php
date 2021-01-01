@@ -12,8 +12,8 @@ $app->get('/admin/softwares/', function (Request $request, Response $response) {
     $data = [];
 	$data["softwares"]=$softwares->getLatest();
 	foreach($data["softwares"] as &$software){
-		SoftwareUtil::makeTextVersion($software);
-	}
+        SoftwareUtil::makeTextVersion($software);
+    }
 
     // Render index view
     return $this->view->render($response, 'admin/softwares.twig', $data);

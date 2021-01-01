@@ -8,7 +8,8 @@ use Model\Dao\Members;
 use Util\SoftwareUtil;
 use Util\MembersUtil;
 
-$app->get('/software/{keyword}', function (Request $request, Response $response, $args) {
+// software/informationを除いてソフトウェア詳細表示へ
+$app->get('/software/{keyword:[^(^information$)].+}', function (Request $request, Response $response, $args) {
 	$keyword=$args["keyword"];
 
     $softwares = new Softwares($this->db);

@@ -8,7 +8,7 @@ use PDO;
 
 class Softwares extends Dao{
 
-	function getLatest($keyword=null){
+	function getLatest($keyword=null, int $excludeFlag=0){
 
 		$subQueryBuilder = new QueryBuilder($this->db);
 		$subQueryBuilder
@@ -28,11 +28,14 @@ class Softwares extends Dao{
 			->join("A","(".$subQueryBuilder->getSQL().")","B","A.id=B.software_id")
 			->orderBy("B.released_at","DESC");
 
+		$queryBuilder->where("A.flag & $excludeFlag = 0");
+
 		//キーワード指定の時は１件しかいらない
 		if($keyword!=null){
-			$queryBuilder->where("A.keyword = :kwd")
+			$queryBuilder->andWhere("A.keyword = :kwd")
 				-> setParameter(":kwd", $keyword);
 		}
+
 
 		$query = $queryBuilder->execute();
 		return $query->FetchALL();
