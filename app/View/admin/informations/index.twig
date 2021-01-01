@@ -34,21 +34,13 @@
 	</div>
 	<form method="post">
 		<div class="container py-5">
-			<div class="row">
-				<div class="col-3">
-					<label>内容</label>
-				</div>
-				<div class="col-9">
-					<input type="text" name="infoString" value="{{ infoString }}" required>
-				</div>
+			<div class="row mb-3">
+				<label class="col-3"> 内容</label>
+				<input class ="col-9" type="text" name="infoString" value="{{ infoString }}" required">
 			</div>
-			<div class="row">
-				<div class="col-3">
-					<label>URL</label>
-				</div>
-				<div class="col-9">
-					<input type="text" name="infoURL" value="{{ infoURL }}">
-				</div>
+			<div class="row mb-3">
+				<label class="col-3">URL</label>
+				<input class="col-9" type="text" name="infoURL" value="{{ infoURL }}">
 			</div>
 		</div>
 		<input type="hidden" name="type" value="informations">

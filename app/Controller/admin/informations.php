@@ -50,7 +50,7 @@ function showInformationsConfirm(array $data,$step,$view,$response){
 // お知らせ内容（array）検証
 function informationsCheck(array $data){
 	$message = "";
-	if (empty($data["infoString"]) || ValidationUtil::checkParam($data,array("infoString"=>"/^.{10,100}$/"))==false){
+	if (empty($data["infoString"]) || ValidationUtil::checkParam($data,array("infoString"=>"/^.{10,100}$/u"))==false){
 		$message.="お知らせ文字列は10～100字で入力してください。";
 	}
 	if(!empty($data["infoURL"]) && !ValidationUtil::checkParam($data,array("infoURL"=>ValidationUtil::URL_PATTERN))){
