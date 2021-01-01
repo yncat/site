@@ -104,6 +104,8 @@ sub bbs_list {
 	$tmpl =~ s/!pg!/$pg/g;
 	$tmpl =~ s|!icon:(\w+\.\w+)!|<img src="$cf{cmnurl}/$1" alt="" class="icon">|g;
 	$tmpl =~ s/!cmnurl!/$cf{cmnurl}/g;
+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime;
+	$tmpl =~ s/!copyrightyear!/$year/g;
 	
 	if ($in{job_bak}) {
 		$in{comment} =~ s/\t/\n/g;
