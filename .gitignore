@@ -10,7 +10,11 @@ bbs/data/log.cgi
 bbs/data/log/*
 bbs/data/num.dat
 bbs/data/pastno.dat
+bbs/data/conf.dat
+data/conf.cgi
 
 # logfile
 logs/
+
+# IDE config file
 ./workspace.code-workspace

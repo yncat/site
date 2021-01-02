@@ -1,4 +1,6 @@
 
 <IfModule mod_rewrite.c>
-  RewriteEngine On
+	RewriteEngine On
 
+	RewriteCond %{REQUEST_URI} (^/bbs/$)
+	RewriteRule ^ light.cgi [QSA,L]
