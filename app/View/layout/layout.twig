@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja" class="h-100">
-<head>
+<head prefix="og: http://ogp.me/ns#">
+	<meta charset = "utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock %} - ACT Laboratory</title>
-    {% block header_scripts_add %}{% endblock %}
+	<meta name = "twitter:card" content = "summary">
+	<meta name = "twitter:site" content = "@act_laboratory">
+	<meta property = "og:url" content = "{{ get_current_url() }}">
+	{% if description == "" %}
+	{% set description = "若い視覚障害者が集まり、アクセシブルなソフトウェアの開発・配布を行っています。" %}
+	{% endif %}
+	<meta name = "description" content = "{{ description }}">
+	<meta property = "og:description" content = "{{ description }}">
+	<meta property="og:site_name" content="ACT Laboratory">
+	{% if not page_type == "website" or page_type == "product" or page_type == "article" %}
+	{% set page_type = "article" %}
+	{% endif %}
+	<meta property="og:type" content = "{{ page_type }}">
+	<meta property="og:title" content = "{{ title }} - ACT Laboratory">
+	<title>{{ title }} - ACT Laboratory</title>
+	{% block header_scripts_add %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {# font awsomeパッケージを利用します#}
 
