@@ -35,6 +35,7 @@ $container['view'] = function ($c) {
 	$view->offsetSet("title", "default");
 	$view->offsetSet("description", "");
 	$view->offsetSet("page_type", "article");
+	$view->offsetSet("page_keywords", []);
 	twigExtention\registerTwigExtention($view);
     return $view;
 };

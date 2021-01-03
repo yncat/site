@@ -11,4 +11,8 @@ class urlFunctions{
 		$url .= $_SERVER["REQUEST_URI"];
 		return $url;
 	}
+	public static function get_base_path(){
+		global $container;
+		return $container["request"]->getUri()->getBasePath();
+	}
 }
