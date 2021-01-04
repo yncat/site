@@ -60,6 +60,8 @@
     <div class="container">
         {% block page_content %}{% endblock %}
     </div>
+	<!-- Chrome系ブラウザが下余白を無視し、ヘッダが本文と重なるので対策 -->
+	<div class="pt-5"></div>
 </main>
 
 {# フッタ #}
