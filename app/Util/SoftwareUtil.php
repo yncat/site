@@ -30,4 +30,8 @@ class SoftwareUtil{
 		}
 		return false;
 	}
+
+	public static function makeSoftwareUrl($keyword){
+		return "/software/".$keyword;
+	}
 }

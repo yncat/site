@@ -68,6 +68,14 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
             'Doctrine\\Common\\' => 16,
             'DeepCopy\\' => 9,
         ),
+        'C' => 
+        array (
+            'Composer\\CaBundle\\' => 18,
+        ),
+        'A' => 
+        array (
+            'Abraham\\TwitterOAuth\\' => 21,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -170,6 +178,14 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
+        'Abraham\\TwitterOAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
+        ),
     );
 
     public static $fallbackDirsPsr4 = array (
@@ -179,6 +195,10 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
     public static $prefixesPsr0 = array (
         'T' => 
         array (
+            'Twitter\\Text\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/nojimage/twitter-text-php/lib',
+            ),
             'Twig_Extensions_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/extensions/lib',
@@ -205,6 +225,7 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

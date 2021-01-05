@@ -5,6 +5,7 @@ use Slim\Http\Response;
 use Model\Dao\Informations;
 use Model\Dao\Updaterequests;
 use Util\ValidationUtil;
+use Util\TwitterUtil;
 
 // お知らせ配信画面表示
 $app->get('/admin/informations',function (Request $request, Response $response, $args) {
@@ -50,11 +51,20 @@ function showInformationsConfirm(array $data,$step,$view,$response){
 // お知らせ内容（array）検証
 function informationsCheck(array $data){
 	$message = "";
-	if (empty($data["infoString"]) || ValidationUtil::checkParam($data,array("infoString"=>"/^.{10,100}$/u"))==false){
-		$message.="お知らせ文字列は10～100字で入力してください。";
+	$url = "";
+	if (empty($data["infoString"]) || ValidationUtil::checkParam($data,array("infoString"=>"/^.{10,}$/u"))==false){
+		$message.="お知らせ文字列は10文字以上で入力してください。";
 	}
-	if(!empty($data["infoURL"]) && !ValidationUtil::checkParam($data,array("infoURL"=>ValidationUtil::URL_PATTERN))){
-		$message.="URLの形式が不正です。";
+	if(!empty($data["infoURL"])){
+		if(!ValidationUtil::checkParam($data,array("infoURL"=>ValidationUtil::URL_PATTERN))){
+			$message.="URLの形式が不正です。";
+		}
+		$url = $data["infoURL"];
+	}
+	if($message == ""){
+		if(!TwitterUtil::isTweetable($data["infoString"], $url)){
+			$message .= "お知らせ文字列がツイートできる文字数を超えています。";
+		}
 	}
 	return $message;
 }
@@ -80,17 +90,27 @@ function setInformationsApprove(array $data,$db,$view,$response){	#本人以外�
 		"type"=>"informations"
 	));
 	$info=unserialize($request["value"]);
-	$infoDB=new Informations($db);
 	if(empty($info["infoURL"])){
 		$info["infoURL"]=NULL;
 	}
-	$infoDB->insert(array(
-		"title"=>$info["infoString"],
-		"date"=>date("Y-m-d"),
-		"url"=>$info["infoURL"],
-		0
-	));
+	publishInformation($info["infoString"],$info["infoURL"]);
 	$updaterequests->delete(array("id"=>$data["requestId"]));
 	return "更新が完了しました。";
 }
 
+
+
+function publishInformation(string $content,string $url=null,string $publishDate=null){
+	global $app;
+	$infoDB=new Informations($app->getContainer()["db"]);
+	if ($publishDate===null){
+		$publishDate=date("Y-m-d");
+	}
+	$infoDB->insert(array(
+		"title"=>$content,
+		"date"=>$publishDate,
+		"url"=>$url,
+		"flag"=>0
+	));
+	TwitterUtil::tweet($content, $url);
+}

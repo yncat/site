@@ -1,7 +1,6 @@
 <?php
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\Informations;
 use Model\Dao\Members;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
@@ -10,7 +9,7 @@ use Util\SoftwareUtil;
 use Util\ValidationUtil;
 use Util\MembersUtil;
 use Util\GitHubUtil;
-
+use Util\TwitterUtil;
 
 // ソフトウェア情報作成・修正へ
 $app->get('/admin/softwares/edit/{keyword}',function (Request $request, Response $response, $args) {
@@ -230,10 +229,8 @@ function paramCheck2($input){
 	}
 
 	if(!empty($input["infoString"])){
-		if (ValidationUtil::checkParam($input,array(
-			"infoString"=>"/^.{10,100}$/u"
-		))==false){
-			$message.="お知らせ文字列は10～100字で入力してください。";
+		if(!TwitterUtil::isTweetable($input["infoString"], SoftwareUtil::makeSoftwareUrl($input["keyword"]))){
+			$message .= "お知らせ文字列がツイートできる長さを超えています。";
 		}
 	}
 
@@ -356,20 +353,12 @@ function setNew($input,$db){
 		//検証とドラフトのリリース
 		$gitData=GitHubUtil::connect("/repos/".$info["gitHubURL"]."releases/".$info["releaseId"],"PATCH",array("draft"=>false));
 
-		if(!empty(info["infoString"])){
-			$informations=new Informations($db);
-			$informations->insert(array(
-				"title"=>$info["infoString"],
-				"date"=>date("Y-m-d"),
-				"url"=>"/software/".$info["keyword"],
-				0
-			));
+		if(!empty($info["infoString"])){
+			publishInformation($info["infoString"],"/software/".$info["keyword"]);
 		}
 
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);
-
-		$informations=new Informations($db);
 
 		$updaterequests->delete(array("id"=>$request["id"]));
 		return "更新が完了しました。";

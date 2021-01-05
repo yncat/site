@@ -1,7 +1,6 @@
 <?php
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\Informations;
 use Model\Dao\Members;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
@@ -192,13 +191,7 @@ function setUpdate($input,$db){
 
 		// お知らせ配信が必要ならば書き込み
 		if(!empty($info["infoString"])){
-			$informations=new Informations($db);
-			$informations->insert(array(
-				"title"=>$info["infoString"],
-				"date"=>date("Y-m-d"),
-				"url"=>"/software/".$info["keyword"],
-				0
-			));
+			publishInformation($info["infoString"],"/software/".$info["keyword"]);
 		}
 		$ret = GitHubUtil::connect("/repos/".$soft["gitHubURL"]."releases/assets/".$info_assets["id"], "DELETE");
 

@@ -2,7 +2,7 @@
 
 
 ## 動作環境
-- PHP5.5以上
+- PHP5.5以上かつintlが有効かされていること
 - Perl5系
 - Apache 2.4
 - Mysql5系
@@ -41,6 +41,11 @@
 	SetEnv BBS_PASS '********'
 	SetEnv GITHUB_TOKEN '********'
 	SetEnv SCRIPT_PASSWORD '********'
+	setEnv TWITTER_API_KEY '********'
+	setEnv TWITTER_API_SECRET '********'
+	setEnv TWITTER_ACCESS_TOKEN '********'
+	setEnv TWITTER_ACCESS_TOKEN_SECRET '********'
+
 - その他の環境については上記を適宜読み替える。
 
 ## 利用ライブラリ
@@ -49,4 +54,6 @@
 - doctorine/dbal
 - bryanjhv/slim-session
 - Bootstrap4
+- abraham/twitteroauth
+- nojimage/twitter-text-php
 - lightboard
