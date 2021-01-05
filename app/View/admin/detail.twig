@@ -1,10 +1,9 @@
-	{#レイアウト継承#}
+{% set page_title = about.title %}
+
+
+{#レイアウト継承#}
 {% extends "layout/layout.twig" %}
 
-{# タイトル #}
-{% block title %}
-	{{ about.title }}
-{% endblock %}
 
 {# スタイルシートの追加 #}
 {% block header_scripts_add %}

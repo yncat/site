@@ -1,14 +1,8 @@
-	{#レイアウト継承#}
+{% set page_title = "ソフトウェア情報の入力" %}
+
+{#レイアウト継承#}
 {% extends "layout/layout.twig" %}
 
-{# タイトル #}
-{% block title %}
-	{% if title is defined %}
-		{{ title }}
-	{% else %}
-		新規ソフトウェア登録
-	{% endif %}
-{% endblock %}
 
 {# スタイルシートの追加 #}
 {% block header_scripts_add %}

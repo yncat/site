@@ -7,11 +7,11 @@
 	<meta name = "twitter:card" content = "summary">
 	<meta name = "twitter:site" content = "@act_laboratory">
 	<meta property = "og:url" content = "{{ get_current_url() }}">
-	{% if description == "" %}
-	{% set description = "若い視覚障害者が集まり、アクセシブルなソフトウェアの開発・配布を行っています。" %}
+	{% if page_description == "" %}
+	{% set page_description = "若い視覚障害者が集まり、アクセシブルなソフトウェアの開発・配布を行っています。" %}
 	{% endif %}
-	<meta name = "description" content = "{{ description }}">
-	<meta property = "og:description" content = "{{ description }}">
+	<meta name = "description" content = "{{ page_description }}">
+	<meta property = "og:description" content = "{{ page_description }}">
 	<meta property="og:site_name" content="ACT Laboratory">
 	{% if not page_type == "website" or page_type == "product" or page_type == "article" %}
 	{% set page_type = "article" %}
@@ -19,8 +19,8 @@
 	{% set page_keywords = page_keywords|merge(["ACT laboratory","actlab","視覚障害","スクリーンリーダー","アクセシビリティー"]) %}
 	<meta name="keywords" content = "{{ page_keywords|join(",") }}">
 	<meta property="og:type" content = "{{ page_type }}">
-	<meta property="og:title" content = "{{ title }} - ACT Laboratory">
-	<title>{{ title }} - ACT Laboratory</title>
+	<meta property="og:title" content = "{{ page_title }} - ACT Laboratory">
+	<title>{{ page_title }} - ACT Laboratory</title>
 	{% block header_scripts_add %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {# font awsomeパッケージを利用します#}
