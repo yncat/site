@@ -2,6 +2,7 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Exception\NotFoundException;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
 use Model\Dao\Members;
@@ -21,6 +22,9 @@ $app->get('/software/{keyword:[^(^information$)].+}', function (Request $request
 
 	$data["about"]=$softwares->select(array("keyword"=>$keyword),"","",1);
 
+	if(!$data["about"]){
+		throw new NotFoundException($request, $response);
+	}
 	//split features
 	$data["about"]["features"]=explode("\n",$data["about"]["features"]);
 	for($i=0;$i<count($data["about"]["features"]);$i++){
