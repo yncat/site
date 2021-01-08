@@ -42,7 +42,7 @@ class AdminPageHandler{
 //		var_dump($request->getUri());
 //		exit();
 		if(explode("/",$request->getUri()->getPath())[1]==="admin"){
-			if(count(explode("/",$request->getUri()->getPath()))==2 && explode("/",$request->getUri()->getPath())[2]==="login"){	//ログインページだけは無視
+			if(count(explode("/",$request->getUri()->getPath()))==3 && explode("/",$request->getUri()->getPath())[2]==="login"){	//ログインページだけは無視
 				return $response = $next($request, $response);
 			}
 			if(empty($_SESSION["ID"])){

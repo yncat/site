@@ -30,6 +30,9 @@
 	RewriteCond %{REQUEST_URI} !(^/public/)
 	RewriteCond %{REQUEST_URI} !(^/bbs/)
 	RewriteCond %{REQUEST_URI} !(^/git-pull.php)
+	RewriteCond %{REQUEST_URI} !(^/git-release.php)
+	RewriteCond %{REQUEST_URI} !(^/dbdump.php)
+
 	RewriteRule ^ index.php [QSA,L]
 ```
 
@@ -43,10 +46,10 @@
 	SetEnv BBS_PASS '********'				#BBS管理者PW
 	SetEnv GITHUB_TOKEN '********'			#GitHub token
 	SetEnv SCRIPT_PASSWORD '********'		#ルートに置いてある外部実行用スクリプトの起動PW
-	setEnv TWITTER_API_KEY '********'
-	setEnv TWITTER_API_SECRET '********'
-	setEnv TWITTER_ACCESS_TOKEN '********'
-	setEnv TWITTER_ACCESS_TOKEN_SECRET '********'
+	SetEnv TWITTER_API_KEY '********'
+	SetEnv TWITTER_API_SECRET '********'
+	SetEnv TWITTER_ACCESS_TOKEN '********'
+	SetEnv TWITTER_ACCESS_TOKEN_SECRET '********'
 ```
 - その他の環境については上記を適宜読み替える。
 
