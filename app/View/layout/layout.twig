@@ -1,3 +1,6 @@
+{% set site_name = "ACT Laboratory" %}
+{% set site_author = "ACT Laboratory" %}
+
 <!DOCTYPE html>
 <html lang="ja" class="h-100">
 <head prefix="og: http://ogp.me/ns#">
@@ -12,7 +15,7 @@
 	{% endif %}
 	<meta name = "description" content = "{{ page_description }}">
 	<meta property = "og:description" content = "{{ page_description }}">
-	<meta property="og:site_name" content="ACT Laboratory">
+	<meta property="og:site_name" content="{{ site_name }}">
 
 	{% if not page_type == "website" or page_type == "product" or page_type == "article" %}
 	{% set page_type = "article" %}
@@ -20,8 +23,9 @@
 	{% set page_keywords = page_keywords|merge(["ACT laboratory","actlab","視覚障害","スクリーンリーダー","アクセシビリティー"]) %}
 	<meta name="keywords" content = "{{ page_keywords|join(",") }}">
 	<meta property="og:type" content = "{{ page_type }}">
-	<meta property="og:title" content = "{{ page_title }} - ACT Laboratory">
-	<title>{{ page_title }} - ACT Laboratory</title>
+	<meta name="author" content="{{ site_author }}">
+	<meta property="og:title" content = "{{ page_title }} - {{ site_name }}">
+	<title>{{ page_title }} - {{ site_name }}</title>
 	{% block header_scripts_add %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {# font awsomeパッケージを利用します#}
@@ -42,7 +46,7 @@
 <div class="container">
     <div class="row">
         <div class="mr-auto">
-            <h1><a href="{{ get_base_path() }}/">ACT Laboratory</a></h1>
+            <h1><a href="{{ get_base_path() }}/">{{ site_name }}</a></h1>
         </div>
         <div aria-hidden="true" class="mr-3" id="ad-area">
             <!--nobanner-->
