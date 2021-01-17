@@ -314,8 +314,9 @@ class App
         } catch (InvalidMethodException $e) {
             $response = $this->processInvalidMethod($e->getRequest(), $response);
         } finally {
+			//PHP標準のtrans_sidが動作するよう修正
             //$output = ob_get_clean();
-			$output = ob_get_contents();
+            $output = ob_get_contents();
         }
 
         if (!empty($output) && $response->getBody()->isWritable()) {
@@ -327,7 +328,8 @@ class App
                 $response = $response->withBody($body);
             } elseif ($outputBuffering === 'append') {
                 // append output buffer content
-                $response->getBody()->write($output);
+				// PHP標準のtrans_sidが動作するよう修正
+                // $response->getBody()->write($output);
             }
         }
 
