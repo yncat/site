@@ -42,7 +42,15 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		$json["message"] = "Please Update to version ".$software["versionText"].".";
 		$json["updater_url"] = $software["updater_URL"];
 		$json["update_version"] = $software["versionText"];
-		$json["update_description"] = $software["hist_text"];
+		$software_history = $softwares->getVersions($data["version"], $data["name"]);
+		$descriptions = [];
+		foreach($software_history as $history){
+			SoftwareUtil::makeTextVersion($history);
+			$descriptions[] = "バージョン".$history["versionText"]."更新情報";
+			$descriptions[] = $history["hist_text"];
+			$descriptions[] = "";
+		}
+		$json["update_description"] = implode("\n", $descriptions);
 		$json["updater_hash"] = $software["updater_hash"];
 		return $response->withJson($json,200,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}

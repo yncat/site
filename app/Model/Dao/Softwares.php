@@ -40,6 +40,24 @@ class Softwares extends Dao{
 		$query = $queryBuilder->execute();
 		return $query->FetchALL();
 	}
+
+	function getVersions($textVersion = "1.0.0", $keyword = ""){
+		$versions = explode(".", $textVersion);
+		$queryBuilder = new QueryBuilder($this->db);
+		$queryBuilder
+		->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.updater_URL, t1.hist_text, t1.updater_hash")
+		->from("software_versions","t1")
+		->orderBy("t1.major*1000000+t1.minor*1000+t1.patch","DESC")
+		->where("t1.major*1000000+t1.minor*1000+t1.patch > :version")
+		->setParameter(":version", $versions[0]*1000000+$versions[1]*1000+$versions[2]);
+		if(!$keyword == ""){
+			$queryBuilder->andWhere("exists(
+			select * from softwares t2 where t1.software_id = t2.id and t2.keyword = :kwd)")
+			->setParameter(":kwd", $keyword);
+		}
+		$query = $queryBuilder->execute();
+		return $query->FetchALL();
+	}
 }
 //クエリ組み立て参考資料
 //https://qiita.com/fukumoto/items/caad9b1c0c17e796b4f4
