@@ -112,5 +112,8 @@ function publishInformation(string $content,string $url=null,string $publishDate
 		"url"=>$url,
 		"flag"=>0
 	));
+	if ($url==null){
+		$url="";
+	}
 	TwitterUtil::tweet($content, $url);
 }
