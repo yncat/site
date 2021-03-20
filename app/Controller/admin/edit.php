@@ -182,9 +182,9 @@ function paramCheck($input){
 		$message.="不正なリクエストです。最初からやり直してください。";
 	}
 	if (ValidationUtil::checkParam($input,array(
-		"title"=>"/^.{3,35}$/u"
+		"title"=>"/^.{3,41}$/u"
 	))==false){
-		$message.="タイトルは3文字以上35文字以内で入力してください。";
+		$message.="タイトルは3文字以上41文字以内で入力してください。";
 	}
 	if (ValidationUtil::checkParam($input,array(
 		"keyword"=>"/^[A-Z]{3,10}$/"
