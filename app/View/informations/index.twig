@@ -1,0 +1,58 @@
+{% set page_title = "トップ" %}
+{% set page_type = "website" %}
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="row text-left">
+		<div class="col-lg-2">
+			<p><h2 class="h4">お知らせ一覧</h2></p>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-lg-12">
+					<p>{{ showYear }}年のお知らせ</p>
+				</div>
+				<div class="col-12 col-sm-6 col-lg-12 text-right">
+					<form method="post" autocomplete="off">
+						<select class="mb-2" name="showYear" required>
+							<option value="" selected>表示する年を選択</option>
+							{% for y in informationYears %}
+								<option value="{{ y }}">{{ y }}年</option>
+							{% endfor %}
+						</select>
+						<input type="submit" class="btn btn-success ml-2" value="更新">
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-10 mt-3">
+			{% for info in informations %}
+				<div class="row">
+					<div class="col-md-3 col-lg-2">
+						{{ info.date }}
+					</div>
+					<div class="col-md-9 col-lg-10">
+						{% if info.url != null %}
+							<a href="{{ info.url }}">{{ info.title }}</a>
+						{% else %}
+							{{ info.title }}
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				<div class="row">
+					該当するお知らせはありません。
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
