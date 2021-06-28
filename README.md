@@ -43,6 +43,7 @@
 	SetEnv DB_USER 'actlab'
 	SetEnv DB_NAME 'actlab'
 	SetEnv DB_PASS '********'				#DB接続用PW兼メアド変更時等のパラメータ暗号化キー
+	SetEnv Dropbox_TOKEN '********'			#DropboxAPI token
 	SetEnv BBS_PASS '********'				#BBS管理者PW
 	SetEnv GITHUB_TOKEN '********'			#GitHub token
 	SetEnv SCRIPT_PASSWORD '********'		#ルートに置いてある外部実行用スクリプトの起動PW
