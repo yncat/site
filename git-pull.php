@@ -1,7 +1,7 @@
 <?php
 
 
-#Ý’è
+#è¨­å®š
 $log_file = '/virtual/actlab/public_html/actlab.org/logs/git-pull.log';
 $date = (new DateTime())->format('Y-m-d H:i:s');
 $path_to_repository = '/virtual/actlab/public_html/actlab.org';
@@ -13,7 +13,7 @@ $json = json_decode($json_string,true);
 
 error_log("[{$date}] Pushed to {$json['ref']}\n",3,$log_file);
 
-if ($json['ref']=="refs/heads/{$branch_name}") { // Žw’èƒuƒ‰ƒ“ƒ`‚ÌpushƒCƒxƒ“ƒg‚ÌŽž‚Ì‚ÝŽÀs
+if ($json['ref']=="refs/heads/{$branch_name}") { // æŒ‡å®šãƒ–ãƒ©ãƒ³ãƒã®pushã‚¤ãƒ™ãƒ³ãƒˆã®æ™‚ã®ã¿å®Ÿè¡Œ
     $git_remote = "http://github.com/actlaboratory/site.git";
     $command = "cd {$path_to_repository} && git pull {$git_remote} {$branch_name} 2>&1";
     exec($command, $output, $exit_status);

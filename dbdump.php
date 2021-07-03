@@ -13,7 +13,7 @@ $header=array(
 	"Authorization: Bearer ".getenv("DROPBOX_TOKEN"),
 	"Content-Type: application/octet-stream",
 	"Content-Length:".strlen($data),
-	'Dropbox-API-Arg: {"path": "/actlab/serverEITƒT[ƒrƒX—˜—p/DB_backups/backup_'.date("y-m-d-His").'.sql","mode": "overwrite","autorename": false,"mute": false,"strict_conflict": false}',
+	'Dropbox-API-Arg: {"path": "/actlab/serverãƒ»ITã‚µãƒ¼ãƒ“ã‚¹åˆ©ç”¨/DB_backups/backup_'.date("y-m-d-His").'.sql","mode": "overwrite","autorename": false,"mute": false,"strict_conflict": false}',
 	"User-Agent: ACTLaboratory-webadmin"
 );
 
@@ -29,9 +29,9 @@ $context = array(
 $result=file_get_contents("https://content.dropboxapi.com/2/files/upload", false, stream_context_create($context));
 $result = json_decode($result,true);
 if (isset($result["path_display"]) && isset($result["size"])){
-	print("{$result['size']}ƒoƒCƒg‚Ìƒtƒ@ƒCƒ‹\"{$result['path_display']}\"‚ÌƒAƒbƒvƒ[ƒh‚É¬Œ÷‚µ‚Ü‚µ‚½B");
+	print("{$result['size']}ãƒã‚¤ãƒˆã®ãƒ•ã‚¡ã‚¤ãƒ«\"{$result['path_display']}\"ã®ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã«æˆåŠŸã—ã¾ã—ãŸã€‚");
 } else {
-	print("ƒAƒbƒvƒ[ƒh‚É¸”s‚µ‚Ü‚µ‚½B<br>\n");
+	print("ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸã€‚<br>\n");
 }
 
 print("<br>\n----------------------<br>\n");
