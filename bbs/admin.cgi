@@ -360,6 +360,7 @@ Content-type: text/html; charset=utf-8
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex">
 <style>
 body { background:#e7e8f2; padding:0; margin:0; font:90% 'Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3',Meiryo,メイリオ,Osaka,'MS PGothic',arial,helvetica,sans-serif; }
 p.ttl { font-weight:bold; color:#004080; border-bottom:1px solid #004080; padding:3px; }

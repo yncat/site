@@ -21,6 +21,7 @@ Content-type: text/html; charset=utf-8
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex">
 <title>Check Mode</title>
 </head>
 <body>
