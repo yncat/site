@@ -1,0 +1,33 @@
+{% set page_title = "404 Not Found" %}
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			４０４　Not Found
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p>
+				お探しのページが見つかりません。恐れ入りますが、上部のメニューよりページをお探しください。
+			</p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="btn btn-primary"><a href="{{ get_base_path() }}/" class="text-white">トップへ戻る</a></div>
+
+	</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

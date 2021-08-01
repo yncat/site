@@ -53,3 +53,11 @@ $container['db'] = function ($c) {
 $container['session'] = function ($c) {
     return new \SlimSession\Helper;
 };
+
+// 404 Not Found Container
+$container['notFoundHandler'] = function ($c) {
+    return function ($request, $response) use ($c) {
+		$response->withStatus(404,"Not Found");
+		return $c->view->render($c->response, 'error/404.twig');
+    };
+};
