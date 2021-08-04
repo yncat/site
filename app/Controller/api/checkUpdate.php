@@ -23,7 +23,7 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		return $response->withJson($json);
 	}
 
-	$isAlpha = SoftwareUtil::conpareVersion("2000.0.0",$data["version"]);
+	$isAlpha = SoftwareUtil::conpareVersion($data["version"],"2000.0.0");
 	if (!$isAlpha){
 		//Ver2000未満は正式版
 		$software=$softwares->getLatest($data["name"]);
