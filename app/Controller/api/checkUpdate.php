@@ -8,7 +8,7 @@ use Util\ValidationUtil;
 
 $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 
-    $softwares = new softwares($this->db);
+	$softwares = new softwares($this->db);
 
 	$data = $request->getQueryParams();
 
@@ -23,7 +23,13 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		return $response->withJson($json);
 	}
 
-	$software=$softwares->getLatest($data["name"]);
+	if (SoftwareUtil::conpareVersion("2000.0.0",$data["version"])){
+		//Ver2000未満は正式版
+		$software=$softwares->getLatest($data["name"]);
+	} else {
+		//alpha版
+		$software=$softwares->getLatestAlpha($data["name"]);
+   	}
 	if($software==null){
 		$json["code"] = 404;
 		$json["message"] = "Requested name is not registed.";
@@ -56,4 +62,3 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 	}
 
 });
-
