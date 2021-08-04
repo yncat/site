@@ -66,6 +66,7 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 			break;
 		}
 	}
+
 	if ($info === null){
 		$json["code"] = 500;
 		$json["message"] = "Release file ".$tag."_info.json Not found.";
@@ -74,19 +75,18 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 	$info = GitHubUtil::get_assets($info["browser_download_url"]);
 	$info = json_decode($info, true);
 
-
 	$softwareAlphaVersions->insert([
-	`software_id` => $software["id"],
-	`major` => explode(".",$data["version"])[0],
-	`minor` => explode(".",$data["version"])[1],
-	`patch` => explode(".",$data["version"])[2],
-	`hist_text` => $commit["commit"]["message"],
-	`package_URL` => $software["snapshotURL"],
-	`updater_URL` => substr($software["snapshotURL"],0,-4)."-patch.zip",
-	`updater_hash` => $info["patch_hash"],
-	`update_min_Major` => 0,
-	`update_min_minor` => 0,
-	`released_at` => $info["released_date"],
-	`flag` => 0,
+		"software_id" => $software["id"],
+		"major" => explode(".",$data["version"])[0],
+		"minor" => explode(".",$data["version"])[1],
+		"patch" => explode(".",$data["version"])[2],
+		"hist_text" => $commit["commit"]["message"],
+		"package_URL" => $software["snapshotURL"],
+		"updater_URL" => substr($software["snapshotURL"],0,-4)."-patch.zip",
+		"updater_hash" => $info["patch_hash"],
+		"update_min_Major" => 0,
+		"update_min_minor" => 0,
+		"released_at" => $info["released_date"],
+		"flag" => 0,
 	]);
 });

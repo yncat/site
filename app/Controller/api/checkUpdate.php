@@ -23,7 +23,8 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		return $response->withJson($json);
 	}
 
-	if (SoftwareUtil::conpareVersion("2000.0.0",$data["version"])){
+	$isAlpha = SoftwareUtil::conpareVersion("2000.0.0",$data["version"]);
+	if (!$isAlpha){
 		//Ver2000未満は正式版
 		$software=$softwares->getLatest($data["name"]);
 	} else {
@@ -48,7 +49,7 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		$json["message"] = "Please Update to version ".$software["versionText"].".";
 		$json["updater_url"] = $software["updater_URL"];
 		$json["update_version"] = $software["versionText"];
-		$software_history = $softwares->getVersions($data["version"], $data["name"]);
+		$software_history = $softwares->getVersions($data["version"], $data["name"], $isAlpha);
 		$descriptions = [];
 		foreach($software_history as $history){
 			SoftwareUtil::makeTextVersion($history);
@@ -60,5 +61,4 @@ $app->get('/api/checkUpdate', function (Request $request, Response $response) {
 		$json["updater_hash"] = $software["updater_hash"];
 		return $response->withJson($json,200,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}
-
 });
