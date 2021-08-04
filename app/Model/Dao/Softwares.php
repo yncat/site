@@ -69,9 +69,9 @@ class Softwares extends Dao{
 
 	function getVersions(string $textVersion = "1.0.0",string $keyword = "", bool $isAlpha = False){
 		if ($isAlpha){
-			$versionTable = "software_versions";
-		} else {
 			$versionTable = "software_alpha_versions";
+		} else {
+			$versionTable = "software_versions";
 		}
 
 		$versions = explode(".", $textVersion);
