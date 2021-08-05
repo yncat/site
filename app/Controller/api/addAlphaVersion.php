@@ -60,8 +60,9 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 	}
 	$assets = $assets["assets"];
 
+	$baseFileName = preg_replace("|^.+download/[^/]+/([^/]+)\\.[a-zA-Z0-9]+$|","$1",$software["snapshotURL"]);
 	foreach ($assets as $asset){
-		if($asset["name"] == $tag."_info.json"){
+		if($asset["name"] == $baseFileName."_info.json"){
 			$info = $asset;
 			break;
 		}
@@ -69,7 +70,7 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 
 	if ($info === null){
 		$json["code"] = 500;
-		$json["message"] = "Release file ".$tag."_info.json Not found.";
+		$json["message"] = "Release file ".$baseFileName."_info.json Not found.";
 		return $response->withJson($json);
 	}
 	$info = GitHubUtil::get_assets($info["browser_download_url"]);
@@ -82,7 +83,7 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 		"patch" => explode(".",$data["version"])[2],
 		"hist_text" => $commit["commit"]["message"],
 		"package_URL" => $software["snapshotURL"],
-		"updater_URL" => substr($software["snapshotURL"],0,-4)."-patch.zip",
+		"updater_URL" => substr($software["snapshotURL"],0,-4)."patch.zip",
 		"updater_hash" => $info["patch_hash"],
 		"update_min_Major" => 0,
 		"update_min_minor" => 0,
