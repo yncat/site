@@ -1,13 +1,11 @@
 <?php
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\Members;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
 use Model\Dao\Updaterequests;
+use util\AdminUtil;
 use Util\SoftwareUtil;
-use Util\ValidationUtil;
-use Util\MembersUtil;
 use Util\GitHubUtil;
 
 
@@ -132,17 +130,7 @@ function setUpdate($input,$db){
 	));
 
 	if($request===false or $request["requester"]==$_SESSION["ID"]){
-		$updaterequests->delete(array(
-			"type"=>"update",
-			"identifier"=>$input["keyword"],
-			"requester"=>$_SESSION["ID"],
-		));
-		$no=$updaterequests->insert(array(
-			"requester"=>$_SESSION["ID"],
-			"type"=>"update",
-			"identifier"=>$input["keyword"],
-			"value"=>serialize($input)
-		));
+		$no = AdminUtil::sendRequest("update", $input, $input["keyword"]);
 		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	} else {	#他人が確認したのでDB反映
 		$updaterequests=new Updaterequests($db);
@@ -197,7 +185,7 @@ function setUpdate($input,$db){
 
 		//検証とドラフトのリリース
 		$gitData=GitHubUtil::connect("/repos/".$soft["gitHubURL"]."releases/".$info["releaseId"],"PATCH",array("draft"=>false, "body" => $versionData["hist_text"]));
-		$updaterequests->delete(array("id"=>$request["id"]));
+		AdminUtil::completeRequest($request["id"]);
 		return "更新が完了しました。";
 	}
 }

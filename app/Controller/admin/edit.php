@@ -5,9 +5,9 @@ use Model\Dao\Members;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
 use Model\Dao\Updaterequests;
+use Util\AdminUtil;
 use Util\SoftwareUtil;
 use Util\ValidationUtil;
-use Util\MembersUtil;
 use Util\GitHubUtil;
 use Util\TwitterUtil;
 
@@ -293,22 +293,12 @@ function setNew($input,$db){
 	));
 
 	if($request===false or $request["requester"]==$_SESSION["ID"]){
-		$updaterequests->delete(array(
-			"type"=>"new",
-			"identifier"=>$input["keyword"],
-			"requester"=>$_SESSION["ID"],
-		));
 		if($input["hidden"]!="no"){
 			$input["flag"]=FLG_HIDDEN;
 		}else{
 			$input["flag"]=0;
 		}
-		$no=$updaterequests->insert(array(
-			"requester"=>$_SESSION["ID"],
-			"type"=>"new",
-			"identifier"=>$input["keyword"],
-			"value"=>serialize($input)
-		));
+		$no=AdminUtil::sendRequest("new", $input, $input["keyword"]);
 		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	} else {	#他人が確認したのでDB反映
 		$updaterequests=new Updaterequests($db);
@@ -360,16 +350,10 @@ function setNew($input,$db){
 		$softwareVersions = new SoftwareVersions($db);
 		$softwareVersions->insert($versionData);
 
-		$updaterequests->delete(array("id"=>$request["id"]));
+		AdminUtil::completeRequest($request["id"]);
 		return "更新が完了しました。";
 	}
 }
-
-
-
-
-
-
 
 function setEdit($input,$db){
 	$updaterequests=new Updaterequests($db);
@@ -379,22 +363,12 @@ function setEdit($input,$db){
 	));
 
 	if($request===false or $request["requester"]==$_SESSION["ID"]){
-		$updaterequests->delete(array(
-			"type"=>"edit",
-			"identifier"=>$input["keyword"],
-			"requester"=>$_SESSION["ID"],
-		));
 		if($input["hidden"]!="no"){
 			$input["flag"]=$input["flag"]|FLG_HIDDEN;
 		}else{
 			$input["flag"] = $input["flag"]&(~FLG_HIDDEN);
 		}
-		$no=$updaterequests->insert(array(
-			"requester"=>$_SESSION["ID"],
-			"type"=>"edit",
-			"identifier"=>$input["keyword"],
-			"value"=>serialize($input)
-		));
+		$no=AdminUtil::sendRequest("edit", $input, $input["keyword"]);
 		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	} else {	#他人が確認したのでDB反映
 		$updaterequests=new Updaterequests($db);
@@ -416,7 +390,7 @@ function setEdit($input,$db){
 		$softwares=new Softwares($db);
 		$id=$softwares->update($softData,array("keyword"));
 
-		$updaterequests->delete(array("id"=>$request["id"]));
+		AdminUtil::completeRequest($request["id"]);
 		return "更新が完了しました。";
 	}
 }

@@ -1,43 +1,23 @@
 <?php
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\members;
 use Model\Dao\Updaterequests;
+use Util\AdminUtil;
 
 require_once "profile.php";
 require_once "edit.php";
 
 $app->get('/admin/request', function (Request $request, Response $response) {
-	$members=new Members($this->db);
 	$updaterequests=new Updaterequests($this->db);
 
 	$data=array();
 	$data["requests"]=$updaterequests->select(array(),"","",100000,true);
 	foreach($data["requests"] as &$request){
-		$request["requester"]=$members->select(array("id"=>$request["requester"]))["name"];
-		$request["title"]=makeRequestTitle($request);
+		$request["title"]=AdminUtil::makeRequestTitle($request);
 	}
 	// Render index view
 	return $this->view->render($response, 'admin/request/index.twig', $data);
 });
-
-function makeRequestTitle($request){
-	if($request["type"]==="publicInformation"){
-		return $request["requester"]."の公開プロフィール変更";
-	}
-	if($request["type"]==="new"){
-		return $request["requester"]."から新規ソフトウェア公開要求(".$request["identifier"].")";
-	}
-	if($request["type"]==="update"){
-		return $request["requester"]."からバージョンアップ配信要求(".$request["identifier"].")";
-	}
-	if($request["type"]==="edit"){
-		return $request["requester"]."から".$request["identifier"]."の公開情報変更要求";
-	}
-	if($request["type"]==="informations"){
-		return $request["requester"]."からのお知らせ配信要求";
-	}
-}
 
 // 更新リクエスト送信処理
 $app->post('/admin/request', function (Request $request, Response $response) {
@@ -143,10 +123,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 	$message="";
 	if($info!==false){
 		if($info["requester"]==$_SESSION["ID"]){
-			$members=new Members($this->db);
-
 			// 自分のリクエストならば削除へ
-			$info["requester"]=$members->select(array("id"=>$info["requester"]))["name"];
 			return deleteRequestConfirm($info,$this->db,$this->view,$response,"");
 		}
 
@@ -179,7 +156,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 	$info=$updaterequests->select(array("id"=>$id));
 
 	if($info!==false && $_SESSION["ID"]==$info["requester"]){
-		$info=$updaterequests->delete(array("id"=>$id));
+		AdminUtil::completeRequest($id, AdminUtil::COMPLETE_TYPE_SELF_DELETED);
 		$message="削除しました。";
 	} else {
 		$message="不正なリクエストです。";
@@ -192,7 +169,7 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 
 // 更新リクエスト削除確認表示
 function deleteRequestConfirm(array $data,$db,$view,$response,$message=""){
-	$data["title"]=makeRequestTitle($data);
+	$data["title"]=AdminUtil::makeRequestTitle($data);
 
 	// Render view
     return $view->render($response, 'admin/request/delete.twig', $data);

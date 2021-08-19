@@ -39,6 +39,7 @@
 ## 設定が必要な環境変数
 - 設定方法はOSにより異なるが、ウェブサーバがApacheで、.htaccessが使えるなら上記設定と合わせて以下のように書く。
 ```
+	SetEnv ENV_NAME 'local'
 	SetEnv DB_HOST 'localhost'
 	SetEnv DB_USER 'actlab'
 	SetEnv DB_NAME 'actlab'
@@ -47,6 +48,7 @@
 	SetEnv BBS_PASS '********'				#BBS管理者PW
 	SetEnv GITHUB_TOKEN '********'			#GitHub token
 	SetEnv SCRIPT_PASSWORD '********'		#ルートに置いてある外部実行用スクリプトの起動PW
+	SetEnv SLACK_NOTIFY_URL 'https://hooks.slack.com/services/*****'
 	SetEnv TWITTER_API_KEY '********'
 	SetEnv TWITTER_API_SECRET '********'
 	SetEnv TWITTER_ACCESS_TOKEN '********'

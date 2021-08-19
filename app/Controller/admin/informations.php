@@ -6,6 +6,8 @@ use Model\Dao\Informations;
 use Model\Dao\Updaterequests;
 use Util\ValidationUtil;
 use Util\TwitterUtil;
+use Util\AdminUtil;
+
 
 // お知らせ配信画面表示
 $app->get('/admin/informations',function (Request $request, Response $response, $args) {
@@ -71,12 +73,7 @@ function informationsCheck(array $data){
 
 // お知らせ配信リクエスト登録
 function setInformationsRequest(array $data,$db,$view,$response, $request){
-	$updaterequests=new Updaterequests($db);
-	$no=$updaterequests->insert(array(
-		"requester"=>$_SESSION["ID"],
-		"type"=>"informations",
-		"value"=>serialize($data)
-	));
+	$no=AdminUtil::sendRequest("informations",$data);
 	$data["message"] ="リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
 	return $view->render($response, 'admin/request/request.twig', $data);
@@ -94,7 +91,7 @@ function setInformationsApprove(array $data,$db,$view,$response){	#本人以外�
 		$info["infoURL"]=NULL;
 	}
 	publishInformation($info["infoString"],$info["infoURL"]);
-	$updaterequests->delete(array("id"=>$data["requestId"]));
+	AdminUtil::completeRequest($data["requestId"]);
 	return "更新が完了しました。";
 }
 

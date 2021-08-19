@@ -2,14 +2,12 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Model\Dao\Softwares;
-use Model\Dao\SoftwareVersions;
 use Model\Dao\Members;
 use Model\Dao\Updaterequests;
-use Util\SoftwareUtil;
 use Util\ValidationUtil;
 use Util\MembersUtil;
 use Util\GitHubUtil;
+use Util\AdminUtil;
 use Util\EncryptUtil;
 
 
@@ -108,17 +106,7 @@ function profileParamCheck($input){
 
 function setProfile($input,$db){
 	if($_SESSION["ID"]==$input["id"]){	#本人リクエストなのでペンディング
-		$updaterequests=new Updaterequests($db);
-		$updaterequests->delete(array(
-			"type"=>"publicInformation",
-			"identifier"=>"".$input["id"]
-		));
-		$no=$updaterequests->insert(array(
-			"requester"=>$_SESSION["ID"],
-			"type"=>"publicInformation",
-			"identifier"=>"".$input["id"],
-			"value"=>serialize($input)
-		));
+		$no = AdminUtil::sendRequest("publicInformation", $input, "".$_SESSION["ID"]);
 		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	} else {	#本人以外のリクエストなので確定してDB反映
 		$updaterequests=new Updaterequests($db);
@@ -131,7 +119,7 @@ function setProfile($input,$db){
 		$info["id"]=$request["requester"];		//念のため対策
 		$members=new Members($db);
 		$members->update($info);
-		$updaterequests->delete(array("id"=>$request["id"]));
+		AdminUtil::completeRequest($request["id"]);
 
 		return "更新が完了しました。";
 	}
