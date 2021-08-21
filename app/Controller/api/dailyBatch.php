@@ -3,7 +3,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-use Model\Dao\members;
+use Model\Dao\Members;
 use Model\Dao\Softwares;
 use Util\GitHubUtil;
 use Util\SlackUtil;

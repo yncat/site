@@ -64,8 +64,8 @@ class GitHubUtil{
 		return $content;
 	}
 
-	# id�̃��[�U�̎w����̃R���g���r���[�V��������Ԃ�
-	# id�ԈႢ�E�Â��E�����ł��铙�Ŏ擾�ł��Ȃ��ꍇ�ɂ�False��Ԃ�
+	# idのユーザの指定日のコントリビューション数を返す
+	# id間違い・古い・未来である等で取得できない場合にはFalseを返す
 	public static function getContributionCountByUser($id,$date){
 		try {
 			$page = file_get_contents("https://github.com/$id");
