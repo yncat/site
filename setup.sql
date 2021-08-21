@@ -78,3 +78,30 @@ CREATE TABLE `updaterequests` (
   `value` mediumblob NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `software_alpha_versions`;
+CREATE TABLE `software_alpha_versions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `software_id` int(10) unsigned NOT NULL,
+  `major` mediumint(8) unsigned NOT NULL,
+  `minor` tinyint(4) NOT NULL,
+  `patch` mediumint(8) unsigned NOT NULL,
+  `hist_text` text NOT NULL,
+  `package_URL` char(255) DEFAULT NULL,
+  `updater_URL` char(255) DEFAULT NULL,
+  `updater_hash` char(128) DEFAULT NULL,
+  `update_min_Major` tinyint(4) DEFAULT NULL,
+  `update_min_minor` tinyint(4) DEFAULT NULL,
+  `released_at` date DEFAULT NULL,
+  `flag` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `software_id` (`software_id`),
+  CONSTRAINT `software_alpha_versions_ibfk_1` FOREIGN KEY (`software_id`) REFERENCES `softwares` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `commit_hash`;
+CREATE TABLE `commit_hash` (
+  `hash` char(40) NOT NULL,
+  PRIMARY KEY (`hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

@@ -34,8 +34,13 @@ abstract class Dao {
 	 * @param \Doctrine\DBAL\Connection $db データベース
 	 */
 
-	public function __construct($db)
+	public function __construct($db = null)
 	{
+		if (!$db){
+			global $app;
+			$db=$app->getContainer()["db"];
+		}
+
 		//DBコネクションを格納
 		$this->db = $db;
 

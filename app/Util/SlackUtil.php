@@ -6,6 +6,14 @@ use Util\EnvironmentUtil;
 class SlackUtil{
 
 	static function notify(string $text){
+		self::send($text,getenv("SLACK_NOTIFY_URL"));
+	}
+
+	static function daily(string $text){
+		self::send($text,getenv("SLACK_DAILY_URL"));
+	}
+
+	private static function send(string $text, string $url){
 		$header=array(
 			"Content-Type: application/json",
 			"User-Agent: ACTLaboratory-webadmin"
@@ -27,7 +35,7 @@ class SlackUtil{
 			)
 		);
 
-		$result=file_get_contents(getenv("SLACK_NOTIFY_URL"), false, stream_context_create($context));
+		$result=file_get_contents($url, false, stream_context_create($context));
 		$result = json_decode($result,true);
 	}
 }

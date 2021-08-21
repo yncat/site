@@ -63,4 +63,27 @@ class GitHubUtil{
 		curl_close($handle);
 		return $content;
 	}
+
+	# idのユーザの指定日のコントリビューション数を返す
+	# id間違い・古い・未来である等で取得できない場合にはFalseを返す
+	public static function getContributionCountByUser($id,$date){
+		try {
+			$page = file_get_contents("https://github.com/$id");
+			$ret = preg_replace(
+				'/^.+data-count="([0-9]+)" data-date="'.$date.'" data-level=.+$/s',
+				"$1",
+				$page);
+			if (is_numeric($ret)){
+				return intval($ret);
+			} else {
+				return -1;
+			}
+		} catch (Exception $e){
+			return -1;
+		}
+	}
+
+	public static function getTagByDownloadURL($url){
+		return preg_replace("|^.+download/([^/]+)/.+$|","$1",$url);
+	}
 }

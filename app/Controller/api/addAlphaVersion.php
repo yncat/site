@@ -3,7 +3,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-use Model\Dao\CommitHash;;
+use Model\Dao\CommitHash;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareAlphaVersions;
 use Util\GitHubUtil;
@@ -52,7 +52,7 @@ $app->get('/api/addAlphaVersion', function (Request $request, Response $response
 	}
 
 	//パッチハッシュの取得
-	$tag = preg_replace("|^.+download/([^/]+)/.+$|","$1",$software["snapshotURL"]);
+	$tag = GitHubUtil::getTagByDownloadURL($software["snapshotURL"]);
 	$assets = GitHubUtil::connect("/repos/".$software["gitHubURL"]."releases/tags/".$tag);
 	$info = null;
 	if(!isset($assets["assets"])){

@@ -11,7 +11,7 @@ class Softwares extends Dao{
 	function getLatest($keyword=null, int $excludeFlag=0){
 
 		$subQueryBuilder = (new QueryBuilder($this->db))
-			->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.updater_URL, t1.hist_text, t1.updater_hash")
+			->select("t1.software_id, t1.major, t1.minor, t1.patch, t1.released_at, t1.package_URL, t1.updater_URL, t1.hist_text, t1.updater_hash")
 			->from("software_versions","t1")
 			->orderBy("t1.released_at","DESC")
 			->where("NOT EXISTS(
@@ -21,7 +21,7 @@ class Softwares extends Dao{
 		$queryBuilder = (new QueryBuilder($this->db))
 			->select(
 				"A.id, A.title, A.keyword, A.description, A.gitHubURL, A.flag,".
-				"B.major, B.minor, B.patch,B.released_at, B.updater_URL, B.hist_text, B.updater_hash")
+				"B.major, B.minor, B.patch,B.released_at, B.package_URL, B.updater_URL, B.hist_text, B.updater_hash")
 			->from("softwares","A")
 			->join("A","(".$subQueryBuilder->getSQL().")","B","A.id=B.software_id")
 			->orderBy("B.released_at","DESC")
