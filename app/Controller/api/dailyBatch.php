@@ -23,6 +23,10 @@ $app->get('/api/dailyBatch', function (Request $request, Response $response) {
 
 	sendContributionCount();
 	sendDownloadCount();
+
+	$json["code"] = 200;
+	$json["message"] = "Done.";
+	return $response->withJson($json);
 });
 
 function sendContributionCount(){
