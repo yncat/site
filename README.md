@@ -50,6 +50,7 @@
 	SetEnv SCRIPT_PASSWORD '********'		#ルートに置いてある外部実行用スクリプトの起動PW
 	SetEnv SLACK_NOTIFY_URL 'https://hooks.slack.com/services/*****'
 	SetEnv SLACK_DAILY_URL 'https://hooks.slack.com/services/*****'
+	SetEnv SLACK_SIGNING_SECRET '****************'
 
 	SetEnv TWITTER_API_KEY '********'
 	SetEnv TWITTER_API_SECRET '********'
