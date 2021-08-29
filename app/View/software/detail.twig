@@ -7,6 +7,9 @@
 
 {# スタイルシートの追加 #}
 {% block header_scripts_add %}
+{% if about.flag b-and constant("FLG_HIDDEN") == constant("FLG_HIDDEN") %}
+<meta name="robots" content="noindex">
+{% endif %}
 {% endblock %}
 
 {# ページ本文 #}
