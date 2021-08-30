@@ -24,11 +24,11 @@ class SlackUtil {
 
 		if (is_string($body)){
 			if (!EnvironmentUtil::isProduct()){
-				$body = "[".EnvironmentUtil::getEnvName()."] ".$text;
+				$body = "[".EnvironmentUtil::getEnvName()."] ".$body;
 			}
 
 			$body = [
-				"text" => $text
+				"text" => $body
 			];
 		}
 
