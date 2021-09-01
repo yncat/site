@@ -27,7 +27,7 @@ $app->post('/api/tweet', function (Request $request, Response $response) {
 	// リクエストの種類で分岐
 	if(isset($params["command"]) && $params["command"]==="/tweet"){
 		// ツイート承認要求
-		$logger->info("recieve tweet command request");
+		$logger->info("received tweet command request");
 
 		// リクエストユーザの状況確認
 		$result = checkUser($params["user_id"]);
