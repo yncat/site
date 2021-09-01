@@ -20,4 +20,10 @@ class ValidationUtil{
 		return true;
 	}
 
+	public static function validate(string $ptn, string $hystack):bool{
+		if (\preg_match($ptn,$hystack)!=1){
+			return false;
+		}
+		return true;
+	}
 }
