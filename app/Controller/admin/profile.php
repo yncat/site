@@ -44,8 +44,6 @@ $app->post('/admin/profile', function (Request $request, Response $response) {
 		if($message===""){
 			$members->update(array("id"=>$_SESSION["ID"],"password_hash"=>password_hash($input["pw_new"],PASSWORD_DEFAULT),"updated"=>time()));
 			return $response->withRedirect($request->getUri()->getBasePath()."/admin/"."?".SID);
-		} else {
-			return showProfileEditor(array(),$this->db,$this->view,$response,$message);
 		}
 	} else if($input["type"]==="email"){
 		if(!ValidationUtil::checkParam($input,array("new"=>"#^[a-zA-Z]([a-zA-Z0-9._\\-?+/]{0,63}[a-zA-Z0-9])*@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$#"))){
@@ -62,18 +60,24 @@ $app->post('/admin/profile', function (Request $request, Response $response) {
 			$url="https://".$_SERVER["HTTP_HOST"].$url;
 			mb_send_mail($input["new"],"[actLab]メールアドレス登録・変更確認","以下のリンクをクリックして、登録を完了させてください。\r\n".$url,"From: info@actlab.org");
 			return showProfileEditor(array(),$this->db,$this->view,$response,$message);
-		} else {
-			return showProfileEditor(array(),$this->db,$this->view,$response,$message);
 		}
 	} else if($input["type"]==="publicInformation"){
 		$message=profileParamCheck($input);
 
 		if($message===""){
 			showProfileConfirm($input,$this->db,$this->view,$response,$message);
+		}
+	} else if($input["type"]==="slack-del"){
+		if($input["slack-del"] === $info["slack"]){
+			$info["slack"]=null;
+			$members->update($info);
+			$message = "Slackアカウントの登録を解除しました。";
+			$input["slack"] = null;
 		} else {
-			return showProfileEditor($input,$this->db,$this->view,$response,$message);
+			$message = "確認入力が正しく行われていないため、Slackアカウントの削除に失敗しました。";
 		}
 	}
+	return showProfileEditor($input,$this->db,$this->view,$response,$message);
 });
 
 function showProfileConfirm(array $data,$db,$view,$response,$message=""){

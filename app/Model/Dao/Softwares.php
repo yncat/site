@@ -82,6 +82,17 @@ class Softwares extends Dao{
 		$query = $queryBuilder->execute();
 		return $query->FetchALL();
 	}
+
+	function hasOfficialSoftware($user_id){
+		return $queryBuilder = (new QueryBuilder($this->db))
+			->select("1")
+			->from("softwares","s")
+			->join("s", "software_versions", "sv", "sv.software_id = s.id")
+			->where("major >= 1")
+			->andWhere("staff = $user_id")
+			->execute()
+			->rowCount() > 0;
+	}
 }
 
 

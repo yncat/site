@@ -7,5 +7,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use PDO;
 
 class Members extends Dao{
-
+	public function getBySlackId($id){
+		return self::select(["slack"=>$id]);
+	}
 }

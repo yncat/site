@@ -9,6 +9,10 @@
 
 {# ページ本文 #}
 {% block page_content %}
+	{% if message!=null %}
+		<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
 	<div class="jumbotron">
 		<h2 class="text-center">
 			管理者ページ

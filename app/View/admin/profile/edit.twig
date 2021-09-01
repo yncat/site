@@ -20,9 +20,9 @@
 		</h2>
 		<div class="container">
 			<p>
-				登録情報を変更します。
-				公開情報の変更には他のメンバーによる確認、メールアドレスの変更には新たなメールアドレスに届く確認メールに記載されたリンクのクリックが必用です。
-				また、パスワードの変更に成功すると、直ちに管理者ページからログアウトされます。
+				<p>登録情報を変更します。</p>
+				<p>公開情報の変更には他のメンバーによる確認、メールアドレスの変更には新たなメールアドレスに届く確認メールに記載されたリンクのクリックが必用です。</p>
+				<p>また、パスワードの変更に成功すると、直ちに管理者ページからログアウトされます。</p>
 			</p>
 		</div>
 	</div>
@@ -140,6 +140,36 @@
 			<input type="submit" value="変更">
 		</div>
 	</form>
+
+	{% if slack %}
+		<div class="text-white bg-primary p-1">
+			<h3>Slackアカウントの登録解除</h3>
+		</div>
+		<form method="post">
+			<div class="container py-5">
+				<div class="row">
+					<div class="col-3">
+						<label for="slack">登録済のSlackアカウントID</label>
+					</div>
+					<div class="col-9">
+						<input id="slack" type="text" name="slack" readonly="true" value="{{ slack }}">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-3">
+						<label for="slack-del">解除するには上記のIDを入力</label>
+					</div>
+					<div class="col-9">
+						<input id="slack-del" type="text" name="slack-del" required>
+					</div>
+				</div>
+
+				<input type="hidden" name="type" value="slack-del">
+				<input type="submit" value="登録を解除">
+			</div>
+		</form>
+	{% endif %}
 
 {% endblock %}
 
