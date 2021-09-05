@@ -4,7 +4,12 @@ if(empty($_GET["password"]) || $_GET["password"] != getenv("SCRIPT_PASSWORD")){
 	exit("Invalid password\n");
 }
 
-$cmd = "mysqldump {$_ENV['DB_NAME']} -u {$_ENV['DB_USER']} -p{$_ENV['DB_PASS']} --default-character-set=utf8mb4 --no-tablespaces -B $_ENV{['DB_NAME']}";
+var_dump($_ENV);
+phpinfo();
+exit();
+
+$cmd = "mysqldump {$_ENV['DB_NAME']} -u {$_ENV['DB_USER']} -p{$_ENV['DB_PASS']} --default-character-set=utf8mb4 
+--no-tablespaces -B {$_ENV['DB_NAME']}";
 $data = shell_exec($cmd);
 //echo($data);
 
@@ -37,5 +42,4 @@ if (isset($result["path_display"]) && isset($result["size"])){
 print("<br>\n----------------------<br>\n");
 var_dump($result);
 print("<br>\n----------------------<br>\n");
-var_dump(json_decode($result, true));
 
