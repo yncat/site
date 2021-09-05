@@ -106,7 +106,7 @@ $app->post('/api/tweet', function (Request $request, Response $response) {
 		$operator = $params["user"]["id"];
 		$logger->info("決済者：" . $operator);
 
-		$message = checkUser($request_uid);
+		$message = checkUser($operator);
 		if ($message){
 			$result = SlackUtil::send(
 				[
