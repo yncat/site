@@ -58,6 +58,9 @@
 				<h3 class="my-0">関連リンク</h3>
 			</div>
 			<div class="container">
+				{% for i in links %}
+					<p><a class="btn" href="{{ i.url }}">{{ i.name }}</a></p>
+				{% endfor %}
 				<p><a class="btn" href="https://github.com/{{ about.gitHubURL }}">GitHubリポジトリ</a></p>
 			</div>
 

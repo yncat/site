@@ -5,6 +5,7 @@ use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
 use Model\Dao\Softwares;
 use Model\Dao\SoftwareVersions;
+use Model\Dao\SoftwareLinks;
 use Model\Dao\Members;
 use Util\SoftwareUtil;
 use Util\MembersUtil;
@@ -13,12 +14,12 @@ use Util\MembersUtil;
 $app->get('/software/{keyword:[^(^information$)].+}', function (Request $request, Response $response, $args) {
 	$keyword=$args["keyword"];
 
-    $softwares = new Softwares($this->db);
-    $softwareVersions = new SoftwareVersions($this->db);
-	$members=new Members($this->db);
+	$softwares = new Softwares();
+	$softwareVersions = new SoftwareVersions();
+	$members=new Members();
+	$links = new SoftwareLinks();
 
-
-    $data = [];
+	$data = [];
 
 	$data["about"]=$softwares->select(array("keyword"=>$keyword),"","",1);
 
@@ -37,12 +38,11 @@ $app->get('/software/{keyword:[^(^information$)].+}', function (Request $request
 		$version["hist_text"]=explode("\n",$version["hist_text"]);
 	}
 
-
-
 	$data["staff"]=$members->select(array("id"=>$data["about"]["staff"]));
 	MembersUtil::makeLinkCode($data["staff"]);
 
-    // Render view
-    return $this->view->render($response, 'software/detail.twig', $data);
-});
+	$data["links"] = $links->getBySoftwareId($data["about"]["id"]);
 
+	// Render view
+	return $this->view->render($response, 'software/detail.twig', $data);
+});
