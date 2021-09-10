@@ -3,6 +3,7 @@
 // e.g: $app->add(new \Slim\Csrf\Guard);
 
 use Util\MembersUtil;
+use Util\UrlUtil;
 
 $app->add(new DataBaseTransactionHandler($app->getContainer()));
 $app->add(new adminPageHandler($app->getContainer()));
@@ -39,10 +40,10 @@ class AdminPageHandler{
 
 	//admin/の時だけ、管理者ログインなどを行う
 	public function __invoke($request, $response, $next){
-//		var_dump($request->getUri());
-//		exit();
-		if(explode("/",$request->getUri()->getPath())[1]==="admin"){
-			if(count(explode("/",$request->getUri()->getPath()))>=3 && explode("/",$request->getUri()->getPath())[2]==="login"){	//ログインページだけは無視
+		$path = UrlUtil::normalize($request->getUri()->getPath());
+
+		if(explode("/",$path)[0]==="admin"){
+			if(count(explode("/",$path))>=2 && explode("/",$path)[1]==="login"){	//ログインページだけは無視
 				return $response = $next($request, $response);
 			}
 			if(empty($_SESSION["ID"])){
@@ -63,10 +64,13 @@ class AdminPageHandler{
 
 
 set_error_handler(function(int $errno, string $errstr, string $errfile, int $errline, array $errcontext){
+	print("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
 	$GLOBALS["app"]->getContainer()->get("logger")->error("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
 	if ($GLOBALS["app"]->getContainer()->get("db")->isTransactionActive()){
 		$GLOBALS["app"]->getContainer()->get("logger")->info("DB rollback");
 		$GLOBALS["app"]->getContainer()->get("db")->rollBack();
 	}
+	die();
 	return false;
 });
+

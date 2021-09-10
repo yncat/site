@@ -70,4 +70,10 @@ class UrlUtil{
 		$abs_url = $urlHome . '/' . implode('/', $pathBaseAry);
 		return $abs_url;
 	}
+
+	// URLのパス部分を受け取って正規化する
+	public static function normalize(string $path):string{
+		return implode("/", array_filter(explode("/",$path), "strlen"));
+	}
+
 }
