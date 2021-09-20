@@ -21,12 +21,16 @@ $app->get('/api/dailyBatch', function (Request $request, Response $response) {
 		return $response->withJson($json);
 	}
 
+	$json["code"] = 200;
+	$json["message"] = "Started.";
+	print(json_encode($json));
+	ob_flush();
+	flush();
+
 	sendContributionCount();
 	sendDownloadCount();
 
-	$json["code"] = 200;
-	$json["message"] = "Done.";
-	return $response->withJson($json);
+	return $response;
 });
 
 function sendContributionCount(){
@@ -47,7 +51,7 @@ function sendDownloadCount(){
 	$softwares = new softwares();
 	$text = "Software download count\n\n";
 
-    $softwares=$softwares->getLatest(null, FLG_HIDDEN);
+	$softwares=$softwares->getLatest(null, FLG_HIDDEN);
 	foreach($softwares as &$software){
 		$tag = GitHubUtil::getTagByDownloadURL($software["package_URL"]);
 		$data = GitHubUtil::connect("/repos/".$software["gitHubURL"]."releases/tags/".$tag);

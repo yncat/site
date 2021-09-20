@@ -59,6 +59,14 @@
 ```
 - その他の環境については上記を適宜読み替える。
 
+## 出力バッファリングの無効化
+
+DailyBatchの実行に時間がかかり、Webhookの実行元でエラー判定される問題があった。
+Apacheの場合、以下のようにすると改善される場合があるようだ。
+```
+php_value output_buffering Off
+SetEnv no-gzip 1
+```
 ## 利用ライブラリ
 - slim/twig-view
 - twig/extensions

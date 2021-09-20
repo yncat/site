@@ -17,6 +17,8 @@ class SlackUtil {
 	}
 
 	public static function send($body, string $url){
+		global $app;
+		$logger = $app->getContainer()->get("logger");
 		$header=array(
 			"Content-Type: application/json",
 			"User-Agent: ACTLaboratory-webadmin"
@@ -32,31 +34,34 @@ class SlackUtil {
 			];
 		}
 
+		$logger->debug("send slack request to " . $url . " body=" . var_export($body, true));
+
+
 		$context = array(
 			"http" => array(
 				"method"  => "POST",
+				"protocol_version" => 1.1,
 				"header"  => implode("\r\n", $header),
 				"content" => json_encode($body),
-				"ignore_errors"=>true
+				"ignore_errors" => false
 			)
 		);
 
 		$result=file_get_contents($url, false, stream_context_create($context));
-		$result = json_decode($result,true);
 		return $result;
 	}
 
 	public static function velifySlackRequest(Request $request){
-	    $timestamp = $request->getHeaderLine('x-slack-request-timestamp');
-    	$signature = $request->getHeaderLine('x-slack-signature');
-	    $requestBody = $request->getBody()->getContents();
-    	$secret = getenv("SLACK_SIGNING_SECRET");
+		$timestamp = $request->getHeaderLine('x-slack-request-timestamp');
+		$signature = $request->getHeaderLine('x-slack-signature');
+		$requestBody = $request->getBody()->getContents();
+		$secret = getenv("SLACK_SIGNING_SECRET");
 
 		//カーソル位置を先頭に戻しておく
 		$request->getBody()->rewind();
 
-	    $sigBasestring = 'v0:' . $timestamp . ':' . $requestBody;
-    	$hash = 'v0=' . hash_hmac('sha256', $sigBasestring, $secret);
-	    return $hash === $signature;
+		$sigBasestring = 'v0:' . $timestamp . ':' . $requestBody;
+		$hash = 'v0=' . hash_hmac('sha256', $sigBasestring, $secret);
+		return $hash === $signature;
 	}
 }
