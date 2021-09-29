@@ -50,12 +50,17 @@
 	SetEnv SCRIPT_PASSWORD '********'		#ルートに置いてある外部実行用スクリプトの起動PW
 	SetEnv SLACK_NOTIFY_URL 'https://hooks.slack.com/services/*****'
 	SetEnv SLACK_DAILY_URL 'https://hooks.slack.com/services/*****'
+	SetEnv SLACK_ALERT_URL "https://hooks.slack.com/services/*****"
+	SetEnv SLACK_MESSAGE_URL "https://hooks.slack.com/services/*****"
+	SetEnv SLACK_TWITTER_NOTIFY_URL "https://hooks.slack.com/services/*****"
+
 	SetEnv SLACK_SIGNING_SECRET '****************'
 
 	SetEnv TWITTER_API_KEY '********'
 	SetEnv TWITTER_API_SECRET '********'
 	SetEnv TWITTER_ACCESS_TOKEN '********'
 	SetEnv TWITTER_ACCESS_TOKEN_SECRET '********'
+	SetEnv TWITTER_ENV_NAME "********" #twitter account activity APIの開発環境名
 ```
 - その他の環境については上記を適宜読み替える。
 

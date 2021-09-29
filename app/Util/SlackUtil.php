@@ -16,6 +16,18 @@ class SlackUtil {
 		self::send($body,getenv("SLACK_DAILY_URL"));
 	}
 
+	static function alert($body){
+		self::send($body,getenv("SLACK_ALERT_URL"));
+	}
+
+	static function message($body){
+		self::send($body,getenv("SLACK_MESSAGE_URL"));
+	}
+
+	static function twitter_notify($body){
+		self::send($body, getenv("SLACK_TWITTER_NOTIFY_URL"));
+	}
+
 	public static function send($body, string $url){
 		global $app;
 		$logger = $app->getContainer()->get("logger");
