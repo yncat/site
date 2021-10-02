@@ -4,9 +4,6 @@ use Slim\Http\Response;
 use Model\Dao\Updaterequests;
 use Util\AdminUtil;
 
-require_once "profile.php";
-require_once "edit.php";
-
 $app->get('/admin/request', function (Request $request, Response $response) {
 	$updaterequests=new Updaterequests($this->db);
 

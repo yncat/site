@@ -65,7 +65,7 @@ $app->post('/admin/profile', function (Request $request, Response $response) {
 		$message=profileParamCheck($input);
 
 		if($message===""){
-			showProfileConfirm($input,$this->db,$this->view,$response,$message);
+			return showProfileConfirm($input,$this->db,$this->view,$response,$message);
 		}
 	} else if($input["type"]==="slack-del"){
 		if($input["slack-del"] === $info["slack"]){
