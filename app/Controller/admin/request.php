@@ -57,7 +57,15 @@ $app->post('/admin/request', function (Request $request, Response $response) {
 });
 
 // 更新リクエスト承認処理
-$app->post('/admin/request/{id}/request', function (Request $request, Response $response) {
+$app->post('/admin/request/{id}/request', function (Request $request, Response $response, $args) {
+	$request_id = $args["id"];
+	$updaterequests=new Updaterequests();
+	$info=$updaterequests->select(array("id"=>$request_id));
+	if(!$info){
+		throw new NotFoundException($request, $response);
+	}
+	$data=unserialize($info["value"]);
+
 	$input = $request->getParsedBody();
 	$message="";
 	if(!empty($input)){
@@ -96,6 +104,10 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 			}
 		}
 	}
+	if($info["type"]==="delete_software_version"){
+		$message = ApproveDeleteVersion($data, $request_id);
+	}
+
 	if($message===""){
 		$message="不正なリクエストのため、処理を中止しました。";
 	}
@@ -136,6 +148,9 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		if($info["type"]==="informations"){
 			$data["requestId"]=$id;
 			return showInformationsConfirm($data,"approve",$this->view,$response,"");
+		}
+		if($info["type"]==="delete_software_version"){
+			return showDeleteVersionConfirm($data,$this->view, $request, $response);
 		}
 	}
 	if($message===""){

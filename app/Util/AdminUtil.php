@@ -73,5 +73,9 @@ class AdminUtil{
 		if($request["type"]==="informations"){
 			return $requester."からのお知らせ配信要求";
 		}
+		if($request["type"]==="delete_software_version"){
+			return $requester."から" . $request["identifier"] . "の削除要求";
+		}
+
 	}
 }

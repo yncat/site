@@ -1,0 +1,59 @@
+{% set page_title = title ~ "公開バージョン削除確認" %}
+
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+<form method="post" autocomplete="off">
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ about.title }} Version {{ version.versionText }}　削除確認
+		</h2>
+		<div class="container py-5 text-center">
+			<p>
+				以下のバージョンを削除します。内容を確認し、ＯＫボタンを押してください。
+			</p>
+			<p>
+				尚、本機能を利用して削除してもGitHub上のリリースは削除されません。
+				また、トップページやTwitterへのお知らせの配信も行われません。
+				これらが必要な場合は、それぞれ別途行ってください。
+			</p>
+		</div>
+	</div>
+
+	<dl>
+		<dt>対象ソフトウェア</dt>
+		<dd>{{ about.title}} ({{ about.keyword }})</dd>
+	</dl>
+
+
+	<dl>
+		<dt>バージョン</dt>
+		<dd>{{ version.versionText }}</dd>
+	</dl>
+
+	<dl>
+		<dt>バージョン履歴掲載情報</dt>
+		<dd>
+			{%for hist in version.hist_text %}
+					{{ hist | nl2br }}
+			{% endfor %}
+		</dd>
+	</dl>
+
+	<input type="submit" value="ＯＫ">
+</form>
+
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

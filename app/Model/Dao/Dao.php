@@ -113,6 +113,43 @@ abstract class Dao {
 	}
 
 	/**
+	 * count Function
+	 *
+	 * 条件に合うデータの個数を数える関数
+	 *
+	 * @param array $param WHERE句として指定したい条件を連想配列で指定します。値に%があると、部分一致などもできます
+	 * @return int
+	 */
+	public function count(array $param):int
+	{
+		//クエリビルダをインスタンス化
+		$queryBuilder = new QueryBuilder($this->db);
+
+		//ベースクエリを構築する
+		$queryBuilder
+			->select('count(*) cnt')
+			->from($this->_table_name);
+
+		//引数の配列からWhere句を生成
+		foreach ($param as $key => $val) {
+			//値があれば処理をする
+			if ($val) {
+				$queryBuilder->andWhere($key . " LIKE :$key");
+				$queryBuilder->setParameter(":$key", $val);
+			}
+		}
+
+		//クエリ実行
+		$query = $queryBuilder->execute();
+		$result = $query->Fetch();
+
+		//結果を返送
+		return $result["cnt"];
+	}
+
+
+
+	/**
 	 * exist Function
 	 *
 	 * 条件に合うレコードの存在確認を行う汎用exist関数
@@ -243,7 +280,7 @@ abstract class Dao {
 			}
 		}
 		//クエリ実行
-		$queryBuilder->execute();
+		return $queryBuilder->execute();
 	}
 
 	public function getQueryBuilder(){

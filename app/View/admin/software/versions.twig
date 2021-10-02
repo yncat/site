@@ -1,0 +1,53 @@
+{% set page_title = about.title ~ " 公開中バージョン一覧" %}
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			{{ about.title}} 公開中バージョン一覧
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p>公開中のバージョンの一覧です。ダウンロード数の確認と、バージョンの削除(公開停止)の操作ができます。</p>
+			<p>なお、バージョンの削除機能は複数のバージョンが公開されている場合のみ利用可能です。</p>
+		</div>
+	</div>
+
+	<div class="container pb-5 mb-5">
+		{% for version in versions %}
+			<ul class="list-group">
+				<li class="my-3">
+					<h4>{{ version.versionText }}</h4>
+					<div class="row">
+						<div class="col-md-9 col-lg-10">
+							<div class="container">
+								<p><b>{{ version.released_at }}</b></p>
+								{%for hist in version.hist_text %}
+									{{ hist | nl2br }}
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-md-3 col-lg-2 text-center py-2">
+							<p>新規DL：{{ version.dl_count }}回</p>
+							<p>パッチDL：{{ version.patch_dl_count }}回</p>
+							<a class="btn btn-danger" href="{{ version.id }}/delete">削除</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+		{% endfor %}
+	</div>
+
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
