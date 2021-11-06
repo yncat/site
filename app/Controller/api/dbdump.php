@@ -31,7 +31,7 @@ $app->get('/api/dbDump', function (Request $request, Response $response) {
 });
 
 function dbDump(){
-	$cmd = "mysqldump {getenv('DB_NAME')} -u {getenv('DB_USER')} -p{getenv('DB_PASS')} --default-character-set=utf8mb4 --no-tablespaces -B {getenv('DB_NAME')}";
+	$cmd = "mysqldump " . getenv('DB_NAME') . " -u " . getenv('DB_USER') . " -p" . getenv('DB_PASS') . " --default-character-set=utf8mb4 --no-tablespaces -B " . getenv('DB_NAME');
 	$data = shell_exec($cmd);
 	return DropboxUtil::save("server・ITサービス利用/DB_backups/backup_".date("y-m-d-His").".sql",$data);
 }
