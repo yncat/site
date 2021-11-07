@@ -76,13 +76,17 @@ class UrlUtil{
 		return implode("/", array_filter(explode("/",$path), "strlen"));
 	}
 
-	public static function get_current_url(){
+	public static function get_origin(){
 		$url = "http://";
 		if(!empty($_SERVER["HTTPS"])){
 			$url = "https://";
 		}
 		$url .= $_SERVER["HTTP_HOST"];
-		$url .= $_SERVER["REQUEST_URI"];
 		return $url;
+	}
+
+	public static function get_current_url(){
+		return self::get_origin() . $_SERVER["REQUEST_URI"];
+
 	}
 }

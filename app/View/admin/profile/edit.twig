@@ -77,6 +77,7 @@
 			<input type="hidden" name="id" value="{{ id }}">
 			<input type="submit" value="確認">
 		</div>
+		{{ csrf_field() | raw }}
 	</form>
 
 	<div class="text-white bg-primary p-1">
@@ -103,6 +104,7 @@
 			<input type="hidden" name="type" value="email">
 			<input type="submit" value="変更">
 		</div>
+		{{ csrf_field() | raw }}
 	</form>
 
 
@@ -139,6 +141,7 @@
 			<input type="hidden" name="type" value="password">
 			<input type="submit" value="変更">
 		</div>
+		{{ csrf_field() | raw }}
 	</form>
 
 	{% if slack %}
@@ -168,6 +171,7 @@
 				<input type="hidden" name="type" value="slack-del">
 				<input type="submit" value="登録を解除">
 			</div>
+			{{ csrf_field() | raw }}
 		</form>
 	{% endif %}
 

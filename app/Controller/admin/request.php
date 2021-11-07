@@ -4,6 +4,7 @@ use Slim\Http\Response;
 use Model\Dao\Updaterequests;
 use Util\AdminUtil;
 
+// リクエスト一覧画面
 $app->get('/admin/request', function (Request $request, Response $response) {
 	$updaterequests=new Updaterequests($this->db);
 
@@ -48,16 +49,20 @@ $app->post('/admin/request', function (Request $request, Response $response) {
 			}
 		}
 	}
+	return showResultMessage($message);
+});
+
+function showResultMessage($message=""){
+	global $app;
 	if($message===""){
 		$message="不正なリクエストのため、処理を中止しました。";
 	}
 	$data=array("message"=>$message);
-	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
-	return $this->view->render($response, 'admin/request/request.twig', $data);
-});
+	return $app->getContainer()->get("view")->render($app->getContainer()->get('response'), 'admin/request/request.twig', $data);
+}
 
 // 更新リクエスト承認処理
-$app->post('/admin/request/{id}/request', function (Request $request, Response $response, $args) {
+$approveRequest = function(Request $request, Response $response, $args) {
 	$request_id = $args["id"];
 	$updaterequests=new Updaterequests();
 	$info=$updaterequests->select(array("id"=>$request_id));
@@ -107,20 +112,11 @@ $app->post('/admin/request/{id}/request', function (Request $request, Response $
 	if($info["type"]==="delete_software_version"){
 		$message = ApproveDeleteVersion($data, $request_id);
 	}
+	return showResultMessage($message);
+};
 
-	if($message===""){
-		$message="不正なリクエストのため、処理を中止しました。";
-	}
-	$data=array("message"=>$message);
-	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
-	return $this->view->render($response, 'admin/request/request.twig', $data);
-});
-
-// 更新リクエスト確認URLへ
-$app->post('/admin/request/{id}/', function (Request $request, Response $response,$args) {
-	$id=$args["id"];
-	return $response->withRedirect($request->getUri()->getBasePath().'/admin/request/'.$id.'/request',307);
-});
+$app->post('/admin/request/{id}/request', $approveRequest);
+$app->post('/admin/request/{id}/', $approveRequest);
 
 // 更新リクエスト確認および削除確認画面表示
 $app->get('/admin/request/{id}/', function (Request $request, Response $response,$args) {
@@ -157,12 +153,11 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		$message="不正なリクエストのため、処理を中止しました。";
 	}
 	$data=array("message"=>$message);
-	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 
 // 更新リクエスト削除処理
-$app->get('/admin/request/{id}/delete', function (Request $request, Response $response,$args) {
+$app->post('/admin/request/{id}/delete', function (Request $request, Response $response,$args) {
 	$id=$args["id"];
 	$updaterequests=new Updaterequests($this->db);
 	$info=$updaterequests->select(array("id"=>$id));
@@ -175,7 +170,6 @@ $app->get('/admin/request/{id}/delete', function (Request $request, Response $re
 	}
 
 	$data=array("message"=>$message);
-	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
 	return $this->view->render($response, 'admin/request/request.twig', $data);
 });
 

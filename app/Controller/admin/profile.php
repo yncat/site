@@ -16,7 +16,7 @@ $app->get('/admin/profile',function (Request $request, Response $response, $args
 });
 
 function showProfileEditor(array $data,$db,$view,$response,$message=""){
-	if(empty($data)){
+	if(empty($data["name"])){
 		$members=new Members($db);
 		$data=$members->select(array("id"=>$_SESSION["ID"]));
 	}
@@ -110,18 +110,25 @@ function profileParamCheck($input){
 
 function setProfile($input,$db){
 	if($_SESSION["ID"]==$input["id"]){	#本人リクエストなのでペンディング
-		$no = AdminUtil::sendRequest("publicInformation", $input, "".$_SESSION["ID"]);
+		$data = [
+			"id" => $_SESSION["ID"],
+			"name" => $input["name"],
+			"introduction" => $input["introduction"],
+			"twitter" => $input["twitter"],
+			"github" => $input["github"],
+			"url" => $input["url"],
+		];
+		$no = AdminUtil::sendRequest("publicInformation", $data, "".$_SESSION["ID"]);
 		return "リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
 	} else {	#本人以外のリクエストなので確定してDB反映
-		$updaterequests=new Updaterequests($db);
+		$updaterequests=new Updaterequests();
 		$request = $updaterequests->select(array(
 			"type"=>"publicInformation",
 			"identifier"=>"".$input["id"]
 		));
 		$info=unserialize($request["value"]);
-		unset($info["type"]);
 		$info["id"]=$request["requester"];		//念のため対策
-		$members=new Members($db);
+		$members=new Members();
 		$members->update($info);
 		AdminUtil::completeRequest($request["id"]);
 

@@ -39,6 +39,7 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Slim\\Views\\' => 11,
+            'Slim\\Csrf\\' => 10,
             'Slim\\' => 5,
         ),
         'P' => 
@@ -125,6 +126,10 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
         array (
             0 => __DIR__ . '/..' . '/slim/php-view/src',
             1 => __DIR__ . '/..' . '/slim/twig-view/src',
+        ),
+        'Slim\\Csrf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/slim/csrf/src',
         ),
         'Slim\\' => 
         array (

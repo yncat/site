@@ -2,7 +2,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$app->get('/admin/dbdump', function (Request $request, Response $response) {
+$app->post('/admin/dbdump', function (Request $request, Response $response) {
 	if (dbDump()){
 		$message = "バックアップを作成しました。";
 	} else {

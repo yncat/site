@@ -1,12 +1,38 @@
 <?php
 // Application middleware
-// e.g: $app->add(new \Slim\Csrf\Guard);
 
 use Util\MembersUtil;
 use Util\UrlUtil;
 
 $app->add(new DataBaseTransactionHandler($app->getContainer()));
+$app->add(new SecurityHandler($app->getContainer()));
 $app->add(new adminPageHandler($app->getContainer()));
+
+
+class SecurityHandler{
+	private $container;
+
+	public function __construct($container) {
+		$this->container = $container;
+	}
+
+	public function __invoke($request, $response, $next){
+		$response = $response->withHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+		$path = UrlUtil::normalize($request->getUri()->getPath());
+		if(explode("/",$path)[0]==="api"){
+			if (in_array($request->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH'])) {
+				//originヘッダがある場合には正当性を確認する
+				$origin = $request->getHeaderLine("Origin");
+				if($origin !== "" && $origin !== UrlUtil::get_origin()){
+					return $response->withStatus(400)->write("origin check failed.");
+				}
+			}
+			return $next($request, $response);
+		} else {
+			return $this->container->get("csrf")->__invoke($request, $response, $next);
+		}
+	}
+}
 
 class DataBaseTransactionHandler{
 

@@ -19,6 +19,11 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// CSRF‘Îô
+$app->getContainer()['csrf'] = function ($c) {
+    return new \Slim\Csrf\Guard();
+};
+
 // Register Twig View helper
 $container['view'] = function ($c) {
 	$settings = $c->get('settings')['renderer'];
@@ -36,6 +41,8 @@ $container['view'] = function ($c) {
 	$view->offsetSet("page_description", "");
 	$view->offsetSet("page_type", "article");
 	$view->offsetSet("page_keywords", []);
+	$view->offsetSet("csrf_field_name", $c->get('csrf')->getTokenName());
+	$view->offsetSet("csrf_field_value", $c->get('csrf')->getTokenValue());
 	twigExtention\registerTwigExtention($view);
     return $view;
 };
@@ -51,7 +58,7 @@ $container['db'] = function ($c) {
 
 // Session Container
 $container['session'] = function ($c) {
-    return new \SlimSession\Helper;
+    return new \SlimSession\Helper($c->get('settings')['session']);
 };
 
 // 404 Not Found Container

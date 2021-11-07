@@ -7,7 +7,7 @@ use Util\SoftwareUtil;
 
 $app->get('/admin/softwares/', function (Request $request, Response $response) {
 
-    $softwares = new softwares($this->db);
+    $softwares = new softwares();
 
     $data = [];
 	$data["softwares"]=$softwares->getLatest();

@@ -52,6 +52,7 @@
 
 			<input type="submit" value="ログイン">
 		</div>
+		{{ csrf_field() | raw }}
 	</form>
 
 	<div class="text-white bg-primary p-1">
@@ -77,6 +78,7 @@
 			</div>
 			<input type="submit" value="ハッシュ生成">
 		</div>
+		{{ csrf_field() | raw }}
 	</form>
 
 {% endblock %}

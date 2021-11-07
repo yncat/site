@@ -102,7 +102,8 @@ $app->post('/admin/softwares/edit/{keyword}', function (Request $request, Respon
 			if ($input["step"]!="confirm"){
 				return showConfirm($input,$this->db,$this->view,$response);
 			} else {
-				return $response->withRedirect($request->getUri()->getBasePath().'/admin/request',307);
+				$message=setEdit($input,$this->db);
+				return showResultMessage($message);
 			}
 		}
 
@@ -133,7 +134,8 @@ $app->post('/admin/softwares/edit/{keyword}', function (Request $request, Respon
 							if ($data["fileUrl"]!=null){
 								if ($input["step"]=="confirm"){
 									//登録処理
-									return $response->withRedirect($request->getUri()->getBasePath().'/admin/request',307);
+									$message=setNew($input,$this->db);
+									return showResultMessage($message);
 								}
 								return showNewConfirm($data,$this->db,$this->view,$response);
 							} else {

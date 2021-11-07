@@ -109,10 +109,13 @@ $app->post('/admin/softwares/update/{keyword}', function (Request $request, Resp
 		if($input["step"]!="confirm"){
 			return showUpdateConfirm($data,$this->db,$this->view,$response);
 		} else {
-			return $response->withRedirect($request->getUri()->getBasePath().'/admin/request',307);
+			$message.=paramCheck3($input);
+			if ($message==""){
+				$message=setUpdate($input,$this->db);
+			}
+			return showResultMessage($message);
 		}
 	}
-
 });
 
 function showUpdateConfirm(array $data,$db,$view,$response){

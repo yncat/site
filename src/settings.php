@@ -2,7 +2,7 @@
 
 return [
     'settings' => [
-        'displayErrorDetails' => false, // set to false in production
+        'displayErrorDetails' => true, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
         //ミドルウェアの前にマッピングを確定させる
@@ -19,6 +19,18 @@ return [
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+
+		// session cookie settings
+		'session' => [
+            'lifetime'     => '20 minutes',
+            'path'         => '/',
+            'domain'       => $_SERVER["HTTP_HOST"],
+            'secure'       => (!empty($_SERVER["HTTPS"])),
+            'httponly'     => true,
+            'name'         => 'slim_session',
+            'autorefresh'  => false,
+            'handler'      => null,
+		],
 
         // DataBase(MySQL) settings
         'doctrine' => [

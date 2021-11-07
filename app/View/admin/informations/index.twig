@@ -44,6 +44,7 @@
 		<input type="hidden" name="type" value="informations">
 		<input type="hidden" name="step" value="{{ step }}">
 		<input type="submit" value="次へ">
+		{{ csrf_field() | raw }}
 	</form>
 
 {% endblock %}

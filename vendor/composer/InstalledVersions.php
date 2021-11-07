@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '93226038ef51e8e48900765b1812df034f0515ac',
+    'reference' => '7e8e57ec1892d7c749a8c060047cab867bd4e209',
     'name' => 'slim/slim-skeleton',
   ),
   'versions' => 
@@ -154,6 +154,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '7f466b331cebfdd00e3568acaf45f2e90a39a320',
+    ),
+    'paragonie/random_compat' => 
+    array (
+      'pretty_version' => 'v9.99.100',
+      'version' => '9.99.100.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
     ),
     'phpdocumentor/reflection-common' => 
     array (
@@ -394,6 +403,15 @@ private static $installed = array (
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
     ),
+    'slim/csrf' => 
+    array (
+      'pretty_version' => '0.8.3',
+      'version' => '0.8.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5f2bcf5d89adf86dc0455a32bea84d912ab466a7',
+    ),
     'slim/php-view' => 
     array (
       'pretty_version' => '2.2.1',
@@ -419,7 +437,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '93226038ef51e8e48900765b1812df034f0515ac',
+      'reference' => '7e8e57ec1892d7c749a8c060047cab867bd4e209',
     ),
     'slim/twig-view' => 
     array (

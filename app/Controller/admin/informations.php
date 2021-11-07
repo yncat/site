@@ -75,7 +75,6 @@ function informationsCheck(array $data){
 function setInformationsRequest(array $data,$db,$view,$response, $request){
 	$no=AdminUtil::sendRequest("informations",$data);
 	$data["message"] ="リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
-	$data["topPageUrl"]=$request->getUri()->getBasePath()."/admin/?".SID;
 	return $view->render($response, 'admin/request/request.twig', $data);
 }
 

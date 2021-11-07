@@ -24,7 +24,8 @@
         "larapack/dd": "1.1",
 		"phpunit/phpunit":"5.7.27",
         "abraham/twitteroauth": "^2.0",
-        "nojimage/twitter-text-php": "^3.1"
+        "nojimage/twitter-text-php": "^3.1",
+        "slim/csrf": "0.8.3"
     },
     "autoload": {
         "psr-4": {

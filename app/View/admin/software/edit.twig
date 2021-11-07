@@ -154,6 +154,7 @@
 	<input type="hidden" name="step" value="edit">
 	<input type="hidden" name="type" value="{{ type }}">
 	<input type="hidden" name="flag" value="{{ flag }}">
+	{{ csrf_field() | raw }}
 </form>
 {% endblock %}
 

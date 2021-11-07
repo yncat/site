@@ -22,8 +22,9 @@
 			<p>タイトル：{{ title }}</p>
 		</div>
 
-		<form action="delete" method="GET">
+		<form action="delete" method="POST">
 			<input type="submit" value="　削除　">
+			{{ csrf_field() | raw }}
 		</form>
 		<form action="../../" method="GET">
 			<input type="submit" value="　キャンセル　">
