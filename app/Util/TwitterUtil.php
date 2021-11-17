@@ -1,8 +1,11 @@
 <?php
 namespace Util;
+
+
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Twitter\Text;
 use slim\Http\Request;
+use Util\SlackUtil;
 
 class TwitterUtil{
 	protected static $twitter = null;
@@ -16,8 +19,12 @@ class TwitterUtil{
 
 	public static function tweet(string $text, string $url = ""){
 		self::initializeIfNeeded();
-		$result = self::$twitter->post("statuses/update", ["status" => self::makeTweetString($text, $url)]);
-		return $result;
+		$body = self::makeTweetString($text, $url);
+		if(EnvironmentUtil::isProduct()){
+			self::$twitter->post("statuses/update", ["status" => $body]);
+		} else {
+			SlackUtil::notify("Tweet:" . $body);
+		}
 	}
 
 	public static function makeTweetString(string $tweet, string $url = ""){
