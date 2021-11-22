@@ -50,18 +50,37 @@
 				<h3 class="my-0">ダウンロード</h3>
 			</div>
 			<div class="container">
+				{% if is_paid %}<p class="text-center">無償での体験利用も可能です。</p>{% endif %}
 				<p class="text-center"><a class="btn btn-success btn-lg" href="{{ versions.0.package_URL }}">最新版ダウンロード</a></p>
 				<p class="text-center"><a class="btn" href="{{ about.snapshotURL }}">開発中α版ダウンロード</a></p>
 			</div>
 
+			{% if is_paid %}
+				<div class="text-white bg-primary text-center mb-2 p-1">
+					<h3 class="my-0">ご購入</h3>
+				</div>
+				{% for product in products %}
+					<div class="container my-4">
+						<div class="text-center"><a class="btn btn-info btn-lg mx-2 py-2" style="display: block;" href="/store/?productid={{ product.id }}">
+							<p style="float: left; text-align: left;">{{ product.edition }}</p>
+							<p style="text-align: right; vertical-align: middle;" class="p-0 m-0">￥{{ product.price | number_format }}</p>
+						</a></div>
+					</div>
+
+				{% endfor %}
+
+			{% endif %}
+
 			<div class="text-white bg-primary text-center p-1">
 				<h3 class="my-0">関連リンク</h3>
 			</div>
-			<div class="container">
-				{% for i in links %}
-					<p><a class="btn" href="{{ i.url }}">{{ i.name }}</a></p>
-				{% endfor %}
-				<p><a class="btn" href="https://github.com/{{ about.gitHubURL }}">GitHubリポジトリ</a></p>
+			<div class="container my-4">
+				<ul style="list-style-type: none;" class="px-2">
+					{% for i in links %}
+						<li><a href="{{ i.url }}">{{ i.name }}</a></li>
+					{% endfor %}
+					<li><a href="https://github.com/{{ about.gitHubURL }}">GitHubリポジトリ</a></ll>
+				</ul>
 			</div>
 
 			<div class="text-white bg-primary text-center p-1">

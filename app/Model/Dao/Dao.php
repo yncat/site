@@ -79,10 +79,21 @@ abstract class Dao {
 
 		//引数の配列からWhere句を生成
 		foreach ($param as $key => $val) {
-			//値があれば処理をする
-			if ($val) {
+			//値があれば値
+			if (!is_array($val) && $val!==NULL) {
 				$queryBuilder->andWhere($key . " LIKE :$key");
 				$queryBuilder->setParameter(":$key", $val);
+			} elseif ($val===NULL){ //NULLを評価
+				$queryBuilder->andWhere($key . " IS NULL");
+			} elseif (count($val)===2) {
+				$queryBuilder->andWhere($key . " $val[0] :$key ");
+				$queryBuilder->setParameter(":$key", $val[1]);
+			} elseif (count($val)===3){
+				$queryBuilder->andWhere($key . " $val[0] :1$key AND :2$key ");
+				$queryBuilder->setParameter(":1$key", $val[1]);
+				$queryBuilder->setParameter(":2$key", $val[2]);
+			} else{
+				return FALSE;
 			}
 		}
 
@@ -274,11 +285,24 @@ abstract class Dao {
 
 		//引数の配列からWhere句を生成
 		foreach ($param as $key => $val) {
-			if($val){
-				$queryBuilder->andWhere($key."= :$key")
-				->setParameter(":$key", $val);
+			//値があれば値
+			if (!is_array($val) && $val!==NULL) {
+				$queryBuilder->andWhere($key . " LIKE :$key");
+				$queryBuilder->setParameter(":$key", $val);
+			} elseif ($val===NULL){ //NULLを評価
+				$queryBuilder->andWhere($key . " IS NULL");
+			} elseif (count($val)===2) {
+				$queryBuilder->andWhere($key . " $val[0] :$key ");
+				$queryBuilder->setParameter(":$key", $val[1]);
+			} elseif (count($val)===3){
+				$queryBuilder->andWhere($key . " $val[0] :1$key AND :2$key ");
+				$queryBuilder->setParameter(":1$key", $val[1]);
+				$queryBuilder->setParameter(":2$key", $val[2]);
+			} else{
+				return FALSE;
 			}
 		}
+
 		//クエリ実行
 		return $queryBuilder->execute();
 	}

@@ -6,7 +6,7 @@ use Model\Dao\Members;
 
 class MembersUtil{
 
-	static function makeLinkCode(array &$info){
+	public static function makeLinkCode(array &$info){
 		if(!empty($info["twitter"])){
 			$info["twitter_link"]=
 			"<a href=\"https://twitter.com/".$info["twitter"]."?ref_src=twsrc%5Etfw\" class=\"twitter-follow-button\" data-show-count=\"false\">Twitter: @".$info["twitter"]."</a><script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";

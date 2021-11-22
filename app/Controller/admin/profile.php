@@ -46,7 +46,7 @@ $app->post('/admin/profile', function (Request $request, Response $response) {
 			return $response->withRedirect($request->getUri()->getBasePath()."/admin/"."?".SID);
 		}
 	} else if($input["type"]==="email"){
-		if(!ValidationUtil::checkParam($input,array("new"=>"#^[a-zA-Z]([a-zA-Z0-9._\\-?+/]{0,63}[a-zA-Z0-9])*@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$#"))){
+		if(!ValidationUtil::checkParam($input,array("new"=>ValidationUtil::EMAIL_PATTERN))){
 			$message.="入力されたメールアドレスの形式が不正です。";
 		} else if($input["new"]!==$input["new_confirm"]){
 			$message.="確認入力が一致しません。";

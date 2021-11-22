@@ -2,7 +2,7 @@
 
 
 ## 動作環境
-- PHP5.5以上かつintlが有効かされていること
+- PHP7以上かつintlが有効かされていること
 - Perl5系
 - Apache 2.4
 - Mysql5系
@@ -18,6 +18,7 @@
 	- 配布版と非公開版は一部異なる場合があるが、テーブル構造は同じである
 	- 先頭行のDB名は適宜修正してから実行する
 1. ウェブサーバを設定する。Apache2.4の場合は、.htaccessファイルを作成し、次項のとおり設定
+1. rsaキーペアを作成
 1. このファイルで示す、必要な環境変数を設定
 1. 管理者ページを利用したい場合には、DBのmembersテーブルにログイン情報を手動で追加する
 1. 掲示板も動かしたい場合には、各cgiファイル先頭行のperlのパスやパーミッションなどを設定
@@ -53,7 +54,6 @@
 	SetEnv SLACK_ALERT_URL "https://hooks.slack.com/services/*****"
 	SetEnv SLACK_MESSAGE_URL "https://hooks.slack.com/services/*****"
 	SetEnv SLACK_TWITTER_NOTIFY_URL "https://hooks.slack.com/services/*****"
-
 	SetEnv SLACK_SIGNING_SECRET '****************'
 
 	SetEnv TWITTER_API_KEY '********'
@@ -61,6 +61,12 @@
 	SetEnv TWITTER_ACCESS_TOKEN '********'
 	SetEnv TWITTER_ACCESS_TOKEN_SECRET '********'
 	SetEnv TWITTER_ENV_NAME "********" #twitter account activity APIの開発環境名
+
+	SetEnv PRIVATE_KEY_PATH '/path/to/private-key'
+
+	SetEnv PAYJP_SECRET 'sk_xxxx_xxxxxxxxxxxxxxxxxxxxxxxx'
+'
+
 ```
 - その他の環境については上記を適宜読み替える。
 

@@ -1,0 +1,22 @@
+{{ orders.0.name }} 様
+
+AccessibleToolsLaboratoryのソフトウェアをご利用いただき、ありがとうございます。
+ウェブサイト上での手続きによりシリアルキーの再発行の要求があったため、
+過去にご購入いただきました製品のシリアルキーの一覧を書きの通りお知らせいたします。
+
+シリアルキーは、ご購入の事実を証明する大切なものです。
+今後は紛失などされませんよう、また他者へ漏洩することのないよう、充分注意してお取り扱いください。
+
+
+{% for order in orders %}
+注文番号　　：{{ order.id }}
+注文日時　　：{{ order.created_at }}
+注文商品　　：{{ order.product_name }} {{ order.edition }}
+シリアルキー：{% for serial in order.serials %}{{ serial }}
+　　　　　　　{% endfor %}
+
+
+{% endfor %}
+
+
+{% include 'footer.twig' %}

@@ -1,0 +1,64 @@
+{% set page_title = "シリアルキー再送ツール" %}
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	{% if message!=null %}
+			<div class="alert-danger p-3">{{ message }}</div>
+	{% endif %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			シリアルキー再送ツール
+		</h2>
+		<div class="container py-5 text-center">
+			<p>
+				このページは、シリアルキーを紛失した場合の再発行フォームです。
+				こちらのフォームに入力した情報が購入時の情報と一致した場合にのみ、ライセンスキーを記載したメールを購入時に使用したメールアドレス宛に再送することができます。
+			</p>
+			<p>
+				なお、お問い合わせをいただきましても、購入時とは異なるメールアドレスへのキーの再送や、購入時の情報が不明な場合のお問い合わせに応じることはできません。
+				購入時の情報が不明な場合や、購入時に使用したメールアドレスを利用できない場合のシリアルキーの再発行手段は用意しておりません。
+			</p>
+		</div>
+	</div>
+
+
+	<div class="text-white bg-primary p-1">
+		<h3>購入情報の入力</h3>
+	</div>
+	<form method="POST">
+		<div class="container py-5">
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>email</label>
+				</div>
+				<div class="col-9">
+					<input type="email" name="email" required value="{{ email }}">
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-3">
+					<label>購入者名</label>
+				</div>
+				<div class="col-9">
+					<input type="text" name="name" required value="{{ name }}">
+				</div>
+			</div>
+
+			<input type="submit" value="再送">
+		</div>
+		{{ csrf_field() | raw }}
+	</form>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

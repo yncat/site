@@ -1,6 +1,8 @@
 <?php
 require("twigExtention/initializer.php");
 use src\twigExtention;
+use Util\EnvironmentUtil;
+
 // DIC configuration
 $container = $app->getContainer();
 
@@ -68,3 +70,22 @@ $container['notFoundHandler'] = function ($c) {
 		return $c->view->render($c->response, 'error/404.twig');
     };
 };
+
+$errorHandler = function ($c) {
+    return function ($request, $response,$e) use ($c) {
+		$response->withStatus(500,"Internal server error");
+		$s = "ERROR lv.".$e->getCode()." ".$e->getMessage()." at ".$e->getFile()." line:".$e->getLine();
+		if (!EnvironmentUtil::isProduct()){
+			print($s);
+		}
+		$GLOBALS["app"]->getContainer()->get("logger")->error($s);
+		if ($GLOBALS["app"]->getContainer()->get("db")->isTransactionActive()){
+			$GLOBALS["app"]->getContainer()->get("logger")->info("DB rollback");
+			$GLOBALS["app"]->getContainer()->get("db")->rollBack();
+		}
+		return $response->write("An error has occured.");
+	};
+};
+error_reporting(E_ALL);
+$container['errorHandler'] = $errorHandler;
+$container['phpErrorHandler'] = $errorHandler;

@@ -1,0 +1,42 @@
+{% set page_title = title ~ "公開情報最終確認" %}
+
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			注文一覧
+		</h2>
+		<div class="container py-5 text-center">
+			<p>
+                注文の確認と処理ができます。
+            </p>
+		</div>
+	</div>
+
+	<div class="row">
+        {% for o in orders %}
+            <div class="row col-12">
+                <div class="col-12 col-md-3">No.{{ o.orderId }}: {{ o.name }}</div>
+                <div class="col-12 col-md-6">{{ o.productName }} / {{ o.edition }} * {{ o.quantity }}</div>
+                <div class="col-6 col-md-1">\{{ o.totalPrice }}</div>
+                <div class="col-6 col-md-2">{{ o.paymentType }} {{ o.status }}</div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

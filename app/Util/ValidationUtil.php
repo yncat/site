@@ -1,12 +1,13 @@
 <?php
-
 namespace Util;
 
 class ValidationUtil{
 
+
 	// URLの正規表現パターン
 	const URL_PATTERN = "@^https?://([a-zA-Z0-9]+[\\.\\-])+[a-zA-Z0-9]+/.*$@";
-	
+	const EMAIL_PATTERN = "#^([a-zA-Z0-9][._\\-?+]?)+[a-zA-Z0-9]@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]+$#";
+
 	//必要な情報が正しい形式で含まれていることを確認する
 	static function checkParam(array $data,array $ptn){
 		foreach($ptn as $key=>$p){

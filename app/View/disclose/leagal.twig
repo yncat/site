@@ -20,7 +20,9 @@
 	{% for title,body in info %}
 		<div class="row my-3">
 			<div class="col-md-3 col-lg-2 pr-1" style="word-break: keep-all;">
-				{{ title | raw }}
+				<h3 style="font-size: 1.00rem;">
+					{{ title | raw }}
+				</h3>
 			</div>
 			<div class="col-md-9 col-lg-10">
 				{{ body | nl2br }}

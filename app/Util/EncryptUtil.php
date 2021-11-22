@@ -24,6 +24,15 @@ class EncryptUtil{
 		return $decrypted;
 	}
 
+	// 秘密鍵で暗号化する
+	// 出力はバイナリなので注意
+	static function encrypt_private_key($data): string{
+		$key = file_get_contents(getenv("PRIVATE_KEY_PATH"));
+		openssl_private_encrypt($data, $crypted, $key);
+
+		return $crypted;
+	}
+
 	static function base64_urlsafe_encode($val) {
 		$val = base64_encode($val);
 		return str_replace(array('+', '/', '='), array('_', '~', '.'), $val);

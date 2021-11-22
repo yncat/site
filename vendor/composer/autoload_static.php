@@ -48,6 +48,7 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'Prophecy\\' => 9,
+            'Payjp\\' => 6,
         ),
         'M' => 
         array (
@@ -150,6 +151,10 @@ class ComposerStaticInit3fa10fcab5578b5614493f6023b0fa59
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
+        ),
+        'Payjp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/payjp/payjp-php/lib',
         ),
         'Monolog\\' => 
         array (

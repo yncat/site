@@ -1,0 +1,80 @@
+{% set page_title = title ~ "公開情報最終確認" %}
+
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+<form method="post" autocomplete="off">
+
+	<div class="jumbotron">
+		<h2 class="text-center">
+			注文番号{{ orderId }}　振込成立の最終確認
+		</h2>
+		<div class="container py-5 text-center">
+			<p>
+				{% if step=="confirm" %}
+					この注文について、代金が全額振り込まれており、注文成立の諸条件を満たしていることをよく確認し、注文確定要求ボタンを押してください。
+				{% else %}
+					この操作により、以下の注文が確定します。代金が全額振り込まれており、注文成立の諸条件を満たしていることをよく確認し、注文確定ボタンを押してください。
+				{% endif %}
+			</p>
+		</div>
+		<input type="hidden" name="step" value="{{ step }}">
+	</div>
+
+	<dl>
+		<dt>注文番号</dt>
+		<dd>{{ orderId }}</dd>
+	</dl>
+	<input type="hidden" name="orderId" value="{{ orderId }}">
+
+	<dl>
+		<dt>注文者名</dt>
+		<dd>{{ name }}</dd>
+	</dl>
+
+	<dl>
+		<dt>注文日時</dt>
+		<dd>{{ createdAt }}</dd>
+	</dl>
+
+	<dl>
+		<dt>品名</dt>
+		<dd>{{ productName }}</dd>
+	</dl>
+
+	<dl>
+		<dt>エディション</dt>
+		<dd>{{ edition }}</dd>
+	</dl>
+
+	<dl>
+		<dt>単価</dt>
+		<dd>{{ price }}</dd>
+	</dl>
+
+	<dl>
+		<dt>合計金額（この金額が着金していることを再確認してください！）</dt>
+		<dd>{{ totalPrice }}</dd>
+	</dl>
+
+	{% if step==="confirm" %}
+		<input type="submit" value="注文確定要求">
+	{% else %}
+		<input type="submit" value="注文確定">
+	{% endif %}
+</form>
+
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}

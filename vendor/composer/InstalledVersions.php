@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '7e8e57ec1892d7c749a8c060047cab867bd4e209',
+    'reference' => '048f103c59df21c6de741cdba730d940b79ee545',
     'name' => 'slim/slim-skeleton',
   ),
   'versions' => 
@@ -163,6 +163,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
+    ),
+    'payjp/payjp-php' => 
+    array (
+      'pretty_version' => '1.2.0',
+      'version' => '1.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a5db0417a31e1d01bca643bde3a127829d1017e2',
     ),
     'phpdocumentor/reflection-common' => 
     array (
@@ -437,7 +446,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '7e8e57ec1892d7c749a8c060047cab867bd4e209',
+      'reference' => '048f103c59df21c6de741cdba730d940b79ee545',
     ),
     'slim/twig-view' => 
     array (

@@ -107,6 +107,12 @@ $approveRequest = function(Request $request, Response $response, $args) {
 					$message=setInformationsApprove($input,$this->db,$this->view,$response);
 				}
 			}
+			if($input["type"]==="confirmTransfer"){
+				$check=ordersCheck($input);
+				if($check===""){
+					$message=setTransferApprove($input,$this->db,$this->view,$response);
+				}
+			}
 		}
 	}
 	if($info["type"]==="delete_software_version"){
@@ -144,6 +150,10 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 		if($info["type"]==="informations"){
 			$data["requestId"]=$id;
 			return showInformationsConfirm($data,"approve",$this->view,$response,"");
+		}
+		if($info["type"]==="confirmTransfer"){
+			$data["requestId"]=$id;
+			return showTransferConfirm($data,"approve",$this->view,$response,"");
 		}
 		if($info["type"]==="delete_software_version"){
 			return showDeleteVersionConfirm($data,$this->view, $request, $response);

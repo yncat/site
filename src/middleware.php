@@ -3,6 +3,7 @@
 
 use Util\MembersUtil;
 use Util\UrlUtil;
+use Util\EnvironmentUtil;
 
 $app->add(new DataBaseTransactionHandler($app->getContainer()));
 $app->add(new SecurityHandler($app->getContainer()));
@@ -18,9 +19,14 @@ class SecurityHandler{
 
 	public function __invoke($request, $response, $next){
 		$response = $response->withHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
+		if (!EnvironmentUtil::isProduct()){
+				$response = $response->withHeader("Access-Control-Allow-Origin", "*")
+					->withHeader("Access-Control-Allow-Headers", "*");
+			}
+
 		$path = UrlUtil::normalize($request->getUri()->getPath());
 		if(explode("/",$path)[0]==="api"){
-			if (in_array($request->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH'])) {
+			if (in_array($request->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH']) && EnvironmentUtil::isProduct()) {
 				//originヘッダがある場合には正当性を確認する
 				$origin = $request->getHeaderLine("Origin");
 				if($origin !== "" && $origin !== UrlUtil::get_origin()){
