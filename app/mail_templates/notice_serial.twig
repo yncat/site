@@ -1,7 +1,7 @@
 {{ name }} 様
 
 AccessibleToolsLaboratoryのソフトウェアをご購入いただき、ありがとうございます。
-ご注文が確定し、シリアルキーが発行されましたので、お知らせいたします。
+ご注文が確定され、シリアルキーが発行されましたので、お知らせいたします。
 
 
 シリアルキーは、ご購入の事実を証明する大切なものです。
@@ -9,12 +9,13 @@ AccessibleToolsLaboratoryのソフトウェアをご購入いただき、あり�
 
 
 ----------
-注文番号　　：{{ id }}
-注文日時　　：{{ createdAt }}
-注文商品　　：{{ productName }} {{ edition }}
-シリアルキー：{% for serialnumber in serialnumbers %}
-　　　　　　　　　　　　{{ serialnumber }}
-{% endfor %}
+ご注文番号　　：{{ id }}
+ご注文日時　　：{{ createdAt }}
+ご注文商品　　：{{ productName }}  {{ edition }}
+シリアルキー：{% for serialnumber in serialnumbers %}{{ serialnumber }}
+　　　　　　　{% endfor %}
+
+
 ----------
 
 
