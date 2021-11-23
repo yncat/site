@@ -73,17 +73,18 @@ $container['notFoundHandler'] = function ($c) {
 
 $errorHandler = function ($c) {
     return function ($request, $response,$e) use ($c) {
-		$response->withStatus(500,"Internal server error");
+		$data = [];
 		$s = "ERROR lv.".$e->getCode()." ".$e->getMessage()." at ".$e->getFile()." line:".$e->getLine();
 		if (!EnvironmentUtil::isProduct()){
-			print($s);
+			$data["detail"] = $s;
 		}
-		$GLOBALS["app"]->getContainer()->get("logger")->error($s);
-		if ($GLOBALS["app"]->getContainer()->get("db")->isTransactionActive()){
-			$GLOBALS["app"]->getContainer()->get("logger")->info("DB rollback");
-			$GLOBALS["app"]->getContainer()->get("db")->rollBack();
+		$c->get("logger")->error($s);
+		if($c->get("db")->isTransactionActive()){
+			$c->get("logger")->info("DB rollback");
+			$c->get("db")->rollBack();
 		}
-		return $response->write("An error has occured.");
+		$response = $response->withStatus(500,"Internal server error");
+		return $c->get("view")->render($response, 'error/500.twig',$data);
 	};
 };
 error_reporting(E_ALL);

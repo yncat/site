@@ -96,13 +96,18 @@ class AdminPageHandler{
 
 
 set_error_handler(function(int $errno, string $errstr, string $errfile, int $errline, array $errcontext){
-	print("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
+	http_response_code (500);
+
+	if (getenv("ENV_NAME") == "product"){
+		print("500 Internal Server Error");
+	} else {
+		print("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
+	}
 	$GLOBALS["app"]->getContainer()->get("logger")->error("ERROR lv.".$errno." ".$errstr." at ".$errfile." line:".$errline);
 	if ($GLOBALS["app"]->getContainer()->get("db")->isTransactionActive()){
 		$GLOBALS["app"]->getContainer()->get("logger")->info("DB rollback");
 		$GLOBALS["app"]->getContainer()->get("db")->rollBack();
 	}
 	die();
-	return false;
 });
 

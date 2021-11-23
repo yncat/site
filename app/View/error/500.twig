@@ -1,0 +1,41 @@
+{% set page_title = "500 Internal Server Error" %}
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			５００　Internal Server Error
+		</h2>
+		<div class="container rx-5 mx-5">
+			<p>
+				大変申し訳ございません。サーバ内部で問題が発生しました。
+			</p>
+			<p>
+				大変お手数ですが、しばらく待ってから再度お試しください。
+				問題が解消されない場合には、直前に行っていた操作の内容とお使いのブラウザの種類・バージョンをご連絡いただきますようお願い致します。
+			</p>
+		</div>
+	</div>
+	<div class="container">
+		<p>
+			{{ detail | raw }}
+		</p>
+
+		<div class="btn btn-primary"><a href="{{ get_base_path() }}/" class="text-white">トップへ戻る</a></div>
+
+	</div>
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
