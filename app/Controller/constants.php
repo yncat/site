@@ -1,6 +1,7 @@
 <?php
 
 const FLG_HIDDEN = 0x1;
+const FLG_NO_SNAPSHOT = 0x2;
 
 const PAYMENT_TYPE = [
     "credit"=> 0,
