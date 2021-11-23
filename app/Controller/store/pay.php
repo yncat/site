@@ -104,11 +104,6 @@ function createCharge($token, $amount) {
             return [0, "card error"];
         }
 
-        $ch = \Payjp\Charge::retrieve($charge["id"]);
-        if ($charge["card"]["cvc_check"] !== "passed") {
-            $ch->refund();
-            return [0, "cvc error"];
-        }
         return [$charge["id"], null];
     } catch(\Payjp\Error\Card $e) {
         return [0, "card error"];
