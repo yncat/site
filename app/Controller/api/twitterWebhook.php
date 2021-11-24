@@ -52,7 +52,7 @@ function process_tweet_create_event($event){
         $created_user_link = "<https://twitter.com/".$created_user["screen_name"]."|".$created_user["name"].">";
         $message_footer = "<https://twitter.com/".$created_user["screen_name"]."/status/".$tweet["id_str"]."|twitterで開く>";
         if(array_key_exists("retweeted_status", $tweet)){
-            $text .= $created_user_link."が、リツイートしました。\n";
+            $text .= $created_user_link."がリツイートしました。\n";
             $text .= $tweet["retweeted_status"]["text"] . "\n";
             $text .= $message_footer;
             SlackUtil::twitter_notify($text);
