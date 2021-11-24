@@ -5,7 +5,7 @@ use Slim\Views\Twig;
 
 
 class MailUtil{
-	private const DEFAULT_MAIL_FROM = "ACTLab<support@actlab.org";
+	private const DEFAULT_MAIL_FROM = "ACTLaboratory<support@actlab.org>";
 
 
 	public static function sendWithTemplate($mail_to, string $title, string $template_name, array $data = []){
