@@ -1,4 +1,5 @@
 <?php
+use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Model\Dao\Updaterequests;
@@ -110,7 +111,17 @@ $approveRequest = function(Request $request, Response $response, $args) {
 			if($input["type"]==="confirmTransfer"){
 				$check=ordersCheck($input);
 				if($check===""){
-					$message=setTransferApprove($input,$this->db,$this->view,$response);
+					$message=setConfirmTransferApprove($input,$this->db,$this->view,$response);	#本人以外のリクエストなので確定してDB反映
+				} else {
+					$message = $check;
+				}
+			}
+			if($input["type"]==="orderDelete"){
+				$check=ordersCheck($input);
+				if($check===""){
+					$message=setOrderDeleteApprove($input,$this->db,$this->view,$response);	#本人以外のリクエストなので確定してDB反映
+				} else {
+					$message = $check;
 				}
 			}
 		}
@@ -152,8 +163,14 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 			return showInformationsConfirm($data,"approve",$this->view,$response,"");
 		}
 		if($info["type"]==="confirmTransfer"){
+			$data = getOrderInfo($data["orderId"]);
 			$data["requestId"]=$id;
 			return showTransferConfirm($data,"approve",$this->view,$response,"");
+		}
+		if($info["type"]==="orderDelete"){
+			$data = getOrderInfo($data["orderId"]);
+			$data["requestId"]=$id;
+			return showOrderDelete($data,"approve",$this->view,$response,"");
 		}
 		if($info["type"]==="delete_software_version"){
 			return showDeleteVersionConfirm($data,$this->view, $request, $response);

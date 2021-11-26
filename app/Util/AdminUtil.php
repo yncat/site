@@ -61,6 +61,12 @@ class AdminUtil{
 		if($request["type"]==="publicInformation"){
 			return $requester."の公開プロフィール変更";
 		}
+		if($request["type"]==="confirmTransfer"){
+			return $requester."の振込承認要求";
+		}
+		if($request["type"]==="orderDelete"){
+			return $requester."の注文削除要求";
+		}
 		if($request["type"]==="new"){
 			return $requester."から新規ソフトウェア公開要求(".$request["identifier"].")";
 		}

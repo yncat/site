@@ -1,0 +1,87 @@
+{% set page_title = orderId ~ "の注文詳細" %}
+
+
+{#レイアウト継承#}
+{% extends "layout/layout.twig" %}
+
+
+{# スタイルシートの追加 #}
+{% block header_scripts_add %}
+{% endblock %}
+
+{# ページ本文 #}
+{% block page_content %}
+	<div class="jumbotron">
+		<h2 class="text-center">
+			注文番号{{ orderId }}　の詳細
+		</h2>
+	</div>
+
+	<dl>
+		<dt>注文番号</dt>
+		<dd>{{ orderId }}</dd>
+	</dl>
+
+	<dl>
+		<dt>注文者名</dt>
+		<dd>{{ name }}</dd>
+	</dl>
+
+	<dl>
+		<dt>メールアドレス</dt>
+		<dd>{{ email }}</dd>
+	</dl>
+
+	<dl>
+		<dt>注文日時</dt>
+		<dd>{{ createdAt }}</dd>
+	</dl>
+
+	<dl>
+		<dt>品名</dt>
+		<dd>{{ productName }}</dd>
+	</dl>
+
+	<dl>
+		<dt>エディション</dt>
+		<dd>{{ edition }}</dd>
+	</dl>
+
+	<dl>
+		<dt>単価</dt>
+		<dd>{{ price }}</dd>
+	</dl>
+
+	<dl>
+		<dt>個数</dt>
+		<dd>{{ quantity }}</dd>
+	</dl>
+	
+	<dl>
+		<dt>合計金額</dt>
+		<dd>{{ totalPrice }}</dd>
+	</dl>
+
+    {% if needConfirm == true %}
+		<form method="post" autocomplete="off">
+			{{ csrf_field() | raw }}
+			<input type="hidden" name="step" value="edit">
+			<input type="hidden" name="orderId" value="{{ orderId }}">
+			<input type="hidden" name="type" value="confirmTransfer">
+			<input type="submit" value="振込承認要求を作成">
+		</form>
+		<form method="post" autocomplete="off">
+			{{ csrf_field() | raw }}
+			<input type="hidden" name="step" value="edit">
+			<input type="hidden" name="orderId" value="{{ orderId }}">
+			<input type="hidden" name="type" value="orderDelete">
+			<input type="submit" value="注文削除要求を作成">
+		</form>
+	{% endif %}
+
+
+{% endblock %}
+
+{# フッダ以降に追加する内容 #}
+{% block footer_scripts_add %}
+{% endblock %}
