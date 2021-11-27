@@ -137,7 +137,7 @@ $app->post('/admin/softwares/edit/{keyword}', function (Request $request, Respon
 									$message=setNew($input,$this->db);
 									return showResultMessage($message);
 								}
-								return showNewConfirm($data,$this->db,$this->view,$response);
+								return showConfirm($data,$this->db,$this->view,$response);
 							} else {
 								$message.="指定されたファイルが存在しません。";
 							}
@@ -165,12 +165,12 @@ function showFileSelector(array $data,$db,$view,$response){
     return $view->render($response, 'admin/software/fileSelect.twig', $data);
 }
 
-function showNewConfirm(array $data,$db,$view,$response){
-    // Render view
-    return $view->render($response, 'admin/software/confirm.twig', $data);
-}
-
 function showConfirm(array $data,$db,$view,$response){
+	$data["display_features"]=explode("\n",$data["features"]);
+	for($i=0;$i<count($data["display_features"]);$i++){
+		$data["display_features"][$i]=explode("\\t",$data["display_features"][$i]);
+	}
+	$data["display_staff"] = (new Members())->select(["id"=>$data["staff"]])["name"];
     // Render view
     return $view->render($response, 'admin/software/confirm.twig', $data);
 }

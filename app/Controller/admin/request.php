@@ -158,7 +158,7 @@ $app->get('/admin/request/{id}/', function (Request $request, Response $response
 			return showProfileConfirm($data,$this->db,$this->view,$response,"");
 		}
 		if($info["type"]==="new" || $info["type"]==="edit"){
-			return showNewConfirm($data,$this->db,$this->view,$response,"");
+			return showConfirm($data,$this->db,$this->view,$response,"");
 		}
 		if($info["type"]==="update"){
 			return showUpdateConfirm($data,$this->db,$this->view,$response,"");

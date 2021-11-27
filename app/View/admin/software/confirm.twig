@@ -41,50 +41,61 @@
 	</div>
 
 	<dl>
-		<dt>キーワード</dt>
+		<dt><h3>キーワード</h3></dt>
 		<dd>{{ keyword }}</dd>
 	</dl>
 	<input type="hidden" name="keyword" value="{{ keyword }}">
 
 	<dl>
-		<dt>概要</dt>
+		<dt><h3>概要</h3></dt>
 		<dd>{{ description }}</dd>
 	</dl>
 	<input type="hidden" name="description" value="{{ description }}">
 
 	<dl>
-		<dt>features</dt>
-		<dd>{{ features }}</dd>
+		<dt><h3>特徴</h3></dt>
+		<dd>
+			<ul class="list-group">
+				{% for feature in display_features %}
+					<li class="my-3">
+						<h4>{{ feature.0 }}</h4>
+						<div class="container">
+							{{ feature.1 | raw }}
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</dd>
 	</dl>
 	<input type="hidden" name="features" value="{{ features }}">
 
 	<dl>
-		<dt>リポジトリ</dt>
+		<dt><h3>リポジトリ</h3></dt>
 		<dd><a href="https://github.com/{{ gitHubURL }}">{{ gitHubURL }}</a></dd>
 	</dl>
 	<input type="hidden" name="gitHubURL" value="{{ gitHubURL }}">
 
 	<dl>
-		<dt>スナップショットタグ名</dt>
+		<dt><h3>スナップショットタグ名</h3></dt>
 		<dd>{{ snapshotTag }}</dd>
 	</dl>
 	<input type="hidden" name="snapshotTag" value="{{ snapshotTag }}">
 
 	<dl>
-		<dt>スナップショットファイル</dt>
+		<dt><h3>スナップショットファイル</h3></dt>
 		<dd><a href="https://github.com/{{ gitHubURL }}releases/download/{{ snapshotTag }}/{{ snapshotFile }}">{{ snapshotFile }}</a></dd>
 	</dl>
 	<input type="hidden" name="snapshotFile" value="{{ snapshotFile }}">
 
 	<dl>
-		<dt>主担当メンバー</dt>
-		<dd>ID:{{ staff }}</dd>
+		<dt><h3>主担当メンバー</h3></dt>
+		<dd>{{ display_staff }}</dd>
 	</dl>
 	<input type="hidden" name="staff" value="{{ staff }}">
 
 	{% if type=="new" %}
 		<dl>
-			<dt>リリースバージョン</dt>
+			<dt><h3>リリースバージョン</h3></dt>
 			<dd><a href="{{ releaseUrl }}">{{ version }}</a></dd>
 		</dl>
 		<input type="hidden" name="version" value="{{ version }}">
@@ -92,19 +103,19 @@
 		<input type="hidden" name="releaseUrl" value="{{ releaseUrl }}">
 
 		<dl>
-			<dt>お知らせ文字列</dt>
+			<dt><h3>お知らせ文字列</h3></dt>
 			<dd>{{ infoString }}</dd>
 		</dl>
 		<input type="hidden" name="infoString" value="{{ infoString }}">
 
 		<dl>
-			<dt>バージョン履歴掲載情報</dt>
+			<dt><h3>バージョン履歴掲載情報</h3></dt>
 			<dd><pre>{{ detailString }}</pre></dd>
 		</dl>
 		<input type="hidden" name="detailString" value="{{ detailString }}">
 
 		<dl>
-			<dt>リリースファイル</dt>
+			<dt><h3>リリースファイル</h3></dt>
 			<dd><a href="{{ fileUrl }}">{{ file }}</a></dl>
 		<input type="hidden" name="file" value="{{ file }}">
 		<input type="hidden" name="fileUrl" value="{{ fileUrl }}">
@@ -112,9 +123,9 @@
 
 	<dl>
 		{% if hidden=="no" %}
-			<dt>このソフトウェアは、公開ソフトウェア一覧に表示されます。</dt>
+			<dt><h3>このソフトウェアは、公開ソフトウェア一覧に表示されます。</h3></dt>
 		{% else %}
-			<dt>このソフトウェアは、公開ソフトウェア一覧から隠されます。</dt>
+			<dt><h3>このソフトウェアは、公開ソフトウェア一覧から隠されます。</h3></dt>
 		{% endif %}
 	</dl>
 
