@@ -38,7 +38,7 @@ $app->post('/admin/informations', function (Request $request, Response $response
 		if($input["step"]==="edit"){
 			return showInformationsConfirm($input,"confirm",$this->view,$response);
 		}else if($input["step"]==="confirm"){
-			return setInformationsRequest($input,$this->db,$this->view,$response, $request);
+			return setInformationsRequest($input);
 		}
 	}
 });
@@ -72,25 +72,26 @@ function informationsCheck(array $data){
 }
 
 // お知らせ配信リクエスト登録
-function setInformationsRequest(array $data,$db,$view,$response, $request){
-	$no=AdminUtil::sendRequest("informations",$data);
-	$data["message"] ="リクエストを記録し、他のメンバーに承認を依頼しました。[リクエストNo:".$no."]";
-	return $view->render($response, 'admin/request/request.twig', $data);
+function setInformationsRequest(array $data){
+	// URLがあればURLを、なければお知らせ文字列の先頭30文字をidentifierとしてリクエストDBへ登録
+	if($data["infoURL"]){
+		$identifier = $data["infoURL"];
+	} else {
+		$identifier = substr($data["infoString"],0,30);
+	}
+
+	$no=AdminUtil::sendRequest("informations", $data, $identifier);
+	return showResultMessage("リクエストを記録し、他のメンバーに承認を依頼しました。");
 }
 
 // お知らせ配信確定
-function setInformationsApprove(array $data,$db,$view,$response){	#本人以外のリクエストなので確定してDB反映
-	$updaterequests=new Updaterequests($db);
-	$request = $updaterequests->select(array(
-		"id"=>$data["requestId"],
-		"type"=>"informations"
-	));
-	$info=unserialize($request["value"]);
+// 本人以外のリクエストなので確定してDB反映
+function setInformationsApprove(array $info, int $request_id):string {	
 	if(empty($info["infoURL"])){
 		$info["infoURL"]=NULL;
 	}
 	publishInformation($info["infoString"],$info["infoURL"]);
-	AdminUtil::completeRequest($data["requestId"]);
+	AdminUtil::completeRequest($request_id);
 	return "更新が完了しました。";
 }
 

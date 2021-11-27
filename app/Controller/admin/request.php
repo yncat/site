@@ -102,12 +102,6 @@ $approveRequest = function(Request $request, Response $response, $args) {
 					$message=setUpdate($input,$this->db);
 				}
 			}
-			if($input["type"]==="informations"){
-				$check=informationsCheck($input);
-				if($check===""){
-					$message=setInformationsApprove($input,$this->db,$this->view,$response);
-				}
-			}
 			if($input["type"]==="confirmTransfer"){
 				$check=ordersCheck($input);
 				if($check===""){
@@ -126,9 +120,20 @@ $approveRequest = function(Request $request, Response $response, $args) {
 			}
 		}
 	}
+	// ソフトウェアバージョンの削除
 	if($info["type"]==="delete_software_version"){
 		$message = ApproveDeleteVersion($data, $request_id);
 	}
+
+	// お知らせ配信要求
+	if($input["type"]==="informations"){
+		$message=informationsCheck($input);
+		if($message === ""){
+			$message = setInformationsApprove($data, $request_id);
+		}
+	}
+
+	// バリデーションエラー時
 	return showResultMessage($message);
 };
 
