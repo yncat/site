@@ -9,12 +9,14 @@ use PDO;
 class Orders extends Dao{
 	public function setDeletedById(int $id){
 		$id = (int)$id;
-		(new QueryBuilder($this->db))->update($this->_table_name)
+		(new QueryBuilder($this->db))
+			->update($this->_table_name)
 			->set("flag", "flag |". \ORDER_FLAG_DELETED)
-			->where("id = :id")->setParameter(":id", $id)
+			->where("id = :id")
+			->setParameter(":id", $id)
 			->execute();
 	}
-	
+
 	public function getAllByEmailAndName(string $email, string $name, int $status): array{
 		return (new QueryBuilder($this->db))
 		->select("o.*", "s.title product_name", "p.edition")
