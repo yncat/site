@@ -30,7 +30,7 @@ class AdminUtil{
 
 		// Slack通知
 		$title = self::makeRequestTitle($request);
-		SlackUtil::notify("リクエストの承認をお願いします。\n<".UrlUtil::toAbsUrl("admin/request/$no/")."|$title>\n");
+		SlackUtil::notify("リクエストの承認をお願いします。\n<".UrlUtil::toAbsUrl("admin/request/$no/")."|No.".$no." $title>\n");
 
 		return $no;
 	}
