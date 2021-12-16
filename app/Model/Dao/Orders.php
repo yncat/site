@@ -7,6 +7,21 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use PDO;
 
 class Orders extends Dao{
+
+	// ’•¶“ú•Ê“ü‹à‘Ò‚¿’•¶Œ”
+	public function countWaitingOrder(){
+		return (new QueryBuilder($this->db))
+			->select("date(created_at) ordered_on", "COUNT(*) cnt")
+			->from($this->_table_name, "o")
+			->where("status = " . \ORDER_STATUS_WAIT_PAY)
+			->andWhere("flag &". \ORDER_FLAG_DELETED . " = 0")
+			->groupBy("ordered_on")
+			->execute()
+			->fetchAll();
+	}
+
+
+
 	public function setDeletedById(int $id){
 		$id = (int)$id;
 		(new QueryBuilder($this->db))
@@ -32,5 +47,4 @@ class Orders extends Dao{
 		->execute()
 		->fetchAll();
 	}
-
 }

@@ -47,5 +47,4 @@ class AuthorizationLog extends Dao{
 		//Œ‹‰Ê‚ð•Ô‘—
 		return $result["cnt"];
 	}
-
 }

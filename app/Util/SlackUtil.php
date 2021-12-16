@@ -28,6 +28,10 @@ class SlackUtil {
 		self::send($body, getenv("SLACK_TWITTER_NOTIFY_URL"));
 	}
 
+	static function sales($body){
+		self::send($body, getenv("SLACK_SALES_URL"));
+	}
+
 	public static function send($body, string $url){
 		global $app;
 		$logger = $app->getContainer()->get("logger");
@@ -58,8 +62,11 @@ class SlackUtil {
 				"ignore_errors" => false
 			)
 		);
-
-		$result=file_get_contents($url, false, stream_context_create($context));
+		try {
+			$result=file_get_contents($url, false, stream_context_create($context));
+		} catch (Exception $e){
+			$logger->error(var_export($e, true));
+		}
 		return $result;
 	}
 

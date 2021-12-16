@@ -48,4 +48,17 @@ class TrialAuthorizationLog extends Dao{
 		//結果を返送
 		return $result["cnt"];
 	}
+
+	// 各ソフトごとに類型の起動成功・失敗数を返す
+	public function getAnalyticsData(){
+		return (new QueryBuilder($this->db))
+			->select("s.keyword name","COUNT(*) total","COUNT(DISTINCT code) `unique`")
+			->from($this->_table_name,"l")
+			->innerJoin("l","softwares","s","l.software_name = s.keyword")
+			->innerJoin("s","products","p","s.id = p.software_id")
+			->where("status = " . self::STATUS_AUTH_SUCCESS)
+			->groupBy("s.keyword")
+			->execute()
+			->fetchAll();
+	}
 }

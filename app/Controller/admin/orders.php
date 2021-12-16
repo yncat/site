@@ -9,6 +9,7 @@ use Model\Dao\Updaterequests;
 use Util\ValidationUtil;
 use Util\AdminUtil;
 use Util\mailUtil;
+use Util\SlackUtil;
 
 // 注文一覧画面表示
 $app->get('/admin/orders',function (Request $request, Response $response, $args) {
@@ -181,6 +182,8 @@ function setConfirmTransferApprove(array $data,$db,$view,$response){	#本人以�
 	$confirmTransfer=unserialize($request["value"]);
 	confirmTransfersOrder($confirmTransfer["orderId"]);
 	AdminUtil::completeRequest($data["requestId"]);
+	$price = (new Orders())->select(["id"=>$confirmTransfer["orderId"]])["total_price"];
+	SlackUtil::sales("銀行振込による注文の入金が承認されました。\n\n決済金額：" . $price . "円");
 	return "更新が完了しました。";
 }
 
@@ -194,7 +197,6 @@ function confirmTransfersOrder($orderId){
 	]);
 	$serialInfo = getSerialnumber($orderId);
 	mailUtil::sendWithTemplate($serialInfo["email"], "シリアルキー発行のお知らせ", "notice_serial.twig", $serialInfo);
-        
 }
 
 
