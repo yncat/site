@@ -86,7 +86,7 @@ function sendSalesNotice(){
 	// 入金待ち注文件数
 	$text = "Orders waiting for payment\n\n";
 	$data = (new Orders())->countWaitingOrder();
-	if (!data){
+	if (!$data){
 		// 該当の注文がなければ出力しない
 		return;
 	}

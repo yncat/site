@@ -55,7 +55,15 @@ class TrialAuthorizationLog extends Dao{
 			->select("s.keyword name","COUNT(*) total","COUNT(DISTINCT code) `unique`")
 			->from($this->_table_name,"l")
 			->innerJoin("l","softwares","s","l.software_name = s.keyword")
-			->innerJoin("s","products","p","s.id = p.software_id")
+			->innerJoin(
+					"s",
+					"(".(new QueryBuilder($this->db))
+						->select("software_id")
+						->from("products")
+						->groupBy("software_id").")",
+					"p",
+					"s.id = p.software_id"
+				)
 			->where("status = " . self::STATUS_AUTH_SUCCESS)
 			->groupBy("s.keyword")
 			->execute()
