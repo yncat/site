@@ -32,6 +32,28 @@ class Orders extends Dao{
 			->execute();
 	}
 
+	public function getAll(){
+		return (new QueryBuilder($this->db))
+		->select("o.*", "s.title product_name", "p.edition", "YEAR(sn.created_at) confirm_year","MONTH(sn.created_at) confirm_month")
+		->from($this->_table_name, "o")
+		->innerJoin("o", "products", "p", "p.id = o.product_id")
+		->innerJoin("p", "softwares", "s", "p.software_id = s.id")
+		->leftJoin(
+			"o",
+			"(".(new QueryBuilder($this->db))
+				->select("order_id","created_at")
+				->from("serialnumbers")
+				->groupBy("order_id")
+				->getSql().")",
+			"sn",
+			"sn.order_id = o.id")
+		->where("o.flag &". \ORDER_FLAG_DELETED . " = 0")
+		->orderBy("o.status")
+		->addOrderBy("o.id","DESC")
+		->execute()
+		->fetchAll();
+	}
+
 	public function getAllByEmailAndName(string $email, string $name, int $status): array{
 		return (new QueryBuilder($this->db))
 		->select("o.*", "s.title product_name", "p.edition")
@@ -44,6 +66,7 @@ class Orders extends Dao{
 		->setParameter(":name", $name)
 		->andWhere("o.status = :status")
 		->setParameter(":status", $status)
+		->andWhere("flag &". \ORDER_FLAG_DELETED . " = 0")
 		->execute()
 		->fetchAll();
 	}

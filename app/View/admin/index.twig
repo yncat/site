@@ -22,116 +22,31 @@
 		</div>
 	</div>
 
+	{% for name,detail in menu %}
 	<div class="card">
 		<div class="card-body">
-			<div class="card-title bg-primary">
-				<h3><a href="request" class="text-white">更新リクエストの確認</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>他のメンバーからの更新リクエストの承認、自分が出した更新リクエストの削除を行います。</p>
+			<div class="row" style="justify-content: center; align-items: center;">
+				<div class="bg-primary col-md-4">
+					<h3 class="h1">
+						{% if detail.method == "POST" %}
+							<form action="{{ detail.link }}" method="POST">
+								<input type="submit" style="border: none;" class="bg-primary text-white" value="{{ name }}">
+								{{ csrf_field() | raw }}
+							</form>
+						{% else %}
+							<a href="{{ detail.link }}" class="text-white">{{ name }}</a>
+						{% endif %}
+					</h3>
+				</div>
+				<div class="card-text col-md-8">
+					<div class="container">
+						<p class="my-0">{{ detail.description }}</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title bg-primary">
-				<h3><a href="orders" class="text-white">ストアの注文管理</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>確定済み注文の確認、振込の承認などができます。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="softwares/edit/NEW" class="text-white">新規ソフトウェア公開</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>GitHubでの準備が整ったソフトの公開作業を行います。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="softwares/" class="text-white">公開済みソフトウェア管理</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>公開中ソフトウェアの上方修正・アップデート配信を行います。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="informations" class="text-white">お知らせ配信</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>トップページに掲載するお知らせの配信を行います。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="profile" class="text-white">プロフィール修正</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>メンバー情報を修正します。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3><a href="logviewer/" class="text-white">サーバログの閲覧</a></h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>サーバ上のログファイルを閲覧します。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<div class="card-body">
-			<div class="card-title text-white bg-primary">
-				<h3>
-					<form action="dbdump" method="POST">
-						<input type="submit" style="border: none;" class="bg-primary text-white" value="データベースダンプファイルのバックアップ">
-						{{ csrf_field() | raw }}
-					</form>
-				</h3>
-			</div>
-			<div class="card-text">
-				<div class="container pl-5">
-					<p>データベースのダンプファイルをDropboxに保存します。</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
+	{% endfor %}
 {% endblock %}
 
 {# フッダ以降に追加する内容 #}

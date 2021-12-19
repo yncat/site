@@ -9,6 +9,7 @@
 {% block header_scripts_add %}
 {% endblock %}
 
+
 {# ページ本文 #}
 {% block page_content %}
 
@@ -23,27 +24,45 @@
 		</div>
 	</div>
 
-	<div class="row">
-        {% for o in orders %}
-            <div class="row col-12">
-                <div class="col-12 col-md-2">No.{{ o.orderId }}: {{ o.name }}</div>
-                <div class="col-12 col-md-6">{{ o.productName }} / {{ o.edition }} * {{ o.quantity }}</div>
-                <div class="col-4 col-md-1">\{{ o.totalPrice }}</div>
-                <div class="col-6 col-md-2">{{ o.paymentType }} {{ o.status }}</div>
+	<div>
+		<h3>入金待ち({{ waiting_orders | length }} 件)</h3>
+        {% for o in waiting_orders %}
+            <div class="row">
+                <div class="col-12 col-md-1">{{ o.id }}</div>
+                <div class="col-12 col-md-2">{{ o.name }}</div>
+                <div class="col-12 col-md-5">{{ o.product_name }} / {{ o.edition }} * {{ o.quantity }}</div>
+                <div class="col-4 col-md-1">\{{ o.total_price }}</div>
+                <div class="col-6 col-md-2">{{ o.payment_type_text }} {{ o.status_text }}</div>
                 <div class="col-2 col-md-1">
-                    <form method="POST" action="order">
-                        {{ csrf_field() | raw }}
-                        <input type="hidden" name="step" value="none">
-                        <input type="hidden" name="type" value="order">
-                        <input type="hidden" name="orderId" value="{{ o.orderId }}">
-                        <input type="submit" class="btn btn-success" value="詳細">
-                    </form>
+					<a href="{{ o.id }}" class="btn btn-primary py-0">詳細</a>
                 </div>
             </div>
         {% endfor %}
-        </div>
+
+        {% for year,year_data in orders %}
+			<h3>{{ year }} 年</h3>
+			{% for month,month_data in year_data %}
+				<h4>{{ month }} 月({{ month_data | length }}件)</h4>
+				{% for o in month_data %}
+		            <div class="row">
+        		        <div class="col-12 col-md-1">{{ o.id }}</div>
+                		<div class="col-12 col-md-2">{{ o.name }}</div>
+		                <div class="col-12 col-md-5">{{ o.product_name }} / {{ o.edition }} * {{ o.quantity }}</div>
+        		        <div class="col-4 col-md-1">\{{ o.total_price }}</div>
+                		<div class="col-6 col-md-2">{{ o.payment_type_text }} {{ o.status_text }}</div>
+		                <div class="col-2 col-md-1">
+							<a href="{{ o.id }}" class="btn btn-primary py-0">詳細</a>
+		                </div>
+		            </div>
+				{% endfor %}
+			{% endfor %}
+        {% endfor %}
+
     </div>
 
+	<div class="container my-5">
+		<div class="btn btn-primary"><a href="{{ get_base_path() }}/admin/" class="text-white">管理者メニュートップへ戻る</a></div>
+	</div>
 {% endblock %}
 
 {# フッダ以降に追加する内容 #}

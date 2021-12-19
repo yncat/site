@@ -6,7 +6,7 @@ use Model\Dao\Updaterequests;
 use Util\AdminUtil;
 
 // リクエスト一覧画面
-$app->get('/admin/request', function (Request $request, Response $response) {
+$app->get('/admin/request/', function (Request $request, Response $response) {
 	$updaterequests=new Updaterequests($this->db);
 
 	$data=array();

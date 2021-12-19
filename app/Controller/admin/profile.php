@@ -11,7 +11,7 @@ use Util\AdminUtil;
 use Util\EncryptUtil;
 
 
-$app->get('/admin/profile',function (Request $request, Response $response, $args) {
+$app->get('/admin/profile/',function (Request $request, Response $response, $args) {
 	showProfileEditor(array(),$this->db,$this->view,$response);
 });
 
@@ -26,7 +26,7 @@ function showProfileEditor(array $data,$db,$view,$response,$message=""){
     return $view->render($response, 'admin/profile/edit.twig', $data);
 }
 
-$app->post('/admin/profile', function (Request $request, Response $response) {
+$app->post('/admin/profile/', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 	$members=new Members($this->db);
 	$info=$members->select(array("id"=>$_SESSION["ID"]));

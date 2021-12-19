@@ -12,35 +12,36 @@ use Util\mailUtil;
 use Util\SlackUtil;
 
 // 注文一覧画面表示
-$app->get('/admin/orders',function (Request $request, Response $response, $args) {
-	showOrdersList(array(),$this->db,$this->view,$response);
+$app->get('/admin/orders/',function (Request $request, Response $response, $args) {
+	showOrdersList($this->view,$response);
 });
 
-function showOrdersList(array $data,$db,$view,$response){
-	if(empty($data)){
-		$data=[];
-	}
+function showOrdersList($view,$response){
+	$data=[];
+	$data["waiting_orders"] = [];
+	$ordersTable = new Orders();
+
 
 	// 注文一覧を取得
-	$ordersTable = new Orders();
-	$orders0 = $ordersTable->select(["status"=> \ORDER_STATUS_WAIT_PAY], "id", "DESC", 1000000, true);
-	$orders1 = $ordersTable->select(["status"=> \ORDER_STATUS_PAID], "id", "DESC", 1000000, true);
-	$data["orders"] = [];
-	foreach($orders0 as $o) {
-		if (((int)$o["flag"] & \ORDER_FLAG_DELETED) !== \ORDER_FLAG_DELETED) {
-			array_push($data["orders"], getOrderInfo($o["id"]));
+	$orders = ($ordersTable->getAll());
+	foreach($orders as $order){
+		$order = array_merge($order, getStringData($order));
+		if ($order["status"] == \ORDER_STATUS_WAIT_PAY){
+			array_push($data["waiting_orders"],$order);
+		} else if ($order["status"] == \ORDER_STATUS_PAID){
+			if(!isset($data["orders"][$order["confirm_year"]][$order["confirm_month"]])){
+				$data["orders"][$order["confirm_year"]][$order["confirm_month"]] = [];
+			}
+			array_push($data["orders"][$order["confirm_year"]][$order["confirm_month"]],$order);
 		}
 	}
-	foreach($orders1 as $o) {
-		if (((int)$o["flag"] & \ORDER_FLAG_DELETED) !== \ORDER_FLAG_DELETED) {
-			array_push($data["orders"], getOrderInfo($o["id"]));
-		}
-	}
-
-
-    // Render view
+	// Render view
     return $view->render($response, 'admin/orders/index.twig', $data);
 }
+
+$app->get('/admin/orders/{order_id}',function (Request $request, Response $response, $args) {
+	return showOrderInfo($args["order_id"], $this->view, $response);
+});
 
 function showOrderInfo($orderId, $view, $response){
 	$data = getOrderInfo($orderId);
@@ -73,18 +74,7 @@ function getOrderInfo($orderId){
 		$software = $softwaresTable->select(["id"=> $product["software_id"]]);
 		$data["productName"] = $software["title"];
 	}
-	if ($order["payment_type"] == \PAYMENT_TYPE["credit"]) {
-		$data["paymentType"] = "クレジットカード決済";
-	} else {
-		$data["paymentType"] = "銀行振込";
-	}
-	if ($order["status"] == \ORDER_STATUS_WAIT_PAY) {
-		$data["status"] = "支払待機中";
-	} else if ($order["status"] == \ORDER_STATUS_PAID) {
-		$data["status"] = "処理済";
-	} else {
-		$data["status"] = "未確定";
-	}
+	$data = array_merge($data,getStringData($order));
 	if (($order["payment_type"] == \PAYMENT_TYPE["transfer"]) && ($order["status"] == \ORDER_STATUS_WAIT_PAY)) {
 		$data["needConfirm"] = true;
 	} else {
@@ -93,9 +83,25 @@ function getOrderInfo($orderId){
 	return $data;
 }
 
+function getStringData($order){
+	$data = [];
+	if ($order["payment_type"] == \PAYMENT_TYPE["credit"]) {
+		$data["payment_type_text"] = "カード";
+	} else {
+		$data["payment_type_text"] = "振込";
+	}
+	if ($order["status"] == \ORDER_STATUS_WAIT_PAY) {
+		$data["status_text"] = "支払待ち";
+	} else if ($order["status"] == \ORDER_STATUS_PAID) {
+		$data["status_text"] = "処理済";
+	} else {
+		$data["status_text"] = "未確定";
+	}
+	return $data;
+}
 
 // 振込承認処理確認
-$app->post('/admin/order', function (Request $request, Response $response) {
+$app->post('/admin/orders/order', function (Request $request, Response $response) {
 	$input = $request->getParsedBody();
 	if ($input["type"] === "confirmTransfer") {
 		if($input["step"]==="edit"){
@@ -109,8 +115,6 @@ $app->post('/admin/order', function (Request $request, Response $response) {
 		}else if($input["step"]==="confirm"){
 			return setOrderDeleteRequest($input,$this->db,$this->view,$response, $request);
 		}
-	}else if($input["step"]==="none"){
-		return showOrderInfo($input["orderId"], $this->view, $response);
 	}
 });
 
@@ -214,7 +218,7 @@ function setOrderDeleteRequest(array $data,$db,$view,$response, $request){
 
 // 確定
 function setOrderDeleteApprove(array $data,$db,$view,$response){	#本人以外のリクエストなので確定してDB反映
-	$updaterequests=new Updaterequests($db);
+	$updaterequests=new Updaterequests();
 	$request = $updaterequests->select(array(
 		"id"=>$data["requestId"],
 		"type"=>"orderDelete"

@@ -63,14 +63,14 @@
 	</dl>
 
     {% if needConfirm == true %}
-		<form method="post" autocomplete="off">
+		<form method="post" action="order" autocomplete="off">
 			{{ csrf_field() | raw }}
 			<input type="hidden" name="step" value="edit">
 			<input type="hidden" name="orderId" value="{{ orderId }}">
 			<input type="hidden" name="type" value="confirmTransfer">
 			<input type="submit" value="振込承認要求を作成">
 		</form>
-		<form method="post" autocomplete="off">
+		<form method="post" action="order" autocomplete="off">
 			{{ csrf_field() | raw }}
 			<input type="hidden" name="step" value="edit">
 			<input type="hidden" name="orderId" value="{{ orderId }}">
@@ -79,6 +79,9 @@
 		</form>
 	{% endif %}
 
+	<div class="container">
+		<div class="btn btn-primary"><a href="./" class="text-white">注文一覧へ戻る</a></div>
+	</div>
 
 {% endblock %}
 
